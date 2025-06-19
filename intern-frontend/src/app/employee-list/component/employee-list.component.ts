@@ -1,0 +1,129 @@
+import {Component, OnInit} from '@angular/core';
+import {Employee} from '../model/employee.model';
+import {EmployeeListService} from '../service/employee-list.service';
+import {FormsModule} from '@angular/forms';
+import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
+
+
+@Component({
+  selector: 'app-component',
+  standalone: true,
+  templateUrl: './employee-list.component.html',
+  styleUrl: './employee-list.component.css',
+  imports: [
+    FormsModule,
+    NgForOf,
+    NgIf,
+    NgClass,
+    NgStyle,
+  ],
+})
+
+export class EmployeeListComponent implements OnInit {
+  employees: Employee[] = [];
+  filteredEmployees: Employee[] = [];
+  filterText: string = '';
+  showDialog: boolean = false;
+  selectedEmployee: Employee = {
+    id: 0,
+    name: '',
+    email: '',
+    address: '',
+    surname: '',
+    avatar: '',
+    password: '',
+    position: '',
+    phoneNumber: '',
+    remainingTimeoff: 0
+  };
+
+  constructor(private employeeListService: EmployeeListService) {
+  }
+
+  ngOnInit(): void {
+    this.loadEmployees();
+  }
+
+  loadEmployees(): void {
+    this.employeeListService.fetchAllEmployees().subscribe(data => {
+      this.employees = data;
+      this.filteredEmployees = data;
+    });
+  }
+
+  filterEmployees(search: string): void {
+    debugger
+    const term = search.trim().toLowerCase();
+    this.filteredEmployees = this.employees.filter(item =>
+      item.name.toLowerCase().includes(term) ||
+      item.surname.toLowerCase().includes(term) ||
+      item.avatar.toLowerCase().includes(term) ||
+      item.email.toLowerCase().includes(term) ||
+      item.password.toLowerCase().includes(term) ||
+      item.position.toLowerCase().includes(term) ||
+      item.address.toLowerCase().includes(term) ||
+      item.phoneNumber.toLowerCase().includes(term) ||
+      item.remainingTimeoff.toString().includes(term)
+    );
+  }
+
+  openEmpDialog(employee?: Employee): void {
+    if (employee) {
+      this.selectedEmployee = employee;
+    }
+    this.showDialog = true;
+  }
+
+  deleteEmployee(id: number): void {
+    const isConfirmed = window.confirm('Are you sure you want to delete this customer?');
+    if (isConfirmed) {
+      this.employeeListService.deleteEmployee(id).subscribe(() => {
+        this.employees = this.employees.filter((item) => item.id !== id);
+        window.location.reload(); // Optionally remove this and update customers locally
+      });
+    }
+  }
+
+  closeDialog() {
+    this.showDialog = false;
+  }
+
+
+  addOrEditEmployee(employee: Employee) {
+    if (employee.id !== 0) {
+      this.employeeListService.updateEmployee(employee).subscribe({
+        next: (data) => {
+          console.log('Employee updated:', data);
+          this.showDialog = false;
+          window.location.reload();
+        },
+        error: (error) => console.error('Error updating employee:', error),
+      });
+    } else {
+      this.employeeListService.createEmployee(employee).subscribe({
+        next: (data) => {
+          console.log('Customer created:', data);
+          this.showDialog = false;
+          window.location.reload();
+        },
+        error: (error) => console.error('Error creating employee:', error),
+      });
+    }
+  }
+}
+
+// TO-DO LIST
+
+// [] DBden remaining timeoff kaldır, startdate ekle
+
+// Profile
+// [] Navbara Profile butonu (en sağa), path'i /profile olacak
+// [] Backende giden bir fonksiyon, getEmployee(employeeId)
+// [] Profile sayfasında bu kişinin tüm bilgileri alt alta.
+// [] Navigation barda olduğumuz menü itemi mavi bold yazıyla gösterilsin
+
+// Home
+// [] Path yoksa sadece Home sayfasına gitsin Welcome to TimeOff yazsın
+// [] Employee id ile employee type (admin, hr, employee) getirme fonksiyonun olsun getEmployeeType(employeeId)
+// [] Eğer adam admin ya da HR ise toplam kaç çalışan var, toplam kaç izin var
+// [] Eğer adam employee ise kalan izin gününü getir, bir de buton ekle izin al diye, izin alma formunu açsın.

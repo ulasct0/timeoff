@@ -1,0 +1,23 @@
+<app-timeoff-header></app-timeoff-header>
+<main>
+  <ul id="employees">
+    <li *ngFor="let employee of employees; trackBy: trackByUserId">
+      <app-timeoff-employee
+        (select)="onSelectUser($event)"
+        [employee]="employee"
+        [selected]="employee.id === selectedUserId"
+      ></app-timeoff-employee>
+    </li>
+  </ul>
+
+  <ng-container *ngIf="selectedUser; else noUser">
+    <app-timeoff-employee-timeoffs
+      [employeeId]="selectedUser.id"
+      [name]="selectedUser.name"
+    ></app-timeoff-employee-timeoffs>
+  </ng-container>
+
+  <ng-template #noUser>
+    <p>Select a user to see their tasks</p>
+  </ng-template>
+</main>

@@ -1,0 +1,8 @@
+<article>
+  <h2>{{ timeoff.status }}</h2>
+  <time>{{ timeoff.endDate }}</time>
+  <p>{{ timeoff.reason }}</p>
+  <p class="actions">
+    <button (click)="onCompleteTimeoff()">Complete</button>
+  </p>
+</article>

@@ -1,0 +1,31 @@
+
+.timeoff-list-container {
+
+}
+
+h1 {
+  color: darkblue;
+  text-align: left;
+}
+
+.p-button.add-button {
+  float: right;
+  margin: 1rem 0;
+  width: 120px;
+}
+
+.actionBtn {
+  height: 2rem;
+  min-width: 2rem;
+}
+
+.p-button.delete-button {
+  background-color: red;
+  border: none;
+  color: white;
+}
+
+.add-btn {
+  margin-left: 3rem;
+  padding: 0.3rem 1.5rem;
+}

@@ -8,5 +8,5 @@ export interface Employee {
   position: string;
   address: string;
   phoneNumber: string;
-  remainingTimeoff: number;
+  startDate: Date;
 }

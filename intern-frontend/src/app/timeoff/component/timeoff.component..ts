@@ -1,6 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {HeaderComponent} from './header/component/header';
-import {Employee} from '../../employee-list/model/employee.model';
+import {Component, OnInit} from '@angular/core';import {Employee} from '../../employee-list/model/employee.model';
 import {EmployeeListService} from '../../employee-list/service/employee-list.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {TimeoffEmployeeComponent} from './timeoff-employee/component/timeoff-employee.component';
@@ -12,7 +10,6 @@ import {
 @Component({
   selector: 'app-timeoff',
   imports: [
-    HeaderComponent,
     NgForOf,
     TimeoffEmployeeComponent,
     NgIf,

@@ -1,9 +1,5 @@
-
-.employee-list-container {
-
-}
-
 h1 {
-  color: darkblue;
+  color: var(--bs-primary);
+  font-weight: bold;
   text-align: left;
 }

@@ -1,21 +1,30 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="/">Timeoff</a>
+  <a class="navbar-brand" routerLink="/home">Timeoff</a>
   <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
           data-target="#navbarNav"
           data-toggle="collapse" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link active" routerLink="/employee-list">Employee List</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/timeoff">Timeoff Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/timeoff-list">Timeoff List</a>
-      </li>
-    </ul>
+    <div class="navbar-nav">
+        <a class="nav-item nav-link"
+           routerLink="/employee-list"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{ exact: true }">Employee List</a>
+        <a class="nav-item nav-link"
+           routerLink="/timeoff"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{ exact: true }">Timeoff Dashboard</a>
+        <a class="nav-item nav-link"
+           routerLink="/timeoff-list"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{ exact: true }">Timeoff List</a>
+    </div>
+    <div class="navbar-nav ml-auto">
+      <a class="nav-item nav-link"
+         routerLink="/profile"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">Profile</a>
+    </div>
   </div>
 </nav>

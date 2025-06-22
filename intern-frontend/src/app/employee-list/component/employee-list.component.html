@@ -1,6 +1,7 @@
 <div class="employee-list-container m-4">
-
-  <h1>Employee List</h1>
+  <header>
+    <h1>Employee List</h1>
+  </header>
 
   <!-- Search Box -->
   <div class="input-group my-3">
@@ -44,7 +45,7 @@
         <td>{{ employee.position }}</td>
         <td>{{ employee.address }}</td>
         <td>{{ employee.phoneNumber }}</td>
-        <td>{{ employee.remainingTimeoff }}</td>
+        <td>{{ employee.startDate }}</td>
         <td>
           <button class="btn btn-sm btn-outline-primary" (click)="openEmpDialog(employee)">
             Edit
@@ -130,8 +131,8 @@
                   </div>
 
                   <div class="mb-3 d-flex align-items-center">
-                    <label for="remainingTimeoff" class="form-label w-25 mb-0 fw-semibold">Remaining Timeoff</label>
-                    <input type="text" id="remainingTimeoff" class="form-control" [(ngModel)]="selectedEmployee.remainingTimeoff"
+                    <label for="startDate" class="form-label w-25 mb-0 fw-semibold">Start Date</label>
+                    <input type="text" id="startDate" class="form-control" [(ngModel)]="selectedEmployee.startDate"
                            autocomplete="off"/>
                   </div>
         </div>

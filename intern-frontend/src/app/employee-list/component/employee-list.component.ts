@@ -34,7 +34,7 @@ export class EmployeeListComponent implements OnInit {
     password: '',
     position: '',
     phoneNumber: '',
-    remainingTimeoff: 0
+    startDate: new Date()
   };
 
   constructor(private employeeListService: EmployeeListService) {
@@ -63,7 +63,7 @@ export class EmployeeListComponent implements OnInit {
       item.position.toLowerCase().includes(term) ||
       item.address.toLowerCase().includes(term) ||
       item.phoneNumber.toLowerCase().includes(term) ||
-      item.remainingTimeoff.toString().includes(term)
+      item.startDate.toString().includes(term)
     );
   }
 
@@ -111,19 +111,3 @@ export class EmployeeListComponent implements OnInit {
     }
   }
 }
-
-// TO-DO LIST
-
-// [] DBden remaining timeoff kaldır, startdate ekle
-
-// Profile
-// [] Navbara Profile butonu (en sağa), path'i /profile olacak
-// [] Backende giden bir fonksiyon, getEmployee(employeeId)
-// [] Profile sayfasında bu kişinin tüm bilgileri alt alta.
-// [] Navigation barda olduğumuz menü itemi mavi bold yazıyla gösterilsin
-
-// Home
-// [] Path yoksa sadece Home sayfasına gitsin Welcome to TimeOff yazsın
-// [] Employee id ile employee type (admin, hr, employee) getirme fonksiyonun olsun getEmployeeType(employeeId)
-// [] Eğer adam admin ya da HR ise toplam kaç çalışan var, toplam kaç izin var
-// [] Eğer adam employee ise kalan izin gününü getir, bir de buton ekle izin al diye, izin alma formunu açsın.

@@ -1,3 +1,7 @@
+section {
+  border: black solid 1px;
+}
+
 #timeoffs {
   padding: 1rem;
   border-radius: 8px;

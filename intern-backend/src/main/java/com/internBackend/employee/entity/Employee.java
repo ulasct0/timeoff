@@ -41,6 +41,6 @@ public class Employee {
     @Column(name = "phone_number", length = 50)
     private String phoneNumber;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date", nullable = false, columnDefinition = "date default CURRENT_DATE")
     private LocalDate startDate;
 }

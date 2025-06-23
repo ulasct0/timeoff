@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface EmployeeService {
 
+    String getPositionByEmployeeId(Long employeeId);
+    long countAllEmployees();
+
     List<Employee> fetchAllEmployees();
     Employee fetchEmployeeById(Long id);
     Employee createEmployee(Employee employee);

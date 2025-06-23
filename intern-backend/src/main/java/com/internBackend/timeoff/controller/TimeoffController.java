@@ -16,7 +16,11 @@ import java.util.Map;
 public class TimeoffController {
 
     @Autowired
-    private TimeoffService timeoffService;
+    private final TimeoffService timeoffService;
+
+    public TimeoffController(TimeoffService timeoffService) {
+        this.timeoffService = timeoffService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Timeoff>> fetchAllTimeoffs() {
@@ -26,6 +30,14 @@ public class TimeoffController {
     @GetMapping("/{id}")
     public ResponseEntity<Timeoff> fetchTimeoffById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(timeoffService.fetchTimeoffById(id));
+    }
+
+    /** 3. Fetch all timeoffs for a given employee */
+    @GetMapping("/employee/{employeeId}")
+    public ResponseEntity<List<Timeoff>> fetchByEmployee(@PathVariable Long employeeId) {
+        return ResponseEntity.ok(
+                timeoffService.getAllTimeoffsByEmployeeId(employeeId)
+        );
     }
 
     @PostMapping
@@ -55,8 +67,6 @@ public class TimeoffController {
         return ResponseEntity.ok(updated);
     }
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> deleteTimeoff(@PathVariable("id") Long id) {
         Timeoff existing = timeoffService.fetchTimeoffById(id);
@@ -69,5 +79,44 @@ public class TimeoffController {
             response.put("message", "Task not found with id: " + id);
         }
         return ResponseEntity.ok(response);
+    }
+
+    /** 7. PATCH: update only the status field */
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> updateStatus(
+            @PathVariable Long id,
+            @RequestParam String status
+    ) {
+        timeoffService.updateStatusById(id, status);
+        return ResponseEntity.noContent().build();
+    }
+
+    /** 8. Get total count of all timeoffs */
+    @GetMapping("/count")
+    public ResponseEntity<Long> getTotalCount() {
+        return ResponseEntity.ok(timeoffService.countAllTimeoffs());
+    }
+
+    @GetMapping("/approved/count")
+    public ResponseEntity<Long> getTotalApprovedCount() {
+        return ResponseEntity.ok(timeoffService.countAllApprovedTimeoffs());
+    }
+
+    /** 9. Get count of approved timeoffs for an employee */
+    @GetMapping("/employee/{employeeId}/approved/count")
+    public ResponseEntity<Long> getApprovedCount(
+            @PathVariable Long employeeId
+    ) {
+        return ResponseEntity.ok(
+                timeoffService.countAllApprovedTimeoffsByEmployeeId(employeeId)
+        );
+    }
+
+    @GetMapping("/employee/remaining/{employeeId}")
+    public ResponseEntity<Integer> getRemainingTimeoff(
+            @PathVariable Long employeeId
+    ) {
+        int remaining = timeoffService.getRemainingTimeoffByEmployeeId(employeeId);
+        return ResponseEntity.ok(remaining);
     }
 }

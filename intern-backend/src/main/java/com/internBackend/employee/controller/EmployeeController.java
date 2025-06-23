@@ -10,30 +10,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(maxAge = 3360)
+@CrossOrigin(origins = "*",maxAge = 3360)
 @RestController
+@RequestMapping("/api/v1/employees")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("/api/v1/employees")
+    @GetMapping
     public ResponseEntity<List<Employee>> fetchAllEmployees(){
         return ResponseEntity.ok(employeeService.fetchAllEmployees());
     }
 
-    @GetMapping("/api/v1/employees/{id}")
-    public ResponseEntity<Employee> fetchById(@PathVariable("id") Long id){
+    @GetMapping("/stats/count")
+    public ResponseEntity<Long> countAllEmployees(){
+        return ResponseEntity.ok(employeeService.countAllEmployees());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> fetchEmployeeById(@PathVariable("id") Long id){
         return ResponseEntity.ok(employeeService.fetchEmployeeById(id));
     }
 
-    @PostMapping("/api/v1/employees")
+    @GetMapping("/position/{id}")
+    public ResponseEntity<String> getPositionByEmployeeId(@PathVariable("id") Long id) {
+        String position = employeeService.getPositionByEmployeeId(id);
+        return ResponseEntity.ok(position);
+    }
+
+    @PostMapping("")
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee){
         employee.setId(null);
         return ResponseEntity.ok(employeeService.createEmployee(employee));
     }
 
-    @PutMapping("/api/v1/employees/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable("id") Long id, @RequestBody Employee employee){
         Employee employeeObj = employeeService.fetchEmployeeById(id);
         if(employeeObj != null){
@@ -46,12 +58,11 @@ public class EmployeeController {
             employeeObj.setPosition(employee.getPosition());
             employeeObj.setAddress(employee.getAddress());
             employeeObj.setPhoneNumber(employee.getPhoneNumber());
-            employeeObj.setRemainingTimeoff(employee.getRemainingTimeoff());
         }
         return ResponseEntity.ok(employeeService.updateEmployee(employeeObj));
     }
 
-    @DeleteMapping("/api/v1/employees/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> deleteEmployee(@PathVariable("id") Long id){
         Employee deleteObj = employeeService.fetchEmployeeById(id);
         Map<String, String> response = new HashMap<>();

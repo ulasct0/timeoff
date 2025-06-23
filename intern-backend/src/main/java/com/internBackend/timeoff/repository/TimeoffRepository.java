@@ -2,19 +2,27 @@ package com.internBackend.timeoff.repository;
 
 import com.internBackend.timeoff.entity.Timeoff;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TimeoffRepository extends JpaRepository<Timeoff, Long> {
 
-    Timeoff[] getAllByEmployeeId(Long employeeId);
+    List<Timeoff> getAllTimeoffsByEmployeeId(Long employeeId);
 
-    void setTimeoffStatus(Long id, String status);
+    @Modifying
+    @Query("UPDATE Timeoff t SET t.status = :status WHERE t.id = :id")
+    void updateStatusById(Long id, String status);
 
-    @Query("SELECT COUNT(*) FROM Timeoff")
-    Integer getAllTimeoffCount();
+    @Query("SELECT COUNT(t) FROM Timeoff t")
+    long countAllTimeoffs();
 
-    @Query("SELECT COUNT(*) FROM Timeoff WHERE status = 'approved' AND employeeId = ?1")
-    Integer getAllApprovedTimeoffCountByEmployeeId(Long employeeId);
+    @Query("SELECT COUNT(t) from Timeoff t where t.status='approved'")
+    long countAllApprovedTimeoffs();
+
+    @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status = 'approved' AND t.employeeId = ?1")
+    long countAllApprovedTimeoffsByEmployeeId(Long employeeId);
 }

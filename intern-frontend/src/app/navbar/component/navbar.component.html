@@ -7,24 +7,32 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
-        <a class="nav-item nav-link"
-           routerLink="/employee-list"
-           routerLinkActive="active"
-           [routerLinkActiveOptions]="{ exact: true }">Employee List</a>
-        <a class="nav-item nav-link"
-           routerLink="/timeoff"
-           routerLinkActive="active"
-           [routerLinkActiveOptions]="{ exact: true }">Timeoff Dashboard</a>
-        <a class="nav-item nav-link"
-           routerLink="/timeoff-list"
-           routerLinkActive="active"
-           [routerLinkActiveOptions]="{ exact: true }">Timeoff List</a>
+      <a [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-item nav-link"
+         routerLink="/employee-list"
+         routerLinkActive="active">Employee List</a>
+      <a [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-item nav-link"
+         routerLink="/timeoff"
+         routerLinkActive="active">Timeoff Dashboard</a>
+      <a [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-item nav-link"
+         routerLink="/timeoff-list"
+         routerLinkActive="active">Timeoff List</a>
     </div>
     <div class="navbar-nav ml-auto">
-      <a class="nav-item nav-link"
+      <a [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-item nav-link"
          routerLink="/profile"
-         routerLinkActive="active"
-         [routerLinkActiveOptions]="{ exact: true }">Profile</a>
+         routerLinkActive="active">Profile
+      </a>
+      <a
+        (click)="logout()"
+        class="nav-item nav-link"
+        style="cursor: pointer;"
+      >
+        Logout
+      </a>
     </div>
   </div>
 </nav>

@@ -12,4 +12,4 @@
  [+] Path yoksa sadece Home sayfasına gitsin Welcome to TimeOff yazsın
  [+] Employee id ile employee position (admin, hr, employee) getirme fonksiyonun olsun getEmployeeType(employeeId)
  [+] Eğer adam admin ya da HR ise toplam kaç çalışan var, toplam kaç izin var
- [] Eğer adam employee ise kalan izin gününü getir, bir de buton ekle izin al diye, izin alma formunu açsın.
+ [+] Eğer adam employee ise kalan izin gününü getir, bir de buton ekle izin al diye, izin alma formunu açsın.

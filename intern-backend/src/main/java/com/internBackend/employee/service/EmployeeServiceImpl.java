@@ -14,8 +14,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
-
     @Override
     @Transactional(readOnly = true)
     public String getPositionByEmployeeId(Long employeeId) {
@@ -51,5 +49,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String deleteEmployee(Employee employee) {
         employeeRepository.delete(employee);
         return "Employee is Deleted Successfully for id: " + employee.getId();
+    }
+
+    public long authenticate(String email, String password) {
+        return employeeRepository.findByEmailAndPassword(email, password)
+                .map(emp -> emp.getId())
+                .orElse(-1L);
     }
 }

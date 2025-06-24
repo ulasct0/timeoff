@@ -8,6 +8,7 @@ public interface EmployeeService {
 
     String getPositionByEmployeeId(Long employeeId);
     long countAllEmployees();
+    long authenticate(String email, String password);
 
     List<Employee> fetchAllEmployees();
     Employee fetchEmployeeById(Long id);

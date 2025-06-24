@@ -4,6 +4,9 @@ import com.internBackend.employee.entity.Employee;
 import com.internBackend.employee.repository.EmployeeRepository;
 import com.internBackend.timeoff.entity.Timeoff;
 import com.internBackend.timeoff.repository.TimeoffRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,8 @@ import java.util.Optional;
 
 @Service
 public class TimeoffServiceImpl implements TimeoffService {
+
+    private static final Logger log = LoggerFactory.getLogger(TimeoffServiceImpl.class);
 
     @Autowired
     private TimeoffRepository timeoffRepository;
@@ -35,11 +40,6 @@ public class TimeoffServiceImpl implements TimeoffService {
     @Transactional(readOnly = true)
     public List<Timeoff> getAllTimeoffsByEmployeeId(Long employeeId) {
         return timeoffRepository.getAllTimeoffsByEmployeeId(employeeId);
-    }
-
-    @Override
-    public void updateStatusById(Long id, String status) {
-        timeoffRepository.updateStatusById(id, status);
     }
 
     @Override
@@ -83,6 +83,7 @@ public class TimeoffServiceImpl implements TimeoffService {
 
     @Override
     public Integer getRemainingTimeoffByEmployeeId(Long employeeId) {
+
         int yearsPassed = 0;
         var employeeOpt = employeeRepository.findById(employeeId);
         if (employeeOpt.isPresent()) {
@@ -90,8 +91,28 @@ public class TimeoffServiceImpl implements TimeoffService {
             Period period = Period.between(employee.getStartDate(), LocalDate.now());
             yearsPassed = period.getYears();
         }
+
         int earnedTimeoffs = yearsPassed * 14;
         var usedTimeoffs = Math.toIntExact(timeoffRepository.countAllApprovedTimeoffsByEmployeeId(employeeId));
+
         return earnedTimeoffs - usedTimeoffs;
+
     }
+
+    @Override
+    @Transactional
+    public Timeoff changeTimeoffStatus(Long id) {
+        Timeoff t = timeoffRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Timeoff not found: " + id));
+
+        if ("rejected".equals(t.getStatus()) || "pending".equals(t.getStatus())) {
+            t.setStatus("approved");
+        } else {
+            t.setStatus("rejected");
+        }
+
+        return t;
+    }
+
+
 }

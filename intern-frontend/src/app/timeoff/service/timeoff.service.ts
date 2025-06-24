@@ -19,10 +19,9 @@ export class TimeoffService {
     return this.http.get<Timeoff[]>(`${this.baseUrl}`);
   }
 
-  fetchTimeoffById(id: number): Observable<Timeoff> {
-    return this.http.get<Timeoff>(`${this.baseUrl}/${id}`);
+  getAllTimeoffsByEmployeeId(employeeId: number): Observable<Timeoff[]> {
+    return this.http.get<Timeoff[]>(`${this.baseUrl}/employee/${employeeId}`);
   }
-
 
   createTimeoff(data: Timeoff): Observable<Timeoff> {
     return this.http.post<Timeoff>(`${this.baseUrl}`, data);
@@ -37,4 +36,9 @@ export class TimeoffService {
   deleteTimeoff(id: number): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.baseUrl}/${id}`);
   }
+
+  changeTimeoffStatus(id: number): Observable<Timeoff> {
+    return this.http.get<Timeoff>(`${this.baseUrl}/changeTimeoffStatus/${id}`);
+  }
+
 }

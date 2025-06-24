@@ -5,7 +5,7 @@
   <!-- Search Box -->
   <div class="input-group my-3">
     <input
-      (ngModelChange)="filterTimeoffs(filterText)"
+      (ngModelChange)="filterTimeoffs($event)"
       [(ngModel)]="filterText"
       class="form-control"
       placeholder="Search Timeoff"
@@ -28,7 +28,7 @@
         <th>Reason</th>
         <th>Edit</th>
         <th>Delete</th>
-        <th>Approve</th>
+        <th *ngIf="loggedInEmployeeType != 'EM'">Approve</th>
       </tr>
       </thead>
       <tbody>
@@ -41,18 +41,19 @@
         <td>{{ timeoff.status }}</td>
         <td>{{ timeoff.reason }}</td>
         <td>
-          <button (click)="openTimeoffDialog(timeoff)" class="btn btn-sm btn-outline-primary">
+          <button (click)="openTimeoffDialog(timeoff)" class="btn btn-sm btn-primary">
             Edit
           </button>
         </td>
         <td>
-          <button (click)="deleteTimeoff(timeoff.id)" class="btn btn-sm btn-outline-danger">
+          <button (click)="deleteTimeoff(timeoff.id)" class="btn btn-sm btn-danger">
             Delete
           </button>
         </td>
-        <td>
-          <button (click)="changeTimeoffStatus(timeoff.id)" class="btn btn-sm btn-outline-danger">
-            Approve
+        <td *ngIf="loggedInEmployeeType != 'EM'">
+          <button (click)="changeTimeoffStatus(timeoff.id)" class="btn btn-sm btn-success">
+            <span *ngIf="timeoff.status === 'pending' || timeoff.status === 'rejected'">Approve</span>
+            <span *ngIf="timeoff.status === 'approved'">Decline</span>
           </button>
         </td>
       </tr>
@@ -82,11 +83,6 @@
         </div>
 
         <div class="modal-body">
-          <div class="mb-3 d-flex align-items-center">
-            <label class="form-label w-25 mb-0 fw-semibold" for="employee-id">Employee Id</label>
-            <input [(ngModel)]="selectedTimeoff.employeeId" autocomplete="off" class="form-control" id="employee-id"
-                   type="text"/>
-          </div>
 
 
           <div class="mb-3 d-flex align-items-center">
@@ -103,16 +99,25 @@
           </div>
 
           <div class="mb-3 d-flex align-items-center">
-            <label class="form-label w-25 mb-0 fw-semibold" for="type-id">Type Id</label>
-            <input [(ngModel)]="selectedTimeoff.typeId" autocomplete="off" class="form-control" id="type-id"
-                   type="text"/>
-          </div>
+            <label
+              class="form-label w-25 mb-0 fw-semibold"
+              for="type-id">
+              Type
+            </label>
 
-
-          <div class="mb-3 d-flex align-items-center">
-            <label class="form-label w-25 mb-0 fw-semibold" for="status">Status</label>
-            <input [(ngModel)]="selectedTimeoff.status" autocomplete="off" class="form-control" id="status"
-                   type="text"/>
+            <select
+              [(ngModel)]="selectedTimeoff.typeId"
+              class="form-control"
+              id="type-id"
+              name="typeId"
+            >
+              <option
+                *ngFor="let type of timeoffTypes"
+                [value]="type.id"
+              >
+                {{ type.label }}
+              </option>
+            </select>
           </div>
 
 

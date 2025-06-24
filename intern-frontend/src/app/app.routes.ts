@@ -4,6 +4,7 @@ import {TimeoffComponent} from './timeoff/component/timeoff.component.';
 import {TimeoffListComponent} from './timeoff-list/component/timeoff-list.component';
 import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
+import {LoginComponent} from './credentials/login/login.component';
 
 export const routes: Routes = [
   {
@@ -27,8 +28,12 @@ export const routes: Routes = [
     component: TimeoffListComponent,
   },
   {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full',
   }
 ];

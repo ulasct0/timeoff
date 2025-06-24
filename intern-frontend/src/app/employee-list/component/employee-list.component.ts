@@ -52,7 +52,6 @@ export class EmployeeListComponent implements OnInit {
   }
 
   filterEmployees(search: string): void {
-    debugger
     const term = search.trim().toLowerCase();
     this.filteredEmployees = this.employees.filter(item =>
       item.name.toLowerCase().includes(term) ||

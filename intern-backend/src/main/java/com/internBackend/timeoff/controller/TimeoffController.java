@@ -32,6 +32,11 @@ public class TimeoffController {
         return ResponseEntity.ok(timeoffService.fetchTimeoffById(id));
     }
 
+    @GetMapping("/employee/{id}")
+    public ResponseEntity<List<Timeoff>> getAllTimeoffsByEmployeeId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(timeoffService.getAllTimeoffsByEmployeeId(id));
+    }
+
     /** 3. Fetch all timeoffs for a given employee */
     @GetMapping("/employee/{employeeId}")
     public ResponseEntity<List<Timeoff>> fetchByEmployee(@PathVariable Long employeeId) {
@@ -81,16 +86,6 @@ public class TimeoffController {
         return ResponseEntity.ok(response);
     }
 
-    /** 7. PATCH: update only the status field */
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<Void> updateStatus(
-            @PathVariable Long id,
-            @RequestParam String status
-    ) {
-        timeoffService.updateStatusById(id, status);
-        return ResponseEntity.noContent().build();
-    }
-
     /** 8. Get total count of all timeoffs */
     @GetMapping("/count")
     public ResponseEntity<Long> getTotalCount() {
@@ -118,5 +113,10 @@ public class TimeoffController {
     ) {
         int remaining = timeoffService.getRemainingTimeoffByEmployeeId(employeeId);
         return ResponseEntity.ok(remaining);
+    }
+
+    @GetMapping("/changeTimeoffStatus/{id}")
+    public Timeoff changeTimeoffStatus(@PathVariable Long id) {
+        return timeoffService.changeTimeoffStatus(id);
     }
 }

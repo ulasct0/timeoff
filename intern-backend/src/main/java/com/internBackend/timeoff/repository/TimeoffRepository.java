@@ -13,10 +13,6 @@ public interface TimeoffRepository extends JpaRepository<Timeoff, Long> {
 
     List<Timeoff> getAllTimeoffsByEmployeeId(Long employeeId);
 
-    @Modifying
-    @Query("UPDATE Timeoff t SET t.status = :status WHERE t.id = :id")
-    void updateStatusById(Long id, String status);
-
     @Query("SELECT COUNT(t) FROM Timeoff t")
     long countAllTimeoffs();
 

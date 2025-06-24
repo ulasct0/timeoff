@@ -3,6 +3,7 @@ import {HomeService} from './service/home.service';
 import {NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {Timeoff} from '../timeoff/model/timeoff.model';
+import {AuthService} from '../credentials/service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
   remainingTimeoff = 0;
   newTimeoff: Timeoff = {
     id: 0,
-    employeeId: 9, // or get from session
+    employeeId: 1, // or get from session
     startDate: new Date(),
     endDate: new Date(),
     typeId: 1, // default or based on your logic
@@ -30,11 +31,18 @@ export class HomeComponent implements OnInit {
     reason: '',
     isEarned: false,
   };
+  employeeId: number = 0;
 
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService,
+              private auth: AuthService) {
+  }
 
   ngOnInit() {
-    this.loadPositionByEmployeeId(9);
+    this.employeeId = this.auth.getEmployeeId() ?? 0;
+    if (this.auth.isLoggedIn() === false) {
+      this.auth.logout();
+    }
+    this.loadPositionByEmployeeId(this.employeeId);
   }
 
   loadPositionByEmployeeId(employeeId: number) {
@@ -44,6 +52,10 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  onSubmitTimeoff(value: any) {
+
+  }
+
   private loadCounts() {
     if (this.positionByEmployeeId === 'AD' || this.positionByEmployeeId === 'HR') {
       // only for admins / HR, fetch counts
@@ -51,17 +63,10 @@ export class HomeComponent implements OnInit {
         .subscribe(count => this.totalEmployees = count);
       this.homeService.getAllTimeoffsCount()
         .subscribe(count => this.totalTimeoffs = count);
-    }
-
-    if (this.positionByEmployeeId === 'EM') {
+    } else if (this.positionByEmployeeId === 'EM') {
       // for regular employees, fetch remaining leave
-      this.homeService.getRemainingTimeoffByEmployeeId(9)
+      this.homeService.getRemainingTimeoffByEmployeeId(this.employeeId)
         .subscribe(data => this.remainingTimeoff = data);
     }
-  }
-
-
-  onSubmitTimeoff(value: any) {
-
   }
 }

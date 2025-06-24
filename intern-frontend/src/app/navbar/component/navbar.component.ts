@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
+import {AuthService} from '../../credentials/service/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,5 +14,10 @@ import {RouterModule} from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  protected readonly sessionStorage = sessionStorage;
+  constructor(public auth: AuthService) {
+  }
+
+  logout() {
+    this.auth.logout();
+  }
 }

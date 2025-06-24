@@ -7,7 +7,7 @@
   <div class="input-group my-3">
     <input
       [(ngModel)]="filterText"
-      (ngModelChange)="filterEmployees(filterText)"
+      (ngModelChange)="filterEmployees($event)"
       type="text"
       class="form-control"
       placeholder="Search Employee"
@@ -29,7 +29,7 @@
         <th>Position</th>
         <th>Address</th>
         <th>Phone Number</th>
-        <th>Remaining Timeoff</th>
+        <th>Start Date</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>

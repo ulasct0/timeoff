@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // on app start, if they already have a session, jump to /home
     if (sessionStorage.getItem('employeeId')) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/dashboard']);
     }
     // also set the initial navbar visibility
     this.updateNavVisibility();

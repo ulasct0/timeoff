@@ -2,6 +2,7 @@ package com.internBackend.timeoff.service;
 
 import com.internBackend.employee.entity.Employee;
 import com.internBackend.employee.repository.EmployeeRepository;
+import com.internBackend.timeoff.entity.Status;
 import com.internBackend.timeoff.entity.Timeoff;
 import com.internBackend.timeoff.repository.TimeoffRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -100,15 +101,20 @@ public class TimeoffServiceImpl implements TimeoffService {
     }
 
     @Override
+    public Long countUsedTimeoffsByEmployeeId(Long employeeId){
+        return timeoffRepository.countUsedTimeoffsByEmployeeId(employeeId);
+    }
+
+    @Override
     @Transactional
     public Timeoff changeTimeoffStatus(Long id) {
         Timeoff t = timeoffRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Timeoff not found: " + id));
 
-        if ("rejected".equals(t.getStatus()) || "pending".equals(t.getStatus())) {
-            t.setStatus("approved");
+        if (t.getStatus().equals(Status.valueOf("Pending")) || t.getStatus().equals(Status.valueOf("Rejected"))) {
+            t.setStatus(Status.valueOf("Approved"));
         } else {
-            t.setStatus("rejected");
+            t.setStatus(Status.valueOf("Rejected"));
         }
 
         return t;

@@ -1,3 +1,79 @@
+.dashboard-container {
+  height: 100%;
+}
+
+header h1 {
+  font-weight: bold;
+  color: var(--bs-primary);
+}
+
+.adminBoxes, .personalBoxes {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.adminBoxes .box {
+  padding: 1rem;
+  width: 50vw;
+  border-radius: 8px;
+  box-shadow: #dddddd 0 1px 1px;
+  background-color: #fff;
+  margin-top: 1rem;
+}
+
+.personalBoxes .box {
+  padding: 1rem;
+  width: 33vw;
+  border-radius: 8px;
+  box-shadow: #dddddd 0 1px 1px;
+  background-color: #fff;
+  margin-top: 1rem;
+}
+
+.adminBoxes .box .text, .personalBoxes .box .text {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.adminBoxes .separator, .personalBoxes .separator {
+  border-top: 1px solid #dddddd;
+  margin: 1rem 0;
+}
+
+.adminBoxes .box .number, .personalBoxes .box .number {
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 0;
+  color: var(--bs-primary);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  gap: 10px;
+}
+
+.buttons .btn {
+  width: 50vw;
+  font-size: 1.1rem;
+  height: 3rem;
+  border-radius: 8px;
+  box-shadow: #dddddd 0 1px 1px;
+  background-color: var(--bs-primary);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.buttons .btn:hover {
+  background-color: #0c6ecc;
+}
+
 h1, h5 {
   color: var(--bs-primary);
   font-weight: bold;
@@ -92,5 +168,6 @@ th {
 .saveButton {
   width: 100px;
 }
+
 
 

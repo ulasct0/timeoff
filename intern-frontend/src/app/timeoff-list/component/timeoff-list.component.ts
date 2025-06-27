@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Timeoff} from '../../timeoff/model/timeoff.model';
-import {TimeoffService} from '../../timeoff/service/timeoff.service';
+import {Timeoff} from '../model/timeoff.model';
+import {TimeoffService} from '../service/timeoff.service';
 import {EmployeeListService} from '../../employee-list/service/employee-list.service';
+import {AuthService} from '../../login/service/auth.service';
 
 @Component({
   selector: 'app-timeoff-list',
@@ -13,7 +14,7 @@ import {EmployeeListService} from '../../employee-list/service/employee-list.ser
     ReactiveFormsModule,
     FormsModule,
     NgClass,
-    NgStyle
+    NgStyle,
   ],
   templateUrl: './timeoff-list.component.html',
   styleUrl: './timeoff-list.component.css'
@@ -29,33 +30,39 @@ export class TimeoffListComponent implements OnInit {
     startDate: new Date(),
     endDate: new Date(),
     typeId: 0,
-    status: '',
+    status: 'Pending',
     reason: '',
-    isEarned: false
   };
   loggedInEmployeeType = "EM";
+  formType: string = "Add";
+  hideAllTimeoffs: boolean = false;
 
   timeoffTypes: { id: number; label: string }[] = [
     {id: 1, label: 'Paid Leave'},
     {id: 2, label: 'Unpaid Leave'},
     {id: 3, label: 'Birthday Leave'},
   ];
+  employeeId: number = 0;
 
-  constructor(private timeoffService: TimeoffService, private employeeService: EmployeeListService) {
+  constructor(
+    private timeoffService: TimeoffService,
+    private employeeService: EmployeeListService,
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit(): void {
-    this.loadTimeoffs();
-  }
+    this.employeeId = this.authService.getEmployeeId() ?? 0;
+    if (this.authService.isLoggedIn() === false) {
+      this.authService.logout();
+    }
 
-  loadTimeoffs(): void {
-
-    this.employeeService.fetchEmployeeById(parseInt(<string>sessionStorage.getItem("employeeId"), 10))
+    this.employeeService.fetchEmployeeById(this.employeeId)
       .subscribe({
         next: (data) => {
           this.loggedInEmployeeType = data.position;
           if (data.position == 'EM') {
-            this.timeoffService.getAllTimeoffsByEmployeeId(parseInt(<string>sessionStorage.getItem("employeeId"), 10)).subscribe(data => {
+            this.timeoffService.getAllTimeoffsByEmployeeId(this.employeeId).subscribe(data => {
               this.timeoffs = data.sort((a, b) => a.id - b.id);
               this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
             });
@@ -68,8 +75,6 @@ export class TimeoffListComponent implements OnInit {
 
         },
       });
-
-
   }
 
   filterTimeoffs(search: string): void {
@@ -88,6 +93,9 @@ export class TimeoffListComponent implements OnInit {
   openTimeoffDialog(timeoff?: Timeoff): void {
     if (timeoff) {
       this.selectedTimeoff = timeoff;
+      this.formType = "Edit";
+    } else {
+      this.formType = "Add";
     }
     this.showDialog = true;
   }
@@ -104,12 +112,20 @@ export class TimeoffListComponent implements OnInit {
 
   closeDialog() {
     this.showDialog = false;
+    this.selectedTimeoff = {
+      id: 0,
+      employeeId: 0,
+      startDate: new Date(),
+      endDate: new Date(),
+      typeId: 0,
+      status: 'Pending',
+      reason: '',
+    };
   }
 
-
   addOrEditTimeoff(timeoff: Timeoff) {
-    timeoff.employeeId = parseInt(<string>sessionStorage.getItem("employeeId"), 10)
-    timeoff.status = "pending";
+    timeoff.employeeId = this.employeeId;
+    timeoff.status = "Pending";
     if (timeoff.id !== 0) {
       this.timeoffService.updateTimeoff(timeoff).subscribe({
         next: (data) => {
@@ -136,11 +152,43 @@ export class TimeoffListComponent implements OnInit {
       .subscribe({
         next: (updatedTimeoff: Timeoff) => {
           console.log('Status changed:', updatedTimeoff);
-          this.loadTimeoffs();
+          this.employeeService.fetchEmployeeById(this.employeeId)
+            .subscribe({
+              next: (data) => {
+                this.loggedInEmployeeType = data.position;
+                if (data.position == 'EM') {
+                  this.timeoffService.getAllTimeoffsByEmployeeId(this.employeeId).subscribe(data => {
+                    this.timeoffs = data.sort((a, b) => a.id - b.id);
+                    this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+                  });
+                } else {
+                  this.timeoffService.fetchAllTimeoffs().subscribe(data => {
+                    this.timeoffs = data.sort((a, b) => a.id - b.id);
+                    this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+                  });
+                }
 
+              },
+            });
         }
 
       })
 
+  }
+
+  showMyTimeoffs() {
+    this.hideAllTimeoffs = !this.hideAllTimeoffs;
+
+    if (this.hideAllTimeoffs) {
+      this.timeoffService.getAllTimeoffsByEmployeeId(this.employeeId).subscribe(data => {
+        this.timeoffs = data.sort((a, b) => a.id - b.id);
+        this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+      });
+    } else {
+      this.timeoffService.fetchAllTimeoffs().subscribe(data => {
+        this.timeoffs = data.sort((a, b) => a.id - b.id);
+        this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+      });
+    }
   }
 }

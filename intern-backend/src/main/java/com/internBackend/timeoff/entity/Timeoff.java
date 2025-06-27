@@ -59,18 +59,13 @@ public class Timeoff {
     /**
      * Current status (e.g. pending, approved, rejected).
      */
+    @Enumerated(EnumType.STRING)
     @Column(length = 100, nullable = false)
-    private String status;
+    private Status status;
 
     /**
      * Optional reason or comment.
      */
     @Column(columnDefinition = "TEXT")
     private String reason;
-
-    /**
-     * Indicates if the time off is earned or not.
-     */
-    @Column(name = "is_earned", nullable = false)
-    private Boolean isEarned;
 }

@@ -36,15 +36,12 @@ export class EmployeeListComponent implements OnInit {
     phoneNumber: '',
     startDate: new Date()
   };
+  formType: string = "Add";
 
   constructor(private employeeListService: EmployeeListService) {
   }
 
   ngOnInit(): void {
-    this.loadEmployees();
-  }
-
-  loadEmployees(): void {
     this.employeeListService.fetchAllEmployees().subscribe(data => {
       this.employees = data;
       this.filteredEmployees = data;
@@ -69,8 +66,27 @@ export class EmployeeListComponent implements OnInit {
   openEmpDialog(employee?: Employee): void {
     if (employee) {
       this.selectedEmployee = employee;
+      this.formType = "Edit";
+    } else {
+      this.formType = "Add";
     }
     this.showDialog = true;
+  }
+
+  closeDialog() {
+    this.showDialog = false;
+    this.selectedEmployee = {
+      id: 0,
+      name: '',
+      email: '',
+      address: '',
+      surname: '',
+      avatar: '',
+      password: '',
+      position: '',
+      phoneNumber: '',
+      startDate: new Date()
+    };
   }
 
   deleteEmployee(id: number): void {
@@ -82,11 +98,6 @@ export class EmployeeListComponent implements OnInit {
       });
     }
   }
-
-  closeDialog() {
-    this.showDialog = false;
-  }
-
 
   addOrEditEmployee(employee: Employee) {
     if (employee.id !== 0) {
@@ -108,5 +119,17 @@ export class EmployeeListComponent implements OnInit {
         error: (error) => console.error('Error creating employee:', error),
       });
     }
+  }
+
+  positionStrecthed(employee: Employee): string {
+    if (employee.position === 'EM') {
+      return 'Employee';
+    } else if (employee.position === 'HR') {
+      return 'Human Resources';
+    } else if (employee.position === 'AD') {
+      return 'Admin';
+    }
+
+    return '';
   }
 }

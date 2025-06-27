@@ -1,0 +1,166 @@
+<div class="dashboard-container  m-4">
+  <header>
+    <h1>Dashboard</h1>
+  </header>
+
+  <div class="personalBoxes">
+    <div class="box">
+      <p class="text">Earned Timeoffs</p>
+      <div class="separator"></div>
+      <p class="number">{{ usedTimeoffs + remainingTimeoffs }}</p>
+    </div>
+    <div class="box">
+      <p class="text">Used Timeoffs</p>
+      <div class="separator"></div>
+      <p class="number">{{ usedTimeoffs }}</p>
+    </div>
+    <div class="box">
+      <p class="text">Remaining Timeoffs</p>
+      <div class="separator"></div>
+      <p class="number">{{ remainingTimeoffs }}</p>
+    </div>
+  </div>
+
+  <ng-container *ngIf="positionByEmployeeId !== 'EM'">
+    <div class="adminBoxes">
+
+      <div class="box">
+        <p class="text">Total Timeoffs</p>
+        <div class="separator"></div>
+        <p class="number">{{ totalTimeoffs }}</p>
+      </div>
+      <div class="box">
+        <p class="text">Total Employees</p>
+        <div class="separator"></div>
+        <p class="number">{{ totalEmployees }}</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="buttons">
+    <button class="btn" data-bs-target="#addTimeoffModal" data-bs-toggle="modal" type="button">
+      <svg fill="#ffffff" height="24px" viewBox="0 -960 960 960" width="24px" xmlns="http://www.w3.org/2000/svg">
+        <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
+      </svg>
+      Add Timeoff
+    </button>
+    <button (click)="goToProfile()" class="btn">
+      <svg fill="#ffffff" height="24px" viewBox="0 -960 960 960" width="24px" xmlns="http://www.w3.org/2000/svg">
+        <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/>
+      </svg>
+      Go to the Profile Page
+    </button>
+  </div>
+
+
+  <!-- Modal -->
+  <div
+    #addTimeoffModal
+    aria-hidden="true"
+    aria-labelledby="addTimeoffModalLabel"
+    class="modal fade"
+    id="addTimeoffModal"
+    style="background: rgba(0, 0, 0, 0.5);"
+    tabindex="-1"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="addTimeoffModalLabel">Add Timeoff</h5>
+          <button
+            aria-label="Close"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            data-bs-target="#addTimeoffModal"
+            data-bs-toggle="modal"
+            type="button"
+          ></button>
+        </div>
+
+        <!-- Modal Form -->
+        <form
+          (ngSubmit)="onSubmit()"
+          [formGroup]="timeoffForm"
+        >
+          <div class="modal-body">
+            <!-- Start Date -->
+            <div class="mb-3">
+              <label class="form-label w-25 mb-0 fw-semibold" for="start">Start Date</label>
+              <input
+                [max]="endDateControl.value"
+                class="form-control"
+                formControlName="startDate"
+                id="start"
+                type="date"
+              />
+            </div>
+
+            <!-- End Date -->
+            <div class="mb-3">
+              <label class="form-label w-25 mb-0 fw-semibold" for="end">End Date</label>
+              <input
+                [min]="startDateControl.value"
+                class="form-control"
+                formControlName="endDate"
+                id="end"
+                type="date"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label
+                class="form-label w-25 mb-0 fw-semibold"
+                for="type-id">
+                Type
+              </label>
+
+              <select
+                class="form-select"
+                formControlName="type"
+                id="type-id"
+                type="text"
+              >
+                <option
+                  *ngFor="let type of timeoffTypes"
+                  [value]="type.id"
+                >
+                  {{ type.label }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Reason -->
+            <div class="mb-3">
+              <label class="form-label w-25 mb-0 fw-semibold" for="reason">Reason</label>
+              <input
+                class="form-control"
+                formControlName="reason"
+                id="reason"
+                type="text"
+              />
+            </div>
+          </div>
+          <ng-container class="error-message">
+            <p *ngIf="errorMessage" class="text-danger ml-3 fw-bold">{{ errorMessage }}</p>
+          </ng-container>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+              type="button"
+            >
+              Close
+            </button>
+            <button class="btn btn-primary saveButton" type="submit">
+              Save
+            </button>
+          </div>
+        </form>
+        <!-- End Form -->
+      </div>
+    </div>
+  </div>
+</div>

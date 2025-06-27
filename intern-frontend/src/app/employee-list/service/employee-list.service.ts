@@ -2,13 +2,13 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Employee} from '../model/employee.model';
-import {Timeoff} from '../../timeoff/model/timeoff.model';
+import {Timeoff} from '../../timeoff-list/model/timeoff.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeListService {
-  private baseUrl: String = 'http://localhost:8085/api/v1/employees';
+  private baseUrl: String = 'api/v1/employees';
 
   constructor(private _httpClient: HttpClient) {
   }

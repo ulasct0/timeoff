@@ -11,14 +11,17 @@ import java.util.List;
 @Repository
 public interface TimeoffRepository extends JpaRepository<Timeoff, Long> {
 
+    @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status != 'Pending' AND t.employeeId = ?1")
+    long countUsedTimeoffsByEmployeeId(Long employeeId);
+
     List<Timeoff> getAllTimeoffsByEmployeeId(Long employeeId);
 
     @Query("SELECT COUNT(t) FROM Timeoff t")
     long countAllTimeoffs();
 
-    @Query("SELECT COUNT(t) from Timeoff t where t.status='approved'")
+    @Query("SELECT COUNT(t) from Timeoff t where t.status='Approved'")
     long countAllApprovedTimeoffs();
 
-    @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status = 'approved' AND t.employeeId = ?1")
+    @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status = 'Approved' AND t.employeeId = ?1")
     long countAllApprovedTimeoffsByEmployeeId(Long employeeId);
 }

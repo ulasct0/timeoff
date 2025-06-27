@@ -1,7 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, DestroyRef, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {AuthService} from '../../credentials/service/auth.service';
+import {AuthService} from '../../login/service/auth.service';
+import {EmployeeListService} from '../../employee-list/service/employee-list.service';
+import {DashboardService} from '../../dashboard/service/dashboard.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-navbar',
@@ -13,11 +16,26 @@ import {AuthService} from '../../credentials/service/auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
-  constructor(public auth: AuthService) {
+export class NavbarComponent implements OnInit {
+  employeeId: number = 0;
+  employeePositionByEmployeeId: string = '';
+
+  constructor(
+    private authService: AuthService,
+    private dashboardService: DashboardService,
+    private destroyRef: DestroyRef
+  ) {
+  }
+
+  ngOnInit() {
+    this.employeeId = this.authService.getEmployeeId() ?? 0;
+
+    this.dashboardService.getPositionByEmployeeId(this.employeeId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(pos => this.employeePositionByEmployeeId = pos);
   }
 
   logout() {
-    this.auth.logout();
+    this.authService.logout();
   }
 }

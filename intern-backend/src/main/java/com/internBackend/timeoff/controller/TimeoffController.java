@@ -32,7 +32,7 @@ public class TimeoffController {
         return ResponseEntity.ok(timeoffService.fetchTimeoffById(id));
     }
 
-    @GetMapping("/employee/{id}")
+    @GetMapping("/employee/allTimeoffs/{id}")
     public ResponseEntity<List<Timeoff>> getAllTimeoffsByEmployeeId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(timeoffService.getAllTimeoffsByEmployeeId(id));
     }
@@ -45,8 +45,16 @@ public class TimeoffController {
         );
     }
 
+    @GetMapping("/employee/used/{employeeId}")
+    public ResponseEntity<Long> countUsedTimeoffsByEmployeeId(@PathVariable Long employeeId) {
+        return ResponseEntity.ok(
+                timeoffService.countUsedTimeoffsByEmployeeId(employeeId)
+        );
+    }
+
     @PostMapping
     public ResponseEntity<Timeoff> createTimeoff(@RequestBody Timeoff timeoff) {
+        timeoff.setId(null);
         return ResponseEntity.ok(timeoffService.createTimeoff(timeoff));
     }
 
@@ -65,7 +73,6 @@ public class TimeoffController {
         existing.setTypeId     (timeoff.getTypeId());
         existing.setStatus     (timeoff.getStatus());
         existing.setReason     (timeoff.getReason());
-        existing.setIsEarned   (timeoff.getIsEarned());
 
         // 3) Save the managed entity, which results in an UPDATE
         Timeoff updated = timeoffService.updateTimeoff(existing);

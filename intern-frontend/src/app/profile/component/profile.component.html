@@ -1,0 +1,96 @@
+<div class="profile-container m-4">
+  <header>
+    <h1>Profile</h1>
+  </header>
+  <div class="profile-information-container">
+    <div class="profile-information-left">
+      <img alt="{{ employeeByEmployeeId?.name }}" src="{{ employeeByEmployeeId?.avatar}}">
+      <button (click)="openPersonalInformation()" class="btn button">Personal Information ></button>
+      <button (click)="openContactInformation()" class="btn button">Contact Information ></button>
+      <button (click)="openBusinessInformation()" class="btn button">Business Information ></button>
+    </div>
+    <div class="profile-information-right">
+      <h2 class="mb-4">{{ infoName }}</h2>
+      <form [formGroup]="profileForm">
+        <ng-container *ngIf="showPersonalInformation">
+          <div class="row mb-5">
+
+            <div class="col-6 mb-3">
+              <label for="name">First Name</label>
+              <input class="form-control" formControlName="nameControl" id="name" readonly
+                     type="text"/>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="surname">Last Name</label>
+              <input class="form-control" formControlName="surnameControl" id="surname"
+                     readonly
+                     type="text"/>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="password">Password</label>
+              <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control"
+                       formControlName="passwordControl" id="password"
+                       readonly/>
+                <button
+                  (click)="togglePassword()"
+                  [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                  class="btn btn-outline-secondary"
+                  type="button">
+                  <i
+                    [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="showContactInformation">
+          <div class="row mb-5">
+            <div class="col-6 mb-3">
+              <label for="email">Email</label>
+              <input class="form-control" formControlName="emailControl" id="email"
+                     readonly
+                     type="text"/>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="phoneNumber">Phone Number</label>
+              <input class="form-control" formControlName="phoneNumberControl"
+                     id="phoneNumber" readonly
+                     type="text"/>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="address">Address</label>
+              <input class="form-control" formControlName="addressControl" id="address"
+                     readonly
+                     type="text"/>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="showBusinessInformation">
+          <div class="row mb-5">
+            <div class="col-6 mb-3">
+              <label for="employeeId">Employee ID</label>
+              <input class="form-control" formControlName="employeeIdControl"
+                     id="employeeId" readonly
+                     type="text"/>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="position">Position</label>
+              <input class="form-control" formControlName="positionControl"
+                     id="position" readonly
+                     type="text"/>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="startDate">Start Date</label>
+              <input class="form-control" formControlName="startDateControl"
+                     id="startDate" readonly
+                     type="text"/>
+            </div>
+          </div>
+        </ng-container>
+      </form>
+      <p class="error-message">{{ errorMessage }}</p>
+    </div>
+  </div>
+</div>

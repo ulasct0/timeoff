@@ -10,6 +10,8 @@ public interface TimeoffService {
     Long countAllTimeoffs();
     Long countAllApprovedTimeoffs();
     Long countAllApprovedTimeoffsByEmployeeId(Long employeeId);
+    Long countUsedTimeoffsByEmployeeId(Long employeeId);
+
 
     Integer getRemainingTimeoffByEmployeeId(Long employeeId);
 
@@ -18,5 +20,4 @@ public interface TimeoffService {
     Timeoff updateTimeoff(Timeoff timeoff);
     String deleteTimeoff(Timeoff timeoff);
     Timeoff changeTimeoffStatus(Long id);
-
     }

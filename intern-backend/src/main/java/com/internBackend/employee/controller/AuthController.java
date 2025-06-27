@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
-    private final EmployeeService service;
+    private final EmployeeService employeeService;
 
-    public AuthController(EmployeeService service) {
-        this.service = service;
+    public AuthController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<Long> login(@RequestBody LoginRequest req) {
-        Long id = service.authenticate(req.getEmail(), req.getPassword());
+        Long id = employeeService.authenticate(req.email, req.password);
         return ResponseEntity.ok(id);
     }
 

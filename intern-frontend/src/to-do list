@@ -1,0 +1,35 @@
+TO-DO LIST
+
+Tasarım
+[+] Employee liste tasarımı kopyala
+[+] Employee add diyaloğa tasarımı kopyala
+[+] Tüm mavileri primary colora çevir
+[+] Add timeoff diyaloğunu (dashboarddan açılan) onu timeoff listten açılanla aynı yap
+[+] position em değil full ismi Employee gibi
+
+Profile
+[+] Parola gizle, göster tuşu
+[+] Business Info employee id ekle
+[+] Üst satır 2 altta 1 olacak şekilde ayarla
+[+] Approve tuşu edit delete gibi olsun boyutları
+
+YARIN
+
+Landing Page
+[] Logout olduğunda Timeoff, Information ve Login butonlarını içeren bir 3lü navbar. (ister 2 ayrı navbar, ister bir adet ama butonlar login logouta göre)
+[] Timeoff yazısı / diye yeni bir sayfa (main works), Information yazısı /information diye yeni bir sayfa (information works)
+[] Dashboard /dashboard ve navbarda yeni bir buton
+[] Ama nerde olursa olsun Timeoff yazısına basmak /[boş] olan main sayfasına yönlendirir ve sadece timeoff, information ve login butonlu timebar görünür
+[] 3lü navbarda logine basıldığında eğer loginse //dashboard, değilse login açılır
+
+Öneri: Hangi urldeyse ona göre navbar /dashboard /information /login -> 3lü, diğerlerinde 5li navbar, hepsinde timeoff yazısı ortak
+
+
+Tables
+[] Sorting columnlar
+[] Pagination
+
+Logic
+[+] Approve reect bugı çöz
+[+] Sadece Hr ve Adminde add timeoff butonunun yanına show mine (sadece kendininkileri gösterir - employee id ile istek at)
+[+] Eğer izin hr'ın kendisininse approve tuşu olmasın

@@ -16,11 +16,11 @@ Profile
 YARIN
 
 Landing Page
-[] Logout olduğunda Timeoff, Information ve Login butonlarını içeren bir 3lü navbar. (ister 2 ayrı navbar, ister bir adet ama butonlar login logouta göre)
-[] Timeoff yazısı / diye yeni bir sayfa (main works), Information yazısı /information diye yeni bir sayfa (information works)
-[] Dashboard /dashboard ve navbarda yeni bir buton
-[] Ama nerde olursa olsun Timeoff yazısına basmak /[boş] olan main sayfasına yönlendirir ve sadece timeoff, information ve login butonlu timebar görünür
-[] 3lü navbarda logine basıldığında eğer loginse //dashboard, değilse login açılır
+[+] Logout olduğunda Timeoff, Information ve Login butonlarını içeren bir 3lü navbar. (ister 2 ayrı navbar, ister bir adet ama butonlar login logouta göre)
+[+] Timeoff yazısı / diye yeni bir sayfa (main works), Information yazısı /information diye yeni bir sayfa (information works)
+[+] Dashboard /dashboard ve navbarda yeni bir buton
+[+] Ama nerde olursa olsun Timeoff yazısına basmak /[boş] olan main sayfasına yönlendirir ve sadece timeoff, information ve login butonlu timebar görünür
+[+] 3lü navbarda logine basıldığında eğer loginse //dashboard, değilse login açılır
 
 Öneri: Hangi urldeyse ona göre navbar /dashboard /information /login -> 3lü, diğerlerinde 5li navbar, hepsinde timeoff yazısı ortak
 

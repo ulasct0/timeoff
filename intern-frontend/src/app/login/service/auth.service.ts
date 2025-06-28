@@ -20,7 +20,8 @@ export class AuthService {
 
   logout() {
     this.router.navigate(['/login'])
-      .then(r => sessionStorage.removeItem('employeeId'));
+      .then(r => sessionStorage.removeItem('employeeId'))
+      .then(() => window.location.reload());
   }
 
   isLoggedIn(): boolean {
@@ -30,7 +31,8 @@ export class AuthService {
   setLoggedIn(employeeId: number) {
     sessionStorage.setItem('employeeId', employeeId.toString());
     sessionStorage.removeItem('saved-login-form');
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard'])
+      .then(() => window.location.reload());
   }
 
   getEmployeeId(): number | null {

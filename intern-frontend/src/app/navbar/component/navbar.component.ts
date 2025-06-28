@@ -33,8 +33,9 @@ export class NavbarComponent implements OnInit {
     this.employeeId = this.authService.getEmployeeId() ?? 0;
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event: NavigationEnd) => {
-        const atRoot = event.urlAfterRedirects === '/';
+        const atRoot = event.urlAfterRedirects === '/' || event.urlAfterRedirects === '/information';
         const noEmp = this.employeeId === 0;
         this.showThreeNavbar = atRoot || noEmp;
       })

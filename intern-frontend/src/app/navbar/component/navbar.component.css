@@ -10,3 +10,16 @@ nav {
   border-radius: 8px;
   font-weight: bold;
 }
+
+.brand-control {
+  color: var(--bs-primary);
+  font-weight: bold;
+}
+
+.brand-control:hover {
+  color: var(--bs-primary-hover);
+}
+
+.brand-control:focus {
+  color: var(--bs-primary-focus);
+}

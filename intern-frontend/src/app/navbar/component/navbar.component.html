@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="/">Timeoff</a>
+  <a class="navbar-brand brand-control" routerLink="/">RocketHR</a>
   <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
           data-target="#navbarNav"
           data-toggle="collapse" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <ng-container class="collapse navbar-collapse" id="navbarNav" *ngIf="showThreeNavbar === false">
+  <ng-container *ngIf="showThreeNavbar === false" class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
       <a [routerLinkActiveOptions]="{ exact: true }"
          class="nav-item nav-link"
@@ -36,7 +36,7 @@
       </a>
     </div>
   </ng-container>
-  <ng-container class="collapse navbar-collapse" id="navbarNav" *ngIf="showThreeNavbar === true">
+  <ng-container *ngIf="showThreeNavbar === true" class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
       <a [routerLinkActiveOptions]="{ exact: true }"
          class="nav-item nav-link"

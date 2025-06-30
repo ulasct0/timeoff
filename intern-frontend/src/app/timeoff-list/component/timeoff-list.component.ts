@@ -1,15 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
+import {Component, DestroyRef, OnInit} from '@angular/core';
+import {NgClass, NgFor, NgIf, NgStyle} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Timeoff} from '../model/timeoff.model';
 import {TimeoffService} from '../service/timeoff.service';
 import {EmployeeListService} from '../../employee-list/service/employee-list.service';
 import {AuthService} from '../../login/service/auth.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Employee} from '../../employee-list/model/employee.model';
 
 @Component({
   selector: 'app-timeoff-list',
+  standalone: true,
   imports: [
-    NgForOf,
+    NgFor,
     NgIf,
     ReactiveFormsModule,
     FormsModule,
@@ -33,9 +36,23 @@ export class TimeoffListComponent implements OnInit {
     status: 'Pending',
     reason: '',
   };
+  selectedEmployee: Employee = {
+    id: 0,
+    name: '',
+    email: '',
+    address: '',
+    surname: '',
+    avatar: '',
+    password: '',
+    position: '',
+    phoneNumber: '',
+    startDate: new Date()
+  };
   loggedInEmployeeType = "EM";
-  formType: string = "Add";
+  formType: "Edit" | "Add" | "View" = "Add";
   hideAllTimeoffs: boolean = false;
+  alertMessage = '';
+  alertType: 'success' | 'danger' = 'success';
 
   timeoffTypes: { id: number; label: string }[] = [
     {id: 1, label: 'Paid Leave'},
@@ -47,7 +64,8 @@ export class TimeoffListComponent implements OnInit {
   constructor(
     private timeoffService: TimeoffService,
     private employeeService: EmployeeListService,
-    private authService: AuthService
+    private authService: AuthService,
+    private destroyRef: DestroyRef
   ) {
   }
 
@@ -90,13 +108,17 @@ export class TimeoffListComponent implements OnInit {
     );
   }
 
-  openTimeoffDialog(timeoff?: Timeoff): void {
+  openDialog(formType: "Edit" | "Add" | "View", timeoff?: Timeoff, employeeId?: number): void {
     if (timeoff) {
       this.selectedTimeoff = timeoff;
-      this.formType = "Edit";
-    } else {
-      this.formType = "Add";
+    } else if (employeeId) {
+      this.employeeService.fetchEmployeeById(employeeId)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(data => {
+          this.selectedEmployee = data;
+        });
     }
+    this.formType = formType;
     this.showDialog = true;
   }
 
@@ -149,9 +171,15 @@ export class TimeoffListComponent implements OnInit {
 
   changeTimeoffStatus(id: number): void {
     this.timeoffService.changeTimeoffStatus(id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (updatedTimeoff: Timeoff) => {
           console.log('Status changed:', updatedTimeoff);
+          if (updatedTimeoff.status === 'Approved') {
+            this.showAlert('success', `Timeoff #${updatedTimeoff.id} approved!`);
+          } else {
+            this.showAlert('danger', `Timeoff #${updatedTimeoff.id} rejected!`);
+          }
           this.employeeService.fetchEmployeeById(this.employeeId)
             .subscribe({
               next: (data) => {
@@ -171,9 +199,7 @@ export class TimeoffListComponent implements OnInit {
               },
             });
         }
-
-      })
-
+      });
   }
 
   showMyTimeoffs() {
@@ -190,5 +216,15 @@ export class TimeoffListComponent implements OnInit {
         this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
       });
     }
+  }
+
+  goToEmail() {
+
+  }
+
+  private showAlert(type: 'success' | 'danger', msg: string, duration = 7 * 1000) {
+    this.alertType = type;
+    this.alertMessage = msg;
+    setTimeout(() => this.alertMessage = '', duration);
   }
 }

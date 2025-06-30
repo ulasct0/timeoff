@@ -36,7 +36,7 @@ export class EmployeeListComponent implements OnInit {
     phoneNumber: '',
     startDate: new Date()
   };
-  formType: string = "Add";
+  formType: "Edit" | "Add" | "View" = "Add";
 
   constructor(private employeeListService: EmployeeListService) {
   }
@@ -63,12 +63,10 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
-  openEmpDialog(employee?: Employee): void {
+  openEmpDialog(formType: "Edit" | "Add" | "View", employee?: Employee): void {
+    this.formType = formType;
     if (employee) {
       this.selectedEmployee = employee;
-      this.formType = "Edit";
-    } else {
-      this.formType = "Add";
     }
     this.showDialog = true;
   }

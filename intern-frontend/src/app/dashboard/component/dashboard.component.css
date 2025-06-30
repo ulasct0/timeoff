@@ -167,7 +167,13 @@ th {
 
 .saveButton {
   width: 100px;
+  border-radius: 8px;
 }
 
+.closeButton {
+  border-radius: 8px;
+}
 
-
+button {
+  border-radius: 8px;
+}

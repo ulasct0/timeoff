@@ -1,6 +1,8 @@
 
 :root {
   --bs-primary: #0956a1;
+  --bs-primary-hover: #06315d;
+  --bs-primary-focus: #06315d;
 }
 
 html, body {

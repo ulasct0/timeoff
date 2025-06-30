@@ -2,6 +2,10 @@
 
   <h1>Timeoff List</h1>
 
+
+  <div *ngIf="alertMessage" [ngClass]="'alert-' + alertType" class="alert" role="alert">
+    {{ alertMessage }}
+  </div>
   <!-- Search Box -->
   <div class="inputs my-3">
     <input
@@ -11,7 +15,7 @@
       placeholder="Search timeoffs..."
       type="text"
     />
-    <input (click)="openTimeoffDialog()" class="btn btn-primary add-btn" type="button" value="Add Timeoff">
+    <input (click)="openDialog('Add')" class="btn btn-primary add-btn" type="button" value="Add Timeoff">
     <button (click)="showMyTimeoffs()" *ngIf="loggedInEmployeeType != 'EM'" class="btn btn-primary add-btn"
             type="button">{{ hideAllTimeoffs ? 'Show All Timeoffs' : 'Show My Timeoffs' }}
     </button>
@@ -37,7 +41,10 @@
       <tbody>
       <tr *ngFor="let timeoff of filteredTimeoffs">
         <td>{{ timeoff.id }}</td>
-        <td>{{ timeoff.employeeId }}</td>
+        <td>{{ timeoff.employeeId }}
+          <i (click)="openDialog('View', undefined, timeoff.employeeId)" class="bi bi-box-arrow-up-right"
+             type="button"></i>
+        </td>
         <td>{{ timeoff.startDate }}</td>
         <td>{{ timeoff.endDate }}</td>
         <td *ngIf="timeoff.typeId === 1">Paid Leave</td>
@@ -46,7 +53,7 @@
         <td>{{ timeoff.status }}</td>
         <td>{{ timeoff.reason }}</td>
         <td>
-          <button (click)="openTimeoffDialog(timeoff)" class="editButton btn btn-sm">
+          <button (click)="openDialog('Edit',timeoff)" class="editButton btn btn-sm">
             Edit
           </button>
         </td>
@@ -60,7 +67,7 @@
                   *ngIf="this.employeeId != timeoff.employeeId"
                   class="btn btn-sm btn-success approveButton">
             <span *ngIf="timeoff.status === 'Pending' || timeoff.status === 'Rejected'">Approve</span>
-            <span *ngIf="timeoff.status === 'Approved'">Decline</span>
+            <span *ngIf="timeoff.status === 'Approved'">Reject</span>
           </button>
         </td>
       </tr>
@@ -69,6 +76,35 @@
       </tr>
       </tbody>
     </table>
+    <div class="pagination-container">
+      <div class="first-page-arrow">
+        <button href=""><i aria-hidden="true" class="bi bi-skip-start-fill"></i></button>
+      </div>
+      <div class="left-arrow">
+        <button href=""><i aria-hidden="true" class="bi bi-chevron-left"></i></button>
+      </div>
+      <div class="page">
+      </div>
+      <div class="right-arrow">
+        <button>
+          <i aria-hidden="true" class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="last-page-arrow">
+        <button>
+          <i aria-hidden="true" class="bi bi-skip-end-fill"></i>
+        </button>
+      </div>
+
+      <fieldset class="selectPerPage">
+        <select>
+          <option>3</option>
+          <option>5</option>
+          <option>10</option>
+        </select>
+      </fieldset>
+    </div>
   </div>
 
   <!-- Bootstrap Modal -->
@@ -85,11 +121,13 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 class="modal-title">{{ formType }} Timeoff Information</h5>
+          <h5 *ngIf="formType === 'Add' || formType === 'Edit'" class="modal-title">{{ formType }} Timeoff
+            Information</h5>
+          <h5 *ngIf="formType === 'View'" class="modal-title">View Employee Information</h5>
           <button (click)="closeDialog()" class="btn-close" type="button"></button>
         </div>
 
-        <div class="modal-body">
+        <div *ngIf="formType === 'Add' || formType === 'Edit'" class="modal-body">
           <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="start-date">Start Date</label>
             <input [(ngModel)]="selectedTimeoff.startDate" autocomplete="off" class="form-control" id="start-date"
@@ -133,8 +171,77 @@
           </div>
         </div>
 
+        <div *ngIf="formType === 'View'" class="modal-body">
+          <div class="mb-3 d-flex align-items-center">
+            <img alt="{{ selectedEmployee.name}}" src="{{ selectedEmployee.avatar}}">
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Employee ID</label>
+            <input [(ngModel)]="selectedEmployee.id" autocomplete="off" class="form-control" id="employee-id" readonly
+                   type="text"/>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Name</label>
+            <input [(ngModel)]="selectedEmployee.name" autocomplete="off" class="form-control" id="employee-name"
+                   readonly
+                   type="text"/>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Surname</label>
+            <input [(ngModel)]="selectedEmployee.surname" autocomplete="off" class="form-control" id="employee-surname"
+                   readonly
+                   type="text"/>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Email</label>
+            <input [(ngModel)]="selectedEmployee.email" autocomplete="off" class="form-control" id="employee-email"
+                   readonly
+                   type="email"/>
+            <button
+              (click)="goToEmail()"
+              class="btn btn-outline-secondary"
+              type="button">
+              <i aria-hidden="true" class="bi box-arrow-in-right"></i>
+            </button>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Password</label>
+            <input [(ngModel)]="selectedEmployee.password" autocomplete="off" class="form-control"
+                   id="employee-password"
+                   readonly
+                   type="password"/>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Position</label>
+            <input [(ngModel)]="selectedEmployee.position" autocomplete="off" class="form-control"
+                   id="employee-position"
+                   readonly
+                   type="text"/>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Address</label>
+            <input [(ngModel)]="selectedEmployee.address" autocomplete="off" class="form-control" id="employee-address"
+                   readonly
+                   type="text"/>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Phone Number</label>
+            <input [(ngModel)]="selectedEmployee.phoneNumber" autocomplete="off" class="form-control"
+                   id="employee-phoneNumber"
+                   readonly
+                   type="text"/>
+          </div>
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="end-date">Start Date</label>
+            <input [(ngModel)]="selectedEmployee.startDate" autocomplete="off" class="form-control"
+                   id="employee-startDate"
+                   readonly
+                   type="Date"/>
+          </div>
+        </div>
+
         <div class="modal-footer">
-          <button (click)="closeDialog()" class="btn btn-outline-danger" type="button">Cancel</button>
+          <button (click)="closeDialog()" class="btn btn-outline-danger cancelButton" type="button">Cancel</button>
           <button (click)="addOrEditTimeoff(selectedTimeoff)" class="btn btn-primary saveButton" type="button">Save
           </button>
         </div>

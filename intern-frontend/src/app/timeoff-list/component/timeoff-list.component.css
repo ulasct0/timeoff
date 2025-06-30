@@ -28,19 +28,19 @@ h1, h5 {
 
 th {
   font-weight: bold;
-  padding: 1rem !important;
   vertical-align: middle !important;
 }
 
 td {
-  padding: 0.75rem !important;
+  padding: 0.5rem !important;
   vertical-align: middle !important;
 }
 
-.editButton, .deleteButton {
+.editButton, .deleteButton, .approveButton {
   width: 5rem;
   height: 2.5rem;
   font-size: 1rem;
+  border-radius: 8px;
 }
 
 th {
@@ -91,6 +91,22 @@ th {
 
 .saveButton {
   width: 100px;
+  border-radius: 8px;
 }
 
+.cancelButton {
+  border-radius: 8px;
+}
+
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.externalButton {
+  border: none;
+  background-color: transparent;
+}
 

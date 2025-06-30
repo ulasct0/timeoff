@@ -1,35 +1,39 @@
 TO-DO LIST
 
+BUGÜN
+
 Tasarım
-[+] Employee liste tasarımı kopyala
-[+] Employee add diyaloğa tasarımı kopyala
-[+] Tüm mavileri primary colora çevir
-[+] Add timeoff diyaloğunu (dashboarddan açılan) onu timeoff listten açılanla aynı yap
-[+] position em değil full ismi Employee gibi
+[+] Tüm mavi butonları primary colora çevir, border radius 8
+[+] Decline yerine Reject yaz
+[+] Timeoff butonu lacivert
+[+] Timeoff yerine chate sor yeni bir isim önersin
+[+] Header ve row heigh küçült
+[+] Approveda ve delete'da reject uyarı success
 
-Profile
-[+] Parola gizle, göster tuşu
-[+] Business Info employee id ekle
-[+] Üst satır 2 altta 1 olacak şekilde ayarla
-[+] Approve tuşu edit delete gibi olsun boyutları
-
-YARIN
-
-Landing Page
-[+] Logout olduğunda Timeoff, Information ve Login butonlarını içeren bir 3lü navbar. (ister 2 ayrı navbar, ister bir adet ama butonlar login logouta göre)
-[+] Timeoff yazısı / diye yeni bir sayfa (main works), Information yazısı /information diye yeni bir sayfa (information works)
-[+] Dashboard /dashboard ve navbarda yeni bir buton
-[+] Ama nerde olursa olsun Timeoff yazısına basmak /[boş] olan main sayfasına yönlendirir ve sadece timeoff, information ve login butonlu timebar görünür
-[+] 3lü navbarda logine basıldığında eğer loginse //dashboard, değilse login açılır
-
-Öneri: Hangi urldeyse ona göre navbar /dashboard /information /login -> 3lü, diğerlerinde 5li navbar, hepsinde timeoff yazısı ortak
-
-
-Tables
+Yeni Özellikler
+[] Main ekranına gösterdiğim tasarımı uygula
+[+] Details butonu ekle, avatar üstte resim, diğerleri input alanı ama editlenemeyen
+[+] Employee listte sadece avatar, id, name, surname ve type olsun.
+[+] Timeoff ekranında employee id yanına buton koy empoloyee detayını açsın
+[] Details sayfasında mailin yanına buton koy maili mail client'a yolla (mailto:)
 [] Sorting columnlar
 [] Pagination
 
 Logic
-[+] Approve reect bugı çöz
-[+] Sadece Hr ve Adminde add timeoff butonunun yanına show mine (sadece kendininkileri gösterir - employee id ile istek at)
-[+] Eğer izin hr'ın kendisininse approve tuşu olmasın
+[] Timeoff ekranına employee diye bir alan koy
+[] Show pending (5)
+[] Show today button (approve olanları ve start-end date içinde bugün olanları)
+[] Bugünle startDate arasında 3 gün veya daha kısa bir zaman varsa approve tuşu gösterme
+[] Employeeye salary (b) ve cinsiyet (p) ekle, priflede da
+
+
+--------------------------------------------------
+
+SONRA
+[] Teams
+[] Total employees
+[] Leave
+[] Spendings
+[] Scale to multiple businesses
+[] Apply jobs
+

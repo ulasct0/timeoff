@@ -5,7 +5,7 @@
           data-toggle="collapse" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <ng-container *ngIf="showThreeNavbar === false" class="collapse navbar-collapse" id="navbarNav">
+  <div *ngIf="showThreeNavbar === false" class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
       <a [routerLinkActiveOptions]="{ exact: true }"
          class="nav-item nav-link"
@@ -35,8 +35,8 @@
         Logout
       </a>
     </div>
-  </ng-container>
-  <ng-container *ngIf="showThreeNavbar === true" class="collapse navbar-collapse" id="navbarNav">
+  </div>
+  <div *ngIf="showThreeNavbar === true" class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
       <a [routerLinkActiveOptions]="{ exact: true }"
          class="nav-item nav-link"
@@ -50,5 +50,5 @@
          routerLinkActive="active">Login
       </a>
     </div>
-  </ng-container>
+  </div>
 </nav>

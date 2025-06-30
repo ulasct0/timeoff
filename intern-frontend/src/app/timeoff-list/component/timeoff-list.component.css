@@ -110,3 +110,17 @@ th {
   background-color: transparent;
 }
 
+.emailBtn {
+  border: none;
+}
+
+.emailBtn:hover, .emailBtn:active, .emailBtn:focus {
+  border-radius: 0px;
+}
+
+.img-dialog {
+  border-radius: 50%;
+  width: 100px;
+  text-align: center;
+}
+

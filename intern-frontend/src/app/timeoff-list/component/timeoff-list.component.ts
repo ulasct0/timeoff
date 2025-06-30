@@ -48,6 +48,19 @@ export class TimeoffListComponent implements OnInit {
     phoneNumber: '',
     startDate: new Date()
   };
+  authorizedEmployee: Employee = {
+    id: 0,
+    name: '',
+    email: '',
+    address: '',
+    surname: '',
+    avatar: '',
+    password: '',
+    position: '',
+    phoneNumber: '',
+    startDate: new Date()
+  };
+
   loggedInEmployeeType = "EM";
   formType: "Edit" | "Add" | "View" = "Add";
   hideAllTimeoffs: boolean = false;
@@ -78,6 +91,7 @@ export class TimeoffListComponent implements OnInit {
     this.employeeService.fetchEmployeeById(this.employeeId)
       .subscribe({
         next: (data) => {
+          this.authorizedEmployee = data;
           this.loggedInEmployeeType = data.position;
           if (data.position == 'EM') {
             this.timeoffService.getAllTimeoffsByEmployeeId(this.employeeId).subscribe(data => {
@@ -114,8 +128,10 @@ export class TimeoffListComponent implements OnInit {
     } else if (employeeId) {
       this.employeeService.fetchEmployeeById(employeeId)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(data => {
-          this.selectedEmployee = data;
+        .subscribe({
+          next: data => {
+            this.selectedEmployee = data;
+          }
         });
     }
     this.formType = formType;
@@ -125,9 +141,11 @@ export class TimeoffListComponent implements OnInit {
   deleteTimeoff(id: number): void {
     const isConfirmed = window.confirm('Are you sure you want to delete this timeoff?');
     if (isConfirmed) {
-      this.timeoffService.deleteTimeoff(id).subscribe(() => {
-        this.timeoffs = this.timeoffs.filter((item) => item.id !== id);
-        window.location.reload(); // Optionally remove this and update customers locally
+      this.timeoffService.deleteTimeoff(id).subscribe({
+        next: () => {
+          this.timeoffs = this.timeoffs.filter((item) => item.id !== id);
+          window.location.reload(); // Optionally remove this and update customers locally
+        }
       });
     }
   }
@@ -218,8 +236,11 @@ export class TimeoffListComponent implements OnInit {
     }
   }
 
-  goToEmail() {
-
+  goToEmail(sentEmail: string) {
+    const email   = sentEmail;
+    const subject = encodeURIComponent(`From ${this.authorizedEmployee.name} ${this.authorizedEmployee.surname}`);
+    const body    = encodeURIComponent('This is where you write...');
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   }
 
   private showAlert(type: 'success' | 'danger', msg: string, duration = 7 * 1000) {

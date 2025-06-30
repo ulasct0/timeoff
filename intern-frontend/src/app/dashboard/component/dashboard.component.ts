@@ -8,6 +8,7 @@ import {NgForOf, NgIf} from '@angular/common';
 import {Timeoff} from '../../timeoff-list/model/timeoff.model';
 import {TimeoffService} from '../../timeoff-list/service/timeoff.service';
 import {Router} from '@angular/router';
+import { timeoffTypes } from '../model/dashboard.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,21 +29,14 @@ export class DashboardComponent implements OnInit {
   positionByEmployeeId?: string;
   totalEmployees = 0;
   totalTimeoffs = 0;
+  timeoffTypes = timeoffTypes;
+  errorMessage!: string;
+  submitted = false;
 
   startDateControl!: FormControl;
   endDateControl!: FormControl;
   reasonControl!: FormControl;
   typeControl!: FormControl;
-
-  errorMessage!: string;
-  submitted = false;
-
-  timeoffTypes: { id: number; label: string }[] = [
-    {id: 1, label: 'Paid Leave'},
-    {id: 2, label: 'Unpaid Leave'},
-    {id: 3, label: 'Birthday Leave'},
-  ];
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +44,8 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService,
     private destroyRef: DestroyRef,
     private timeoffService: TimeoffService,
-    private router: Router,) {
+    private router: Router
+  ) {
   }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import {Employee} from '../model/employee.model';
 import {EmployeeListService} from '../service/employee-list.service';
 import {FormsModule} from '@angular/forms';
 import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
+import {AuthService} from '../../login/service/auth.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 })
 
 export class EmployeeListComponent implements OnInit {
+  employeeId: number = 0;
   employees: Employee[] = [];
   filteredEmployees: Employee[] = [];
   filterText: string = '';
@@ -38,13 +40,23 @@ export class EmployeeListComponent implements OnInit {
   };
   formType: "Edit" | "Add" | "View" = "Add";
 
-  constructor(private employeeListService: EmployeeListService) {
+  constructor(
+    private employeeListService: EmployeeListService,
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit(): void {
-    this.employeeListService.fetchAllEmployees().subscribe(data => {
-      this.employees = data;
-      this.filteredEmployees = data;
+    this.employeeId = this.authService.getEmployeeId() ?? 0;
+    if (this.authService.isLoggedIn() === false) {
+      this.authService.logout();
+    }
+
+    this.employeeListService.fetchAllEmployees().subscribe({
+      next: data => {
+        this.employees = data;
+        this.filteredEmployees = data;
+      }
     });
   }
 
@@ -63,7 +75,7 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
-  openEmpDialog(formType: "Edit" | "Add" | "View", employee?: Employee): void {
+  openDialog(formType: "Edit" | "Add" | "View", employee?: Employee): void {
     this.formType = formType;
     if (employee) {
       this.selectedEmployee = employee;
@@ -90,9 +102,11 @@ export class EmployeeListComponent implements OnInit {
   deleteEmployee(id: number): void {
     const isConfirmed = window.confirm('Are you sure you want to delete this customer?');
     if (isConfirmed) {
-      this.employeeListService.deleteEmployee(id).subscribe(() => {
-        this.employees = this.employees.filter((item) => item.id !== id);
-        window.location.reload(); // Optionally remove this and update customers locally
+      this.employeeListService.deleteEmployee(id).subscribe({
+        next: () => {
+          this.employees = this.employees.filter((item) => item.id !== id);
+          window.location.reload();
+        }
       });
     }
   }
@@ -127,7 +141,6 @@ export class EmployeeListComponent implements OnInit {
     } else if (employee.position === 'AD') {
       return 'Admin';
     }
-
     return '';
   }
 }

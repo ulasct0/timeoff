@@ -20,7 +20,7 @@ export class AuthService {
 
   logout() {
     this.router.navigate(['/login'])
-      .then(r => sessionStorage.removeItem('employeeId'))
+      .then(() => sessionStorage.removeItem('employeeId'))
       .then(() => window.location.reload());
   }
 

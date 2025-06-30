@@ -15,7 +15,7 @@ Yeni Özellikler
 [+] Details butonu ekle, avatar üstte resim, diğerleri input alanı ama editlenemeyen
 [+] Employee listte sadece avatar, id, name, surname ve type olsun.
 [+] Timeoff ekranında employee id yanına buton koy empoloyee detayını açsın
-[] Details sayfasında mailin yanına buton koy maili mail client'a yolla (mailto:)
+[+] Details sayfasında mailin yanına buton koy maili mail client'a yolla (mailto:)
 [] Sorting columnlar
 [] Pagination
 

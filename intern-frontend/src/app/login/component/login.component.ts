@@ -9,6 +9,7 @@ import {NgIf} from '@angular/common';
 import {debounceTime} from 'rxjs';
 import {AuthService} from '../service/auth.service';
 import {Router} from '@angular/router';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +24,10 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+
   emailControl!: FormControl;
   passwordControl!: FormControl;
+
   errorMessage = '';
   submitted = false;
 
@@ -62,15 +65,13 @@ export class LoginComponent implements OnInit {
     }
 
 
-    const subscription = this.loginForm.valueChanges.pipe(debounceTime(500)).subscribe({
+    const subscription = this.loginForm.valueChanges.pipe(debounceTime(500))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
       next: (value) => {
         console.log(value);
         window.sessionStorage.setItem('saved-login-form', JSON.stringify({email: value.email}));
       }
-    })
-
-    this.destroyRef.onDestroy(() => {
-      subscription.unsubscribe();
     })
   }
 
@@ -83,7 +84,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.login(this.emailControl.value, this.passwordControl.value).subscribe({
         next: (data) => {
-          if (data == -1) {
+          if (data === -1) {
             this.errorMessage = "Invalid email or password.";
           } else {
             this.authService.setLoggedIn(data);

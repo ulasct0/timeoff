@@ -12,7 +12,7 @@
       placeholder="Search Employees..."
       type="text"
     />
-    <input (click)="openEmpDialog( 'Add')" class="btn btn-primary add-btn" type="button" value="Add Employee">
+    <input (click)="openDialog( 'Add')" class="btn btn-primary add-btn" type="button" value="Add Employee">
   </div>
 
   <!-- Table -->
@@ -21,7 +21,7 @@
       <thead>
       <tr>
         <th>Avatar</th>
-        <th>Id</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Surname</th>
         <th>Position</th>
@@ -38,12 +38,12 @@
         <td>{{ employee.surname }}</td>
         <td>{{ positionStrecthed(employee) }}</td>
         <td>
-          <button (click)="openEmpDialog('View', employee)" class="detailButton btn btn-sm">
+          <button (click)="openDialog('View', employee)" class="detailButton btn btn-sm">
             Details
           </button>
         </td>
         <td>
-          <button (click)="openEmpDialog('Edit', employee )" class="editButton btn btn-sm">
+          <button (click)="openDialog('Edit', employee )" class="editButton btn btn-sm">
             Edit
           </button>
         </td>

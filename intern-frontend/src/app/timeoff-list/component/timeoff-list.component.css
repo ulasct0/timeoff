@@ -1,3 +1,4 @@
+
 h1, h5 {
   color: var(--bs-primary);
   font-weight: bold;
@@ -122,5 +123,14 @@ th {
   border-radius: 50%;
   width: 100px;
   text-align: center;
+}
+
+.rounded-number {
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  padding: 0.3rem;
+  margin-left: 0.5rem;
+  font-weight: bold
 }
 

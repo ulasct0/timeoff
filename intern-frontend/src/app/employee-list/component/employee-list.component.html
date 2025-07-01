@@ -193,7 +193,7 @@
 
         <div class="modal-footer">
           <button (click)="closeDialog()" class="btn btn-outline-danger" type="button">Cancel</button>
-          <button (click)="addOrEditEmployee(selectedEmployee)" class="btn btn-primary saveButton" type="button">Save
+          <button *ngIf="formType !== 'View'" (click)="addOrEditEmployee(selectedEmployee)" class="btn btn-primary saveButton" type="button">Save
           </button>
         </div>
       </div>

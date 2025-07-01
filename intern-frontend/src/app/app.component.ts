@@ -2,7 +2,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {NavbarComponent} from './navbar/component/navbar.component';
-import {ButtonModule} from 'primeng/button';
+import {PrimeNG} from 'primeng/config';
 
 
 @Component({
@@ -11,13 +11,16 @@ import {ButtonModule} from 'primeng/button';
   imports: [
     RouterModule,                  // brings in routerLink, routerLinkActive & router-outlet
     NavbarComponent,
-    ButtonModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']  // ← plural!
 })
 export class AppComponent implements OnInit {
 
+  constructor(private primeng: PrimeNG) {
+  }
+
   ngOnInit() {
+    this.primeng.ripple.set(true);
   }
 }

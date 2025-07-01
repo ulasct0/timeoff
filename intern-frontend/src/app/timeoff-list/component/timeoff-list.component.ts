@@ -1,5 +1,5 @@
 import {Component, DestroyRef, OnInit} from '@angular/core';
-import {NgClass, NgFor, NgIf, NgStyle} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Timeoff} from '../model/timeoff.model';
 import {TimeoffService} from '../service/timeoff.service';
@@ -7,17 +7,16 @@ import {EmployeeListService} from '../../employee-list/service/employee-list.ser
 import {AuthService} from '../../login/service/auth.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Employee} from '../../employee-list/model/employee.model';
+import {TableModule} from 'primeng/table';
 
 @Component({
   selector: 'app-timeoff-list',
   standalone: true,
   imports: [
-    NgFor,
-    NgIf,
     ReactiveFormsModule,
     FormsModule,
-    NgClass,
-    NgStyle,
+    TableModule,
+    CommonModule
   ],
   templateUrl: './timeoff-list.component.html',
   styleUrl: './timeoff-list.component.css'
@@ -78,7 +77,7 @@ export class TimeoffListComponent implements OnInit {
     private timeoffService: TimeoffService,
     private employeeService: EmployeeListService,
     private authService: AuthService,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
   ) {
   }
 
@@ -237,9 +236,9 @@ export class TimeoffListComponent implements OnInit {
   }
 
   goToEmail(sentEmail: string) {
-    const email   = sentEmail;
+    const email = sentEmail;
     const subject = encodeURIComponent(`From ${this.authorizedEmployee.name} ${this.authorizedEmployee.surname}`);
-    const body    = encodeURIComponent('This is where you write...');
+    const body = encodeURIComponent('This is where you write...');
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
   }
 

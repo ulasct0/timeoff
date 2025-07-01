@@ -1,3 +1,6 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-primeui";
 
 :root {
   --bs-primary: #0956a1;

@@ -97,3 +97,17 @@ img {
   text-align: center;
 }
 
+::ng-deep .p-datatable .p-datatable-thead th {
+  background-color: var(--bs-primary);
+  color: white;
+}
+
+::ng-deep .p-datatable .p-datatable-thead th:hover, ::ng-deep .p-datatable .p-datatable-thead th:focus, ::ng-deep .p-datatable .p-datatable-thead th:active {
+  background-color: var(--bs-primary-focus);
+  color: white;
+}
+
+::ng-deep .p-datatable-thead > tr > th.p-datatable-column-sorted {
+  background-color: var(--bs-primary) !important;
+  color: white !important;
+}

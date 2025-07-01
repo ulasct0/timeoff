@@ -44,11 +44,6 @@ td {
   border-radius: 8px;
 }
 
-th {
-  background-color: var(--bs-primary);
-  color: white;
-}
-
 .inputs {
   display: flex;
   flex-direction: row;
@@ -84,10 +79,10 @@ th {
 .add-btn, .editButton, .saveButton {
   background-color: var(--bs-primary);
   color: white;
+}
 
-  &&:hover {
-    background-color: #0c6ecc;
-  }
+.add-btn:hover, .editButton:hover, .saveButton:hover {
+  background-color: #0c6ecc;
 }
 
 .saveButton {
@@ -134,3 +129,17 @@ th {
   font-weight: bold
 }
 
+::ng-deep .p-datatable .p-datatable-thead th {
+  background-color: var(--bs-primary);
+  color: white;
+}
+
+::ng-deep .p-datatable .p-datatable-thead th:hover, ::ng-deep .p-datatable .p-datatable-thead th:focus, ::ng-deep .p-datatable .p-datatable-thead th:active {
+  background-color: var(--bs-primary-focus);
+  color: white;
+}
+
+::ng-deep datatable.header.cell.selected.background {
+  background-color: var(--bs-primary-focus);
+  color: white;
+}

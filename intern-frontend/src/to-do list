@@ -16,13 +16,15 @@ Yeni Özellikler
 [+] Employee listte sadece avatar, id, name, surname ve type olsun.
 [+] Timeoff ekranında employee id yanına buton koy empoloyee detayını açsın
 [+] Details sayfasında mailin yanına buton koy maili mail client'a yolla (mailto:)
-[] Sorting columnlar
-[] Pagination
+[+] Sorting columnlar
+[+] Pagination
 
 Logic
+
 [] Timeoff ekranına employee diye bir alan koy
 [] Show pending (5)
 [] Show today button (approve olanları ve start-end date içinde bugün olanları)
+[] EMploıyee list yeni buton: bugün izinli olanları göster
 [] Bugünle startDate arasında 3 gün veya daha kısa bir zaman varsa approve tuşu gösterme
 [] Employeeye salary (b) ve cinsiyet (p) ekle, priflede da
 
@@ -30,10 +32,14 @@ Logic
 --------------------------------------------------
 
 SONRA
-[] Teams
-[] Total employees
 [] Leave
 [] Spendings
+[] Total employees
+
+
+[] Teams
+
+
 [] Scale to multiple businesses
 [] Apply jobs
 

@@ -16,24 +16,31 @@
   </div>
 
   <!-- Table -->
-  <div class="table" style="min-width: 50rem;">
-    <table class="table table-striped table-hover">
-      <thead>
+  <div class="card">
+    <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]"
+             [rows]="5" [sortOrder]="+1"
+             [tableStyle]="{ 'min-width': '50rem' }" [value]="filteredEmployees" rowHover
+             sortField="id" stripedRows>
+      <ng-template #header>
       <tr>
         <th>Avatar</th>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Position</th>
+        <th pSortableColumn="id">ID
+          <p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="name">Name
+          <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="surname">Surname
+          <p-sortIcon field="surname"></p-sortIcon></th>
+        <th pSortableColumn="position">Position
+          <p-sortIcon field="position"></p-sortIcon></th>
         <th></th>
         <th></th>
         <th></th>
       </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let employee of filteredEmployees">
-        <td>{{ employee.id }}</td>
+      </ng-template>
+      <ng-template #body let-employee>
+      <tr>
         <td><img alt="{{ employee.name }}" src="{{ employee.avatar }}"></td>
+        <td>{{ employee.id }}</td>
         <td>{{ employee.name }}</td>
         <td>{{ employee.surname }}</td>
         <td>{{ positionStrecthed(employee) }}</td>
@@ -56,8 +63,8 @@
       <tr *ngIf="filteredEmployees.length === 0">
         <td class="text-center" colspan="15">No employees found.</td>
       </tr>
-      </tbody>
-    </table>
+      </ng-template>
+    </p-table>
 
   </div>
 

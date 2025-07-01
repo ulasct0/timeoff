@@ -31,6 +31,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.employeeId = this.authService.getEmployeeId() ?? 0;
+
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -38,7 +39,7 @@ export class NavbarComponent implements OnInit {
         const atRoot = event.urlAfterRedirects === '/' || event.urlAfterRedirects === '/information';
         const noEmp = this.employeeId === 0;
         this.showThreeNavbar = atRoot || noEmp;
-      })
+      });
 
     this.dashboardService.getPositionByEmployeeId(this.employeeId)
       .pipe(takeUntilDestroyed(this.destroyRef))

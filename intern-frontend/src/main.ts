@@ -6,12 +6,18 @@ import {provideZoneChangeDetection} from '@angular/core';
 
 import {AppComponent} from './app/app.component';
 import {routes} from './app/app.routes';
+import {providePrimeNG} from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {preset: Aura, options: {darkModeSelector: 'none'}},
+      ripple: true
+    }),
     provideHttpClient(),
     provideRouter(routes),
-    provideAnimationsAsync(),
     provideZoneChangeDetection({
       eventCoalescing: true
     })

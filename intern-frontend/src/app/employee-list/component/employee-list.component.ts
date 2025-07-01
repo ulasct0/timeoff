@@ -4,6 +4,7 @@ import {EmployeeListService} from '../service/employee-list.service';
 import {FormsModule} from '@angular/forms';
 import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 import {AuthService} from '../../login/service/auth.service';
+import {TableModule} from 'primeng/table';
 
 
 @Component({
@@ -13,10 +14,10 @@ import {AuthService} from '../../login/service/auth.service';
   styleUrl: './employee-list.component.css',
   imports: [
     FormsModule,
-    NgForOf,
     NgIf,
     NgClass,
     NgStyle,
+    TableModule,
   ],
 })
 

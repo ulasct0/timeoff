@@ -26,19 +26,34 @@
 
   <!-- Table -->
   <div class="card">
-    <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]" [rows]="5"
-             [tableStyle]="{ 'min-width': '50rem' }"
-             [value]="filteredTimeoffs"
-             class="table table-hover" stripedRows>
+    <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]"
+             [rows]="5" [sortOrder]="+1"
+             [tableStyle]="{ 'min-width': '50rem' }" [value]="filteredTimeoffs" rowHover
+             sortField="id" stripedRows
+    >
       <ng-template #header>
         <tr>
-          <th>ID</th>
-          <th>Employee ID</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Timeoff Type</th>
-          <th>Status</th>
-          <th>Reason</th>
+          <th pSortableColumn="id">ID
+            <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="employeeId">Employee ID
+            <p-sortIcon field="employeeId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="startDate">Start Date
+            <p-sortIcon field="startDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="endDate">End Date
+            <p-sortIcon field="endDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="typeId">Timeoff Type
+            <p-sortIcon field="typeId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">Status
+            <p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th pSortableColumn="reason">Reason
+            <p-sortIcon field="reason"></p-sortIcon>
+          </th>
           <th></th>
           <th></th>
           <th *ngIf="loggedInEmployeeType != 'EM'"></th>

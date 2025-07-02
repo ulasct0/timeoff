@@ -26,21 +26,24 @@
                      readonly
                      type="text"/>
             </div>
+
+            <div class="col-6 mb-3">
+              <label for="gender">Gender</label>
+              <input class="form-control" formControlName="genderControl" id="gender"
+                     readonly
+                     type="text"/>
+            </div>
+
             <div class="col-6 mb-3">
               <label for="password">Password</label>
               <div class="input-group">
                 <input [type]="showPassword ? 'text' : 'password'" class="form-control"
                        formControlName="passwordControl" id="password"
                        readonly/>
-                <button
-                  (click)="togglePassword()"
-                  [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-                  class="btn btn-outline-secondary"
-                  type="button">
-                  <i
-                    [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
-                  ></i>
-                </button>
+                <i (click)="togglePassword()" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                   [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" class="password-icon"
+                   type="button"
+                ></i>
               </div>
             </div>
           </div>
@@ -81,6 +84,14 @@
                      id="position" readonly
                      type="text"/>
             </div>
+
+            <div class="col-6 mb-3">
+              <label for="salary">Salary</label>
+              <input class="form-control" formControlName="salaryControl"
+                     id="salary" readonly
+                     type="text"/>
+            </div>
+
             <div class="col-6 mb-3">
               <label for="startDate">Start Date</label>
               <input class="form-control" formControlName="startDateControl"

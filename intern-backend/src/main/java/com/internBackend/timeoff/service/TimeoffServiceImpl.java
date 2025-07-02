@@ -120,5 +120,18 @@ public class TimeoffServiceImpl implements TimeoffService {
         return t;
     }
 
+    @Override
+    public List<Timeoff> getPendingTimeoffs() {
+        return timeoffRepository.findAllTimeoffsByStatus(Status.valueOf("Pending"));
+    }
 
+    @Override
+    public List<Timeoff> getOnlyEmployeeTimeoffs() {
+        return this.timeoffRepository.getOnlyEmployeeTimeoffs();
+    }
+
+    @Override
+    public List<Timeoff> getTodayAndApprovedTimeoffs() {
+        return this.timeoffRepository.getTodayAndApprovedTimeoffs(LocalDate.now());
+    }
 }

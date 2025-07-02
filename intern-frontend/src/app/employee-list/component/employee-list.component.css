@@ -108,6 +108,10 @@ img {
 }
 
 ::ng-deep .p-datatable-thead > tr > th.p-datatable-column-sorted {
-  background-color: var(--bs-primary) !important;
+  background-color: var(--bs-primary-hover) !important;
   color: white !important;
+}
+
+#gender {
+  padding: 0.1rem;
 }

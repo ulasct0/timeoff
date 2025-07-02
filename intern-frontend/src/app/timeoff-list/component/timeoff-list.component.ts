@@ -8,6 +8,7 @@ import {AuthService} from '../../login/service/auth.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Employee} from '../../employee-list/model/employee.model';
 import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
 
 @Component({
   selector: 'app-timeoff-list',
@@ -16,7 +17,8 @@ import {TableModule} from 'primeng/table';
     ReactiveFormsModule,
     FormsModule,
     TableModule,
-    CommonModule
+    CommonModule,
+    DropdownModule
   ],
   templateUrl: './timeoff-list.component.html',
   styleUrl: './timeoff-list.component.css'
@@ -38,24 +40,28 @@ export class TimeoffListComponent implements OnInit {
   selectedEmployee: Employee = {
     id: 0,
     name: '',
+    surname: '',
+    gender: 'MALE',
     email: '',
     address: '',
-    surname: '',
     avatar: '',
     password: '',
     position: '',
+    salary: 0,
     phoneNumber: '',
     startDate: new Date()
   };
   authorizedEmployee: Employee = {
     id: 0,
     name: '',
+    surname: '',
+    gender: 'MALE',
     email: '',
     address: '',
-    surname: '',
     avatar: '',
     password: '',
     position: '',
+    salary: 0,
     phoneNumber: '',
     startDate: new Date()
   };
@@ -72,6 +78,7 @@ export class TimeoffListComponent implements OnInit {
     {id: 3, label: 'Birthday Leave'},
   ];
   employeeId: number = 0;
+  protected readonly Date = Date;
 
   constructor(
     private timeoffService: TimeoffService,
@@ -224,13 +231,61 @@ export class TimeoffListComponent implements OnInit {
 
     if (this.hideAllTimeoffs) {
       this.timeoffService.getAllTimeoffsByEmployeeId(this.employeeId).subscribe(data => {
-        this.timeoffs = data.sort((a, b) => a.id - b.id);
-        this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
       });
     } else {
       this.timeoffService.fetchAllTimeoffs().subscribe(data => {
-        this.timeoffs = data.sort((a, b) => a.id - b.id);
-        this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
+      });
+    }
+  }
+
+  showPendingTimeoffs() {
+    this.hideAllTimeoffs = !this.hideAllTimeoffs;
+
+    if (this.hideAllTimeoffs) {
+      this.timeoffService.getPendingTimeoffs().subscribe(data => {
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
+      });
+    } else {
+      this.timeoffService.fetchAllTimeoffs().subscribe(data => {
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
+      });
+    }
+  }
+
+  showEmployeeTimeoffs() {
+    this.hideAllTimeoffs = !this.hideAllTimeoffs;
+
+    if (this.hideAllTimeoffs) {
+      this.timeoffService.getOnlyEmployeeTimeoffs().subscribe(data => {
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
+      });
+    } else {
+      this.timeoffService.fetchAllTimeoffs().subscribe(data => {
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
+      });
+    }
+  }
+
+  showTodayAndApprovedTimeoffs() {
+    this.hideAllTimeoffs = !this.hideAllTimeoffs;
+
+    if (this.hideAllTimeoffs) {
+      this.timeoffService.getTodayAndApprovedTimeoffs().subscribe(data => {
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
+      });
+    } else {
+      this.timeoffService.fetchAllTimeoffs().subscribe(data => {
+        this.timeoffs = data;
+        this.filteredTimeoffs = data;
       });
     }
   }
@@ -240,6 +295,19 @@ export class TimeoffListComponent implements OnInit {
     const subject = encodeURIComponent(`From ${this.authorizedEmployee.name} ${this.authorizedEmployee.surname}`);
     const body = encodeURIComponent('This is where you write...');
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  }
+
+  daysUntil(d: string | Date): number {
+    const start = new Date(d);
+    const today = new Date();
+
+    // zero out the time portion so we’re only comparing dates
+    today.setHours(0, 0, 0, 0);
+    start.setHours(0, 0, 0, 0);
+
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const diffMs = start.getTime() - today.getTime();
+    return Math.floor(diffMs / msPerDay);
   }
 
   private showAlert(type: 'success' | 'danger', msg: string, duration = 7 * 1000) {

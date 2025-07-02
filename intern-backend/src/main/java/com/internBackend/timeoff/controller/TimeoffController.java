@@ -126,4 +126,19 @@ public class TimeoffController {
     public Timeoff changeTimeoffStatus(@PathVariable Long id) {
         return timeoffService.changeTimeoffStatus(id);
     }
+
+    @GetMapping("/pendingTimeoffs")
+    public ResponseEntity<List<Timeoff>> getPendingTimeoffs() {
+        return ResponseEntity.ok(timeoffService.getPendingTimeoffs());
+    }
+
+    @GetMapping("/onlyEmployeeTimeoffs")
+    public ResponseEntity<List<Timeoff>> getOnlyEmployeeTimeoffs() {
+        return ResponseEntity.ok(timeoffService.getOnlyEmployeeTimeoffs());
+    }
+
+    @GetMapping("/todayAndApprovedTimeoffs")
+    public ResponseEntity<List<Timeoff>> getTodayAndApprovedTimeoffs() {
+        return ResponseEntity.ok(timeoffService.getTodayAndApprovedTimeoffs());
+    }
 }

@@ -20,4 +20,8 @@ public interface TimeoffService {
     Timeoff updateTimeoff(Timeoff timeoff);
     String deleteTimeoff(Timeoff timeoff);
     Timeoff changeTimeoffStatus(Long id);
+
+    List<Timeoff> getPendingTimeoffs();
+    List<Timeoff> getOnlyEmployeeTimeoffs();
+    List<Timeoff> getTodayAndApprovedTimeoffs();
     }

@@ -40,4 +40,15 @@ export class TimeoffService {
     return this.http.get<Timeoff>(`${this.timeoffUrl}/changeTimeoffStatus/${id}`);
   }
 
+  getPendingTimeoffs(): Observable<Timeoff[]> {
+    return this.http.get<Timeoff[]>(`${this.timeoffUrl}/pendingTimeoffs`);
+  }
+
+  getOnlyEmployeeTimeoffs(): Observable<Timeoff[]> {
+    return this.http.get<Timeoff[]>(`${this.timeoffUrl}/onlyEmployeeTimeoffs`);
+  }
+
+  getTodayAndApprovedTimeoffs(): Observable<Timeoff[]> {
+    return this.http.get<Timeoff[]>(`${this.timeoffUrl}/todayAndApprovedTimeoffs`);
+  }
 }

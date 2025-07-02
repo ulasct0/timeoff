@@ -13,12 +13,17 @@
       type="text"
     />
     <input (click)="openDialog( 'Add')" class="btn btn-primary add-btn" type="button" value="Add Employee">
+    <button (click)="showEmployeesOnTimeoff()" *ngIf="loggedInEmployeeType != 'EM'"
+            class="btn btn-primary add-btn"
+            type="button">
+      {{ hideAllEmployees ? 'Show All Employees' : 'Show Employees on Timeoff' }}
+    </button>
   </div>
 
   <!-- Table -->
   <div class="card">
-    <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]"
-             [rows]="5" [sortOrder]="+1"
+    <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]" [showCurrentPageReport]="true"
+             [rows]="5" [sortOrder]="+1" currentPageReportTemplate=" {{ filteredEmployees.length }} records found. {first} to {last} of {totalRecords} entries"
              [tableStyle]="{ 'min-width': '50rem' }" [value]="filteredEmployees" rowHover
              sortField="id" stripedRows>
       <ng-template #header>
@@ -98,6 +103,17 @@
                    type="text"/>
           </div>
 
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="gender">Gender</label>
+            <p-dropdown
+              [(ngModel)]="selectedEmployee.gender"
+              [options]="genders"
+              optionLabel="label"
+              placeholder="Select Gender"
+              class="form-control"
+              id="gender"
+            ></p-dropdown>
+          </div>
 
           <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="avatar">Avatar</label>
@@ -122,6 +138,12 @@
           <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="position">Position</label>
             <input [(ngModel)]="selectedEmployee.position" autocomplete="off" class="form-control" id="position"
+                   type="text"/>
+          </div>
+
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="salary">Salary</label>
+            <input [(ngModel)]="selectedEmployee.salary" autocomplete="off" class="form-control" id="salary"
                    type="text"/>
           </div>
 
@@ -160,6 +182,12 @@
           </div>
 
           <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="gender">Gender</label>
+            <input [(ngModel)]="selectedEmployee.gender" readonly autocomplete="off" class="form-control" id="gender"
+                   type="text"/>
+          </div>
+
+          <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="email">Email</label>
             <input [(ngModel)]="selectedEmployee.email" readonly autocomplete="off" class="form-control" id="email"
                    type="email"/>
@@ -176,6 +204,12 @@
           <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="position">Position</label>
             <input [(ngModel)]="selectedEmployee.position" readonly autocomplete="off" class="form-control" id="position"
+                   type="text"/>
+          </div>
+
+          <div class="mb-3 d-flex align-items-center">
+            <label class="form-label w-25 mb-0 fw-semibold" for="salary">Salary</label>
+            <input [(ngModel)]="selectedEmployee.salary" readonly autocomplete="off" class="form-control" id="salary"
                    type="text"/>
           </div>
 

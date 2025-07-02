@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -55,5 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findByEmailAndPassword(email, password)
                 .map(emp -> emp.getId())
                 .orElse(-1L);
+    }
+
+    @Override
+    public List<Employee> getEmployeesOnTimeoff() {
+        return employeeRepository.getEmployeesOnTimeoff(LocalDate.now());
     }
 }

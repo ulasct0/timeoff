@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  width: 70%;
+  width: 100%;
 }
 
 .view-header-1 {
@@ -47,15 +47,16 @@
   margin-bottom: 2rem;
 }
 
-::ng-deep .view-right p-image {
-  clip-path: polygon(
-    20px 0, /* ① start 20px in along top edge */ 100% 0, /* ② top-right corner */ 100% 100%, /* ③ bottom-right corner */ 20px 100%, /* ④ 20px in along bottom edge */ 0 calc(100% - 20px), /* ⑤ cut up 20px from bottom-left corner */ 0 20px /* ⑥ cut over 20px from top-left corner */
-  );
+:host ::ng-deep p-image {
+  border-radius: 8px;
 }
+
 
 .view-container-2 {
   background-color: #EB3656;
   align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .view-container-2 .view-header-2 {
@@ -69,3 +70,42 @@
   color: #e8e8e8;
   width: 50%;
 }
+
+.grid-container-long p, .grid-container-short p {
+  color: #a8a8a8;
+}
+
+.grid-container-long {
+  width: 60%;
+  background-color: #ffddef;
+}
+
+.grid-container-short {
+  width: 40%;
+  background-color: white;
+}
+
+.view-seperator-2 {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.view-seperator-2-top, .view-seperator-2-bottom {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 2rem;
+  gap: 2rem;
+}
+
+.grid-container-long, .grid-container-short {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 1rem;
+}
+
+

@@ -18,17 +18,31 @@
     <button (click)="showMyTimeoffs()" *ngIf="loggedInEmployeeType != 'EM'" class="btn btn-primary add-btn"
             type="button">
       {{ hideAllTimeoffs ? 'Show All Timeoffs' : 'Show My Timeoffs ' }}
-      <span class="rounded-number">
-        {{ filteredTimeoffs.length }}
-      </span>
+    </button>
+    <button (click)="showPendingTimeoffs()" *ngIf="loggedInEmployeeType != 'EM' && hideAllTimeoffs === false"
+            class="btn btn-primary add-btn"
+            type="button">
+      Show Pending Timeoffs
+    </button>
+    <button (click)="showEmployeeTimeoffs()" *ngIf="loggedInEmployeeType != 'EM' && hideAllTimeoffs === false"
+            class="btn btn-primary add-btn"
+            type="button">
+      Show Employee Timeoffs
+    </button>
+    <button (click)="showTodayAndApprovedTimeoffs()" *ngIf="loggedInEmployeeType != 'EM' && hideAllTimeoffs === false"
+            class="btn btn-primary add-btn"
+            type="button">
+      Show Today
     </button>
   </div>
 
   <!-- Table -->
   <div class="card">
     <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]"
-             [rows]="5" [sortOrder]="+1"
-             [tableStyle]="{ 'min-width': '50rem' }" [value]="filteredTimeoffs" rowHover
+             [rows]="5" [showCurrentPageReport]="true" [sortOrder]="+1" [tableStyle]="{ 'min-width': '50rem' }"
+             [value]="filteredTimeoffs"
+             currentPageReportTemplate=" {{ filteredTimeoffs.length }} records found. {first} to {last} of {totalRecords} entries"
+             rowHover
              sortField="id" stripedRows
     >
       <ng-template #header>
@@ -91,7 +105,7 @@
           </td>
           <td *ngIf="loggedInEmployeeType != 'EM'">
             <button (click)="changeTimeoffStatus(timeoff.id)"
-                    *ngIf="this.employeeId != timeoff.employeeId"
+                    *ngIf="this.employeeId != timeoff.employeeId || daysUntil(timeoff.startDate) >= 3"
                     class="btn btn-sm btn-success approveButton">
               <span *ngIf="timeoff.status === 'Pending' || timeoff.status === 'Rejected'">Approve</span>
               <span *ngIf="timeoff.status === 'Approved'">Reject</span>
@@ -146,20 +160,15 @@
               for="type-id">
               Type
             </label>
-
-            <select
+            <p-dropdown
               [(ngModel)]="selectedTimeoff.typeId"
-              class="form-select"
+              [options]="timeoffTypes"
+              class="form-control"
               id="type-id"
-              name="typeId"
+              optionLabel="label"
+              placeholder="Select a Type of Timeoff"
             >
-              <option
-                *ngFor="let type of timeoffTypes"
-                [value]="type.id"
-              >
-                {{ type.label }}
-              </option>
-            </select>
+            </p-dropdown>
           </div>
 
 

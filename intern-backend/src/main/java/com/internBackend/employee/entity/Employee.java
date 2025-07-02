@@ -23,6 +23,9 @@ public class Employee {
     @Column(nullable = false, length = 100)
     private String surname;
 
+    @Enumerated(EnumType.STRING) // Optional but recommended
+    private Gender gender;
+
     @Column
     private String avatar;
 
@@ -34,6 +37,8 @@ public class Employee {
 
     @Column(name = "position", length = 100)
     private String position;
+
+    private Double salary;
 
     @Column
     private String address;

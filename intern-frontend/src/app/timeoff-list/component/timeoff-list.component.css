@@ -47,6 +47,7 @@ td {
 .inputs {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 0.5rem;
   margin-bottom: 1rem;
   height: 2.5rem
@@ -120,15 +121,6 @@ td {
   text-align: center;
 }
 
-.rounded-number {
-  border-radius: 50%;
-  background-color: white;
-  color: black;
-  padding: 0.3rem;
-  margin-left: 0.5rem;
-  font-weight: bold
-}
-
 ::ng-deep .p-datatable .p-datatable-thead th {
   background-color: var(--bs-primary);
   color: white;
@@ -142,4 +134,13 @@ td {
 ::ng-deep datatable.header.cell.selected.background {
   background-color: var(--bs-primary-focus);
   color: white;
+}
+
+#type-id {
+  padding: 0.1rem;
+}
+
+::ng-deep .p-datatable-thead > tr > th.p-datatable-column-sorted {
+  background-color: var(--bs-primary-hover) !important;
+  color: white !important;
 }

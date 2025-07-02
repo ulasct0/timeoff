@@ -75,4 +75,9 @@ public class EmployeeController {
         }
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/onTimeoff")
+    public ResponseEntity<List<Employee>> getEmployeesOnTimeoff() {
+        return ResponseEntity.ok(employeeService.getEmployeesOnTimeoff());
+    }
 }

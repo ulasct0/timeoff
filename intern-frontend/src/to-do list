@@ -1,7 +1,5 @@
 TO-DO LIST
 
-BUGÜN
-
 Tasarım
 [+] Tüm mavi butonları primary colora çevir, border radius 8
 [+] Decline yerine Reject yaz
@@ -11,7 +9,7 @@ Tasarım
 [+] Approveda ve delete'da reject uyarı success
 
 Yeni Özellikler
-[] Main ekranına gösterdiğim tasarımı uygula
+[+] Main ekranına gösterdiğim tasarımı uygula
 [+] Details butonu ekle, avatar üstte resim, diğerleri input alanı ama editlenemeyen
 [+] Employee listte sadece avatar, id, name, surname ve type olsun.
 [+] Timeoff ekranında employee id yanına buton koy empoloyee detayını açsın
@@ -20,14 +18,19 @@ Yeni Özellikler
 [+] Pagination
 
 Logic
+[+] Timeoff ekranına employee diye bir alan koy
+[+] Show pending (5)
+[+] Show today button (approve olanları ve start-end date içinde bugün olanları)
+[+] Employee-list yeni buton: bugün izinli olanları göster
+[+] Bugünle startDate arasında 3 gün veya daha kısa bir zaman varsa approve tuşu gösterme
+[+] Employeeye salary (b) ve cinsiyet (p) ekle, priflede da
 
-[] Timeoff ekranına employee diye bir alan koy
-[] Show pending (5)
-[] Show today button (approve olanları ve start-end date içinde bugün olanları)
-[] EMploıyee list yeni buton: bugün izinli olanları göster
-[] Bugünle startDate arasında 3 gün veya daha kısa bir zaman varsa approve tuşu gösterme
-[] Employeeye salary (b) ve cinsiyet (p) ekle, priflede da
 
+Devam
+[+] Main sayfasına anlamlı bilgiler
+[+] Navbar çöz
+[+] Tabloya 2 kayıt arasından xx gösteriliyor yazısı ekle
+[+] timeoff list id mavi
 
 --------------------------------------------------
 

@@ -32,4 +32,8 @@ export class EmployeeListService {
   fetchEmployeeById(id: number): Observable<Employee> {
     return this._httpClient.get<Employee>(`${this.baseUrl}/${id}`);
   }
+
+  getEmployeesOnTimeoff(): Observable<Employee[]> {
+    return this._httpClient.get<Employee[]>(`${this.baseUrl}/onTimeoff`);
+  }
 }

@@ -53,6 +53,9 @@ export class ProfileComponent implements OnInit {
       surnameControl: new FormControl('', {
         validators: [Validators.required, Validators.maxLength(50)],
       }),
+      genderControl: new FormControl('', {
+        validators: [Validators.required],
+      }),
       emailControl: new FormControl('', {
         validators: [Validators.email, Validators.required, Validators.maxLength(50)],
       }),
@@ -62,14 +65,17 @@ export class ProfileComponent implements OnInit {
       positionControl: new FormControl('', {
         validators: [Validators.required, Validators.maxLength(50)],
       }),
-      startDateControl: new FormControl(new Date(), {
-        validators: [Validators.required],
+      salaryControl: new FormControl('', {
+        validators: [Validators.required, Validators.min(0)],
       }),
       addressControl: new FormControl('', {
         validators: [Validators.required, Validators.maxLength(50)],
       }),
       phoneNumberControl: new FormControl('', {
         validators: [Validators.required, Validators.maxLength(50)],
+      }),
+      startDateControl: new FormControl(new Date(), {
+        validators: [Validators.required],
       }),
     })
 
@@ -82,9 +88,11 @@ export class ProfileComponent implements OnInit {
             employeeIdControl: employee.id,
             nameControl: employee.name,
             surnameControl: employee.surname,
+            genderControl: employee.gender,
             emailControl: employee.email,
             passwordControl: employee.password,
             positionControl: employee.position,
+            salaryControl: employee.salary,
             startDateControl: employee.startDate,
             addressControl: employee.address,
             phoneNumberControl: employee.phoneNumber,

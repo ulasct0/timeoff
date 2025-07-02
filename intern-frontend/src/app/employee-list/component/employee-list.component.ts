@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 import {AuthService} from '../../login/service/auth.service';
 import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
 
 
 @Component({
@@ -18,6 +19,7 @@ import {TableModule} from 'primeng/table';
     NgClass,
     NgStyle,
     TableModule,
+    DropdownModule,
   ],
 })
 
@@ -30,16 +32,38 @@ export class EmployeeListComponent implements OnInit {
   selectedEmployee: Employee = {
     id: 0,
     name: '',
+    surname: '',
+    gender: 'MALE',
     email: '',
     address: '',
-    surname: '',
     avatar: '',
     password: '',
     position: '',
+    salary: 0,
+    phoneNumber: '',
+    startDate: new Date()
+  };
+  authorizedEmployee: Employee = {
+    id: 0,
+    name: '',
+    surname: '',
+    gender: 'MALE',
+    email: '',
+    address: '',
+    avatar: '',
+    password: '',
+    position: '',
+    salary: 0,
     phoneNumber: '',
     startDate: new Date()
   };
   formType: "Edit" | "Add" | "View" = "Add";
+  genders: { id: number, label: string }[] = [
+    {id: 1, label: 'MALE'},
+    {id: 2, label: 'FEMALE'}
+  ];
+  loggedInEmployeeType = "EM";
+  hideAllEmployees: boolean = false;
 
   constructor(
     private employeeListService: EmployeeListService,
@@ -57,8 +81,16 @@ export class EmployeeListComponent implements OnInit {
       next: data => {
         this.employees = data;
         this.filteredEmployees = data;
+        this.employeeListService.fetchEmployeeById(this.employeeId)
+          .subscribe({
+            next: (data) => {
+              this.loggedInEmployeeType = data.position;
+            },
+          });
       }
     });
+
+
   }
 
   filterEmployees(search: string): void {
@@ -66,10 +98,12 @@ export class EmployeeListComponent implements OnInit {
     this.filteredEmployees = this.employees.filter(item =>
       item.name.toLowerCase().includes(term) ||
       item.surname.toLowerCase().includes(term) ||
+      item.gender.toLowerCase().includes(term) ||
       item.avatar.toLowerCase().includes(term) ||
       item.email.toLowerCase().includes(term) ||
       item.password.toLowerCase().includes(term) ||
       item.position.toLowerCase().includes(term) ||
+      item.salary.toString().includes(term) ||
       item.address.toLowerCase().includes(term) ||
       item.phoneNumber.toLowerCase().includes(term) ||
       item.startDate.toString().includes(term)
@@ -89,12 +123,14 @@ export class EmployeeListComponent implements OnInit {
     this.selectedEmployee = {
       id: 0,
       name: '',
+      surname: '',
+      gender: 'MALE',
       email: '',
       address: '',
-      surname: '',
       avatar: '',
       password: '',
       position: '',
+      salary: 0,
       phoneNumber: '',
       startDate: new Date()
     };
@@ -143,5 +179,25 @@ export class EmployeeListComponent implements OnInit {
       return 'Admin';
     }
     return '';
+  }
+
+  showEmployeesOnTimeoff() {
+    this.hideAllEmployees = !this.hideAllEmployees;
+
+    if (this.hideAllEmployees) {
+      this.employeeListService.getEmployeesOnTimeoff().subscribe({
+        next: (data) => {
+          this.employees = data;
+          this.filteredEmployees = data;
+        }
+      });
+    } else {
+      this.employeeListService.fetchAllEmployees().subscribe({
+        next: (data) => {
+          this.employees = data;
+          this.filteredEmployees = data;
+        }
+      });
+    }
   }
 }

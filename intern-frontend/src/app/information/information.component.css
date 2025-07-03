@@ -1,0 +1,202 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.view-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 100%;
+}
+
+.view-header-1 {
+  font-size: 3rem;
+  margin-top: 5rem;
+  margin-left: 4rem;
+  width: 50%;
+}
+
+.view-seperator {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-left: 4rem;
+}
+
+.view-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.view-left p {
+  color: #5d5d5d;
+  padding-right: 5rem;
+}
+
+.view-paragraph {
+  color: #5d5d5d;
+  margin-top: 1rem;
+}
+
+:host ::ng-deep .view-button {
+  padding: 0.5rem 5rem;
+  background-color: var(--bs-primary);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+:host ::ng-deep .view-button:hover,
+:host ::ng-deep .view-button:active,
+:host ::ng-deep .view-button:focus {
+  background-color: var(--bs-primary-hover);
+  border: none;
+  padding: 0.55rem 5.5rem;
+}
+
+.view-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.view-container-2 {
+  background-color: var(--bs-primary);
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.view-container-3 {
+  background-color: #467aad;
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.view-container-4 {
+  background-color: var(--bs-primary);
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.view-container-2 .view-header-2 {
+  color: white;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+  font-size: 3rem;
+}
+
+.view-container-3 .view-header-3 {
+  color: white;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+}
+
+.view-container-4 .view-header-4 {
+  color: white;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+}
+
+.view-container-2 .view-paragraph-2 {
+  color: #e8e8e8;
+  width: 50%;
+}
+
+.view-container-3 .view-paragraph-3 {
+  color: #e8e8e8;
+  width: 50%;
+}
+
+.view-container-4 .view-paragraph-4 {
+  color: #e8e8e8;
+  width: 50%;
+}
+
+.grid-container-long p, .grid-container-short p {
+  color: #a8a8a8;
+}
+
+.grid-container-long {
+  width: 60%;
+  background-color: #ddebff;
+}
+
+.grid-container-short {
+  width: 40%;
+  background-color: white;
+}
+
+.view-seperator-2 {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  gap: 5rem;
+}
+
+.view-seperator-3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+.view-seperator-4 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  gap: 5rem;
+}
+
+.view-seperator-3 h3 {
+  color: #e8e8e8;
+  width: 40%;
+}
+
+.view-seperator-4 p {
+  color: #e8e8e8;
+  width: 80%;
+  font-size: 2rem;
+}
+
+.view-seperator-2-top, .view-seperator-2-bottom {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 2rem;
+  gap: 2rem;
+}
+
+.grid-container-long, .grid-container-short {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 1rem;
+}
+
+:host ::ng-deep p-image img {
+  width: 30rem;
+  border-radius: 8px;
+}
+
+

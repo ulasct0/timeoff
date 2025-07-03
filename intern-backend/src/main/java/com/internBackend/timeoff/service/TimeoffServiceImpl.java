@@ -2,6 +2,7 @@ package com.internBackend.timeoff.service;
 
 import com.internBackend.employee.entity.Employee;
 import com.internBackend.employee.repository.EmployeeRepository;
+import com.internBackend.timeoff.dto.TimeoffDTO;
 import com.internBackend.timeoff.entity.Status;
 import com.internBackend.timeoff.entity.Timeoff;
 import com.internBackend.timeoff.repository.TimeoffRepository;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TimeoffServiceImpl implements TimeoffService {
@@ -30,6 +30,23 @@ public class TimeoffServiceImpl implements TimeoffService {
     public TimeoffServiceImpl(TimeoffRepository timeoffRepository, EmployeeRepository employeeRepository) {
         this.timeoffRepository = timeoffRepository;
         this.employeeRepository = employeeRepository;
+    }
+
+    @Override
+    public TimeoffDTO convertToDTO(Timeoff timeoff) {
+        Employee emp = employeeRepository.findById(timeoff.getEmployeeId())
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        return TimeoffDTO.builder()
+                .id(timeoff.getId())
+                .employeeId(emp.getId())
+                .employeeFullName(emp.getName() + " " + emp.getSurname())
+                .startDate(timeoff.getStartDate())
+                .endDate(timeoff.getEndDate())
+                .typeId(timeoff.getTypeId())
+                .status(timeoff.getStatus())
+                .reason(timeoff.getReason())
+                .build();
     }
 
     @Override
@@ -121,17 +138,48 @@ public class TimeoffServiceImpl implements TimeoffService {
     }
 
     @Override
-    public List<Timeoff> getPendingTimeoffs() {
-        return timeoffRepository.findAllTimeoffsByStatus(Status.valueOf("Pending"));
+    public List<TimeoffDTO> getPendingTimeoffs() {
+        List<Timeoff> timeoffs = timeoffRepository.findAllTimeoffsByStatus(Status.valueOf("Pending"));
+        return timeoffs.stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
     @Override
-    public List<Timeoff> getOnlyEmployeeTimeoffs() {
-        return this.timeoffRepository.getOnlyEmployeeTimeoffs();
+    public Long countPendingTimeoffs() {
+        return timeoffRepository.countPendingTimeoffs();
     }
 
     @Override
-    public List<Timeoff> getTodayAndApprovedTimeoffs() {
-        return this.timeoffRepository.getTodayAndApprovedTimeoffs(LocalDate.now());
+    public List<TimeoffDTO> getTodayAndApprovedTimeoffs() {
+        List<Timeoff> timeoffs = this.timeoffRepository.getTodayAndApprovedTimeoffs(LocalDate.now());
+        return timeoffs.stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
+    @Override
+    public Long countTodayAndApprovedTimeoffs() {
+        return this.timeoffRepository.countTodayAndApprovedTimeoffs(LocalDate.now());
+    }
+
+    @Override
+    public List<TimeoffDTO> fetchAllTimeoffDTOs() {
+        List<Timeoff> timeoffs = timeoffRepository.findAll();
+        return timeoffs.stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
+    @Override
+    public List<TimeoffDTO> fetchAllTimeoffDTOsByEmployeeId(Long employeeId){
+        List<Timeoff> timeoffs = timeoffRepository.getAllTimeoffsByEmployeeId(employeeId);
+        return timeoffs.stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+    @Override
+    public Long countAllTimeoffsByEmployeeId(Long employeeId){
+        return timeoffRepository.countAllTimeoffsByEmployeeId(employeeId);
     }
 }

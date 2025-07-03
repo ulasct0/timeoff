@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
+@tailwind utilities;
+
 @plugin "tailwindcss-primeui";
 
 :root {
-  --bs-primary: #0956a1;
+  --bs-primary: #0a5aa9;
   --bs-primary-hover: #06315d;
   --bs-primary-focus: #06315d;
 }

@@ -1,8 +1,8 @@
 import {Component, DestroyRef, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Timeoff} from '../model/timeoff.model';
-import {TimeoffService} from '../service/timeoff.service';
+import {Spending} from '../model/spending.model';
+import {SpendingService} from '../service/spending.service';
 import {EmployeeListService} from '../../employee-list/service/employee-list.service';
 import {AuthService} from '../../login/service/auth.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -15,7 +15,7 @@ import {Select} from 'primeng/select';
 import {Button} from 'primeng/button';
 
 @Component({
-  selector: 'app-timeoff-list',
+  selector: 'app-spending-list',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -24,27 +24,26 @@ import {Button} from 'primeng/button';
     CommonModule,
     DropdownModule,
     ToastModule,
-    Select,
     Button,
   ],
-  templateUrl: './timeoff-list.component.html',
-  styleUrl: './timeoff-list.component.css'
+  templateUrl: './spending-list.component.html',
+  styleUrl: './spending-list.component.css'
 })
-export class TimeoffListComponent implements OnInit {
-  timeoffs: Timeoff[] = [];
-  filteredTimeoffs: Timeoff[] = [];
+export class SpendingListComponent implements OnInit {
+  spendings: Spending[] = [];
+  filteredSpendings: Spending[] = [];
   filterText: string = '';
   showDialog: boolean = false;
-  countPendingTimeoffs: number = 0;
-  countTodayAndApprovedTimeoffs: number = 0;
-  countAllTimeoffsByEmployeeId: number = 0;
-  countAllTimeoffs: number = 0;
-  selectedTimeoff: Timeoff = {
+  countPendingSpendings: number = 0;
+  countTodayAndApprovedSpendings: number = 0;
+  countAllSpendingsByEmployeeId: number = 0;
+  countAllSpendings: number = 0;
+  selectedSpending: Spending = {
     id: 0,
     employeeId: 0,
     startDate: new Date(),
     endDate: new Date(),
-    typeId: 0,
+    spendingAmount: 0,
     status: 'Pending',
     reason: '',
   };
@@ -79,20 +78,14 @@ export class TimeoffListComponent implements OnInit {
 
   loggedInEmployeeType = "EM";
   formType: "Edit" | "Add" | "View" = "Add";
-  hideAllTimeoffs: boolean = false;
+  hideAllSpendings: boolean = false;
   alertMessage = '';
   alertType: 'success' | 'danger' = 'success';
-
-  timeoffTypes: { id: number; label: string }[] = [
-    {id: 1, label: 'Paid Leave'},
-    {id: 2, label: 'Unpaid Leave'},
-    {id: 3, label: 'Birthday Leave'},
-  ];
   employeeId: number = 0;
   protected readonly Date = Date;
 
   constructor(
-    private timeoffService: TimeoffService,
+    private spendingService: SpendingService,
     private employeeService: EmployeeListService,
     private authService: AuthService,
     private destroyRef: DestroyRef,
@@ -106,14 +99,14 @@ export class TimeoffListComponent implements OnInit {
       this.authService.logout();
     }
 
-    this.timeoffService.countPendingTimeoffs()
-      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countPendingTimeoffs = data);
-    this.timeoffService.countTodayAndApprovedTimeoffs()
-      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countTodayAndApprovedTimeoffs = data);
-    this.timeoffService.countAllTimeoffsByEmployeeId(this.employeeId)
-      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countAllTimeoffsByEmployeeId = data);
-    this.timeoffService.countAllTimeoffs()
-      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countAllTimeoffs = data);
+    this.spendingService.countPendingSpendings()
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countPendingSpendings = data);
+    this.spendingService.countTodayAndApprovedSpendings()
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countTodayAndApprovedSpendings = data);
+    this.spendingService.countAllSpendingsByEmployeeId(this.employeeId)
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countAllSpendingsByEmployeeId = data);
+    this.spendingService.countAllSpendings()
+      .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.countAllSpendings = data);
 
     this.employeeService.fetchEmployeeById(this.employeeId)
       .subscribe({
@@ -121,36 +114,36 @@ export class TimeoffListComponent implements OnInit {
           this.authorizedEmployee = data;
           this.loggedInEmployeeType = data.position;
           if (data.position == 'EM') {
-            this.timeoffService.getAllTimeoffsByEmployeeIdWithFullName(this.employeeId).subscribe(data => {
-              this.timeoffs = data.sort((a, b) => a.id - b.id);
-              this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+            this.spendingService.getAllSpendingsByEmployeeId(this.employeeId).subscribe(data => {
+              this.spendings = data.sort((a, b) => a.id - b.id);
+              this.filteredSpendings = data.sort((a, b) => a.id - b.id);
             });
           } else {
-            this.timeoffService.getAllTimeoffsWithFullName().subscribe(data => {
-              this.timeoffs = data.sort((a, b) => a.id - b.id);
-              this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+            this.spendingService.getAllSpendings().subscribe(data => {
+              this.spendings = data.sort((a, b) => a.id - b.id);
+              this.filteredSpendings = data.sort((a, b) => a.id - b.id);
             });
           }
         },
       });
   }
 
-  filterTimeoffs(search: string): void {
+  filterSpendings(search: string): void {
     const term = search.trim().toLowerCase();
-    this.filteredTimeoffs = this.timeoffs.filter(item =>
+    this.filteredSpendings = this.spendings.filter(item =>
       item.id.toString().includes(term) ||
       item.employeeId.toString().includes(term) ||
       item.startDate.toString().includes(term) ||
       item.endDate.toString().includes(term) ||
-      item.typeId.toString().includes(term) ||
+      item.spendingAmount.toString().includes(term) ||
       item.status.toLowerCase().includes(term) ||
       item.reason.toLowerCase().includes(term)
     );
   }
 
-  openDialog(formType: "Edit" | "Add" | "View", timeoff?: Timeoff, employeeId?: number): void {
-    if (timeoff) {
-      this.selectedTimeoff = timeoff;
+  openDialog(formType: "Edit" | "Add" | "View", spending?: Spending, employeeId?: number): void {
+    if (spending) {
+      this.selectedSpending = spending;
     } else if (employeeId) {
       this.employeeService.fetchEmployeeById(employeeId)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -164,12 +157,12 @@ export class TimeoffListComponent implements OnInit {
     this.showDialog = true;
   }
 
-  deleteTimeoff(id: number): void {
-    const isConfirmed = window.confirm('Are you sure you want to delete this timeoff?');
+  deleteSpending(id: number): void {
+    const isConfirmed = window.confirm('Are you sure you want to delete this spending?');
     if (isConfirmed) {
-      this.timeoffService.deleteTimeoff(id).subscribe({
+      this.spendingService.deleteSpending(id).subscribe({
         next: () => {
-          this.timeoffs = this.timeoffs.filter((item) => item.id !== id);
+          this.spendings = this.spendings.filter((item) => item.id !== id);
           window.location.reload(); // Optionally remove this and update customers locally
         }
       });
@@ -178,76 +171,76 @@ export class TimeoffListComponent implements OnInit {
 
   closeDialog() {
     this.showDialog = false;
-    this.selectedTimeoff = {
+    this.selectedSpending = {
       id: 0,
       employeeId: 0,
       startDate: new Date(),
       endDate: new Date(),
-      typeId: 0,
+      spendingAmount: 0,
       status: 'Pending',
       reason: '',
     };
   }
 
-  addOrEditTimeoff(timeoff: Timeoff) {
-    timeoff.employeeId = this.employeeId;
-    timeoff.status = "Pending";
-    if (timeoff.id !== 0) {
-      this.timeoffService.updateTimeoff(timeoff).subscribe({
+  addOrEditSpending(spending: Spending) {
+    spending.employeeId = this.employeeId;
+    spending.status = "Pending";
+    if (spending.id !== 0) {
+      this.spendingService.updateSpending(spending).subscribe({
         next: (data) => {
-          console.log('Timeoff updated:', data);
+          console.log('Spending updated:', data);
           this.showDialog = false;
           window.location.reload();
         },
-        error: (error) => console.error('Error updating timeoff:', error),
+        error: (error) => console.error('Error updating spending:', error),
       });
     } else {
-      this.timeoffService.createTimeoff(timeoff).subscribe({
+      this.spendingService.createSpending(spending).subscribe({
         next: (data) => {
-          console.log('Timeoff created:', data);
+          console.log('Spending created:', data);
           this.showDialog = false;
           window.location.reload();
         },
-        error: (error) => console.error('Error creating timeoff:', error),
+        error: (error) => console.error('Error creating spending:', error),
       });
     }
   }
 
-  changeTimeoffStatus(id: number): void {
+  changeSpendingStatus(id: number): void {
 
-    this.timeoffService.changeTimeoffStatus(id)
+    this.spendingService.changeSpendingStatus(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (updatedTimeoff: Timeoff) => {
-          console.log('Status changed:', updatedTimeoff);
-          if (updatedTimeoff.status === 'Approved') {
+        next: (updatedSpending: Spending) => {
+          console.log('Status changed:', updatedSpending);
+          if (updatedSpending.status === 'Approved') {
             this.messageService.add({
               severity: 'success',
               summary: 'Success',
-              detail: `Timeoff #${updatedTimeoff.id} approved!`,
+              detail: `Spending #${updatedSpending.id} approved!`,
             });
-            this.showAlert('success', `Timeoff #${updatedTimeoff.id} approved!`);
+            this.showAlert('success', `Spending #${updatedSpending.id} approved!`);
           } else {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: `Timeoff #${updatedTimeoff.id} rejected!`,
+              detail: `Spending #${updatedSpending.id} rejected!`,
             });
-            this.showAlert('danger', `Timeoff #${updatedTimeoff.id} rejected!`);
+            this.showAlert('danger', `Spending #${updatedSpending.id} rejected!`);
           }
           this.employeeService.fetchEmployeeById(this.employeeId)
             .subscribe({
               next: (data) => {
                 this.loggedInEmployeeType = data.position;
                 if (data.position == 'EM') {
-                  this.timeoffService.getAllTimeoffsByEmployeeIdWithFullName(this.employeeId).subscribe(data => {
-                    this.timeoffs = data.sort((a, b) => a.id - b.id);
-                    this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+                  this.spendingService.getAllSpendingsByEmployeeId(this.employeeId).subscribe(data => {
+                    this.spendings = data.sort((a, b) => a.id - b.id);
+                    this.filteredSpendings = data.sort((a, b) => a.id - b.id);
                   });
                 } else {
-                  this.timeoffService.getAllTimeoffsWithFullName().subscribe(data => {
-                    this.timeoffs = data.sort((a, b) => a.id - b.id);
-                    this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+                  this.spendingService.getAllSpendings().subscribe(data => {
+                    this.spendings = data.sort((a, b) => a.id - b.id);
+                    this.filteredSpendings = data.sort((a, b) => a.id - b.id);
                   });
                 }
 
@@ -257,50 +250,50 @@ export class TimeoffListComponent implements OnInit {
       });
   }
 
-  showMyTimeoffs() {
-    this.hideAllTimeoffs = !this.hideAllTimeoffs;
+  showMySpendings() {
+    this.hideAllSpendings = !this.hideAllSpendings;
 
-    if (this.hideAllTimeoffs) {
-      this.timeoffService.getAllTimeoffsByEmployeeIdWithFullName(this.employeeId).subscribe(data => {
-        this.timeoffs = data;
-        this.filteredTimeoffs = data;
+    if (this.hideAllSpendings) {
+      this.spendingService.getAllSpendingsByEmployeeId(this.employeeId).subscribe(data => {
+        this.spendings = data;
+        this.filteredSpendings = data;
       });
     } else {
-      this.timeoffService.getAllTimeoffsWithFullName().subscribe(data => {
-        this.timeoffs = data;
-        this.filteredTimeoffs = data;
+      this.spendingService.getAllSpendings().subscribe(data => {
+        this.spendings = data;
+        this.filteredSpendings = data;
       });
     }
   }
 
-  showPendingTimeoffs() {
-    this.hideAllTimeoffs = !this.hideAllTimeoffs;
+  showPendingSpendings() {
+    this.hideAllSpendings = !this.hideAllSpendings;
 
-    if (this.hideAllTimeoffs) {
-      this.timeoffService.getPendingTimeoffs().subscribe(data => {
-        this.timeoffs = data;
-        this.filteredTimeoffs = data;
+    if (this.hideAllSpendings) {
+      this.spendingService.getPendingSpendings().subscribe(data => {
+        this.spendings = data;
+        this.filteredSpendings = data;
       });
     } else {
-      this.timeoffService.getAllTimeoffsWithFullName().subscribe(data => {
-        this.timeoffs = data;
-        this.filteredTimeoffs = data;
+      this.spendingService.getAllSpendings().subscribe(data => {
+        this.spendings = data;
+        this.filteredSpendings = data;
       });
     }
   }
 
-  showTodayAndApprovedTimeoffs() {
-    this.hideAllTimeoffs = !this.hideAllTimeoffs;
+  showTodayAndApprovedSpendings() {
+    this.hideAllSpendings = !this.hideAllSpendings;
 
-    if (this.hideAllTimeoffs) {
-      this.timeoffService.getTodayAndApprovedTimeoffs().subscribe(data => {
-        this.timeoffs = data;
-        this.filteredTimeoffs = data;
+    if (this.hideAllSpendings) {
+      this.spendingService.getTodayAndApprovedSpendings().subscribe(data => {
+        this.spendings = data;
+        this.filteredSpendings = data;
       });
     } else {
-      this.timeoffService.getAllTimeoffsWithFullName().subscribe(data => {
-        this.timeoffs = data;
-        this.filteredTimeoffs = data;
+      this.spendingService.getAllSpendings().subscribe(data => {
+        this.spendings = data;
+        this.filteredSpendings = data;
       });
     }
   }

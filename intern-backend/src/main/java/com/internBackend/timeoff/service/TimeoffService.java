@@ -1,5 +1,6 @@
 package com.internBackend.timeoff.service;
 
+import com.internBackend.timeoff.dto.TimeoffDTO;
 import com.internBackend.timeoff.entity.Timeoff;
 
 import java.util.List;
@@ -21,7 +22,14 @@ public interface TimeoffService {
     String deleteTimeoff(Timeoff timeoff);
     Timeoff changeTimeoffStatus(Long id);
 
-    List<Timeoff> getPendingTimeoffs();
-    List<Timeoff> getOnlyEmployeeTimeoffs();
-    List<Timeoff> getTodayAndApprovedTimeoffs();
-    }
+    List<TimeoffDTO> getPendingTimeoffs();
+    Long countPendingTimeoffs();
+    List<TimeoffDTO> getTodayAndApprovedTimeoffs();
+    Long countTodayAndApprovedTimeoffs();
+
+    TimeoffDTO convertToDTO(Timeoff timeoff);
+
+    List<TimeoffDTO> fetchAllTimeoffDTOs();
+    List<TimeoffDTO> fetchAllTimeoffDTOsByEmployeeId(Long employeeId);
+    Long countAllTimeoffsByEmployeeId(Long employeeId);
+}

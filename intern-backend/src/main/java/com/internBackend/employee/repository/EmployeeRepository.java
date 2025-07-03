@@ -22,6 +22,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     List<Employee> getEmployeesByPosition(@Param("position") String position);
 
 
-    @Query("SELECT DISTINCT t.employee FROM Timeoff t WHERE :today BETWEEN t.startDate AND t.endDate")
+    @Query("SELECT DISTINCT t.employee FROM Spending t WHERE :today BETWEEN t.startDate AND t.endDate")
     List<Employee> getEmployeesOnTimeoff(@Param("today") LocalDate today);
 }

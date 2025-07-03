@@ -1,27 +1,28 @@
-<div class="timeoff-list-container m-4">
+<div class="spending-list-container m-4">
 
-  <h1>Timeoff List</h1>
+  <h1>Spending List</h1>
   <div class="inputs my-3">
     <input
-      (ngModelChange)="filterTimeoffs($event)"
+      (ngModelChange)="filterSpendings($event)"
       [(ngModel)]="filterText"
       class="searchBar"
-      placeholder="Search timeoffs..."
+      placeholder="Search spendings..."
       type="text"
     />
-    <input (click)="openDialog('Add')" class="btn btn-primary add-btn" type="button" value="Add Timeoff">
-    <p-button (click)="showMyTimeoffs()" *ngIf="loggedInEmployeeType != 'EM'"
-              badge="{{ hideAllTimeoffs === false ? countAllTimeoffsByEmployeeId : countAllTimeoffs }}"
-              styleClass="showMyTimeoffsButton" type="button">
-      {{ hideAllTimeoffs ? 'Show All Timeoffs' : 'Show My Timeoffs ' }}
+    <input (click)="openDialog('Add')" class="btn btn-primary add-btn" type="button" value="Add Spending">
+    <p-button (click)="showMySpendings()" *ngIf="loggedInEmployeeType != 'EM'"
+              badge="{{ hideAllSpendings === false ? countAllSpendingsByEmployeeId : countAllSpendings }}"
+              styleClass="showMySpendingsButton" type="button">
+      {{ hideAllSpendings ? 'Show All Spendings' : 'Show My Spendings ' }}
     </p-button>
-    <p-button (click)="showPendingTimeoffs()" *ngIf="loggedInEmployeeType != 'EM' && hideAllTimeoffs === false"
-              badge="{{ countPendingTimeoffs }}"
+    <p-button (click)="showPendingSpendings()" *ngIf="loggedInEmployeeType != 'EM' && hideAllSpendings === false"
+              badge="{{ countPendingSpendings }}"
               styleClass="showPendingButton" type="button">
-      Show Pending Timeoffs
+      Show Pending Spendings
     </p-button>
-    <p-button (click)="showTodayAndApprovedTimeoffs()" *ngIf="loggedInEmployeeType != 'EM' && hideAllTimeoffs === false"
-              badge="{{ countTodayAndApprovedTimeoffs }}"
+    <p-button (click)="showTodayAndApprovedSpendings()"
+              *ngIf="loggedInEmployeeType != 'EM' && hideAllSpendings === false"
+              badge="{{ countTodayAndApprovedSpendings }}"
               styleClass="showTodayAndApprovedButton" type="button">
       Show Today
     </p-button>
@@ -32,8 +33,8 @@
     <p-toast/>
     <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]"
              [rows]="5" [showCurrentPageReport]="true" [sortOrder]="+1" [tableStyle]="{ 'min-width': '50rem' }"
-             [value]="filteredTimeoffs"
-             currentPageReportTemplate=" {{ filteredTimeoffs.length }} records found. {first} to {last} of {totalRecords} entries"
+             [value]="filteredSpendings"
+             currentPageReportTemplate=" {{ filteredSpendings.length }} records found. {first} to {last} of {totalRecords} entries"
              rowHover
              sortField="id" stripedRows
     >
@@ -45,17 +46,14 @@
           <th pSortableColumn="employeeId">Employee ID
             <p-sortIcon field="employeeId"></p-sortIcon>
           </th>
-          <th pSortableColumn="employeeFullName">Full Name
-            <p-sortIcon field="employeeFullName"></p-sortIcon>
-          </th>
           <th pSortableColumn="startDate">Start Date
             <p-sortIcon field="startDate"></p-sortIcon>
           </th>
           <th pSortableColumn="endDate">End Date
             <p-sortIcon field="endDate"></p-sortIcon>
           </th>
-          <th pSortableColumn="typeId">Timeoff Type
-            <p-sortIcon field="typeId"></p-sortIcon>
+          <th pSortableColumn="spendingAmount">Spending Amount
+            <p-sortIcon field="spendingAmount"></p-sortIcon>
           </th>
           <th pSortableColumn="status">Status
             <p-sortIcon field="status"></p-sortIcon>
@@ -66,50 +64,42 @@
           <th></th>
           <th></th>
           <th *ngIf="loggedInEmployeeType != 'EM'"></th>
-          <th *ngIf="filteredTimeoffs.length === 0"></th>
+          <th *ngIf="filteredSpendings.length === 0"></th>
         </tr>
       </ng-template>
-      <ng-template #body let-timeoff>
+      <ng-template #body let-spending>
         <tr>
-          <td>{{ timeoff.id }}</td>
-          <td>{{ timeoff.employeeId }}
-            <i (click)="openDialog('View', undefined, timeoff.employeeId)" class="bi bi-box-arrow-up-right"
+          <td>{{ spending.id }}</td>
+          <td>{{ spending.employeeId }}
+            <i (click)="openDialog('View', undefined, spending.employeeId)" class="bi bi-box-arrow-up-right"
                type="button"></i>
           </td>
-          <td>{{ timeoff.employeeFullName }}</td>
-          <td>{{ timeoff.startDate }}</td>
-          <td>{{ timeoff.endDate }}</td>
+          <td>{{ spending.startDate }}</td>
+          <td>{{ spending.endDate }}</td>
+          <td>{{ spending.spendingAmount }}</td>
+          <td>{{ spending.status }}</td>
+          <td>{{ spending.reason }}</td>
           <td>
-            {{
-              timeoff.typeId === 1 ? 'Paid Leave' :
-                timeoff.typeId === 2 ? 'Unpaid Leave' :
-                  timeoff.typeId === 3 ? 'Birthday Leave' :
-                    '—'
-            }}
-          </td>
-          <td>{{ timeoff.status }}</td>
-          <td>{{ timeoff.reason }}</td>
-          <td>
-            <button (click)="openDialog('Edit',timeoff)" class="editButton btn btn-sm">
+            <button (click)="openDialog('Edit',spending)" class="editButton btn btn-sm">
               Edit
             </button>
           </td>
           <td>
-            <button (click)="deleteTimeoff(timeoff.id)" class="deleteButton btn btn-sm btn-danger">
+            <button (click)="deleteSpending(spending.id)" class="deleteButton btn btn-sm btn-danger">
               Delete
             </button>
           </td>
           <td *ngIf="loggedInEmployeeType != 'EM'">
-            <button (click)="changeTimeoffStatus(timeoff.id)"
-                    *ngIf="this.employeeId != timeoff.employeeId || daysUntil(timeoff.startDate) >= 3"
+            <button (click)="changeSpendingStatus(spending.id)"
+                    *ngIf="this.employeeId != spending.employeeId || daysUntil(spending.startDate) >= 3"
                     class="btn btn-sm btn-success approveButton">
-              <span *ngIf="timeoff.status === 'Pending' || timeoff.status === 'Rejected'">Approve</span>
-              <span *ngIf="timeoff.status === 'Approved'">Reject</span>
+              <span *ngIf="spending.status === 'Pending' || spending.status === 'Rejected'">Approve</span>
+              <span *ngIf="spending.status === 'Approved'">Reject</span>
             </button>
           </td>
         </tr>
-        <tr *ngIf="filteredTimeoffs.length === 0">
-          <td class="text-center" colspan="10">No timeoffs found.</td>
+        <tr *ngIf="filteredSpendings.length === 0">
+          <td class="text-center" colspan="10">No spendings found.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -130,7 +120,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 *ngIf="formType === 'Add' || formType === 'Edit'" class="modal-title">{{ formType }} Timeoff
+          <h5 *ngIf="formType === 'Add' || formType === 'Edit'" class="modal-title">{{ formType }} Spending
             Information</h5>
           <h5 *ngIf="formType === 'View'" class="modal-title">View Employee Information</h5>
           <button (click)="closeDialog()" class="btn-close" type="button"></button>
@@ -139,38 +129,32 @@
         <div *ngIf="formType === 'Add' || formType === 'Edit'" class="modal-body">
           <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="start-date">Start Date</label>
-            <input [(ngModel)]="selectedTimeoff.startDate" autocomplete="off" class="form-control" id="start-date"
+            <input [(ngModel)]="selectedSpending.startDate" autocomplete="off" class="form-control" id="start-date"
                    type="Date"/>
           </div>
 
 
           <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="end-date">End Date</label>
-            <input [(ngModel)]="selectedTimeoff.endDate" autocomplete="off" class="form-control" id="end-date"
+            <input [(ngModel)]="selectedSpending.endDate" autocomplete="off" class="form-control" id="end-date"
                    type="Date"/>
           </div>
 
           <div class="mb-3 d-flex align-items-center">
             <label
               class="form-label w-25 mb-0 fw-semibold"
-              for="type-id">
-              Type
+              for="spending-amount">
+              Spending Amount
             </label>
-            <p-select
-              [(ngModel)]="selectedTimeoff.typeId"
-              [options]="timeoffTypes"
-              class="form-control"
-              id="type-id"
-              optionLabel="label"
-              placeholder="Select a Type of Timeoff"
-            >
-            </p-select>
+            <input [(ngModel)]="selectedSpending.spendingAmount" autocomplete="off" class="form-control"
+                   id="spending-amount"
+                   type="text"/>
           </div>
 
 
           <div class="mb-3 d-flex align-items-center">
             <label class="form-label w-25 mb-0 fw-semibold" for="reason">Reason</label>
-            <input [(ngModel)]="selectedTimeoff.reason" autocomplete="off" class="form-control" id="reason"
+            <input [(ngModel)]="selectedSpending.reason" autocomplete="off" class="form-control" id="reason"
                    type="text"/>
           </div>
         </div>
@@ -250,7 +234,7 @@
           <button (click)="closeDialog()" class="btn btn-outline-danger cancelButton"
                   type="button">{{ formType === 'View' ? 'Close' : 'Cancel' }}
           </button>
-          <button (click)="addOrEditTimeoff(selectedTimeoff)" *ngIf="formType !== 'View'"
+          <button (click)="addOrEditSpending(selectedSpending)" *ngIf="formType !== 'View'"
                   class="btn btn-primary saveButton" type="button">Save
           </button>
         </div>

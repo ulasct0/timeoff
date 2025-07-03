@@ -6,6 +6,7 @@ import {LoginComponent} from './login/component/login.component';
 import {DashboardComponent} from './dashboard/component/dashboard.component';
 import {MainComponent} from './main/main.component';
 import {InformationComponent} from './information/information.component';
+import {SpendingListComponent} from './spending-list/component/spending-list.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,10 @@ export const routes: Routes = [
   {
     path: 'timeoff-list',
     component: TimeoffListComponent,
+  },
+  {
+    path: 'spending-list',
+    component: SpendingListComponent,
   },
   {
     path: 'login',

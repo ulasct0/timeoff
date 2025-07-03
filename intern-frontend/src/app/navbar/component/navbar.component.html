@@ -21,6 +21,10 @@
          class="nav-item nav-link"
          routerLink="/timeoff-list"
          routerLinkActive="active">Timeoff List</a>
+      <a [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-item nav-link"
+         routerLink="/spending-list"
+         routerLinkActive="active">Spending List</a>
     </div>
     <div class="navbar-nav ml-auto">
       <a [routerLinkActiveOptions]="{ exact: true }"

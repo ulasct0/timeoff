@@ -1,22 +1,23 @@
-package com.internBackend.timeoff.entity;
+package com.internBackend.spending.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.internBackend.employee.entity.Employee;
+import com.internBackend.timeoff.entity.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 
 /**
- * JPA entity mapping for the timeoff.timeoffs table.
+ * JPA entity mapping for the spending.spendings table.
  */
 @Entity
-@Table(name = "timeoffs", schema = "timeoff")
+@Table(name = "spendings", schema = "timeoff")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Timeoff {
+public class Spending {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,8 +53,8 @@ public class Timeoff {
     /**
      * Type identifier (e.g. vacation=1, sick=2).
      */
-    @Column(name = "type_id", nullable = false)
-    private Integer typeId;
+    @Column(name = "spending_amount", nullable = false)
+    private Integer spendingAmount;
 
     /**
      * Current status (e.g. pending, approved, rejected).

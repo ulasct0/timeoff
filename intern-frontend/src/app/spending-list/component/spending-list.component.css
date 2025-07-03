@@ -65,7 +65,7 @@ td {
   background-color: var(--bs-primary-focus) !important;
 }
 
-:host ::ng-deep .p-button.showTodayAndApprovedButton, :host ::ng-deep .p-button.showPendingButton, :host ::ng-deep .p-button.showMyTimeoffsButton {
+:host ::ng-deep .p-button.showTodayAndApprovedButton, :host ::ng-deep .p-button.showPendingButton, :host ::ng-deep .p-button.showMySpendingsButton {
   border-radius: 8px;
   background-color: var(--bs-primary);
   color: white;
@@ -76,7 +76,7 @@ td {
 
 :host ::ng-deep .p-button.showTodayAndApprovedButton:hover,
 :host ::ng-deep .p-button.showPendingButton:hover,
-:host ::ng-deep .p-button.showMyTimeoffsButton:hover {
+:host ::ng-deep .p-button.showMySpendingsButton:hover {
   background-color: var(--bs-primary-focus);
   border: none;
 }

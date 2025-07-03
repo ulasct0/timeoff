@@ -16,6 +16,9 @@ public interface TimeoffRepository extends JpaRepository<Timeoff, Long> {
     @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status != 'Pending' AND t.employeeId = ?1")
     long countUsedTimeoffsByEmployeeId(Long employeeId);
 
+    @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status = 'Pending'")
+    long countPendingTimeoffs();
+
     List<Timeoff> getAllTimeoffsByEmployeeId(Long employeeId);
 
     @Query("SELECT COUNT(t) FROM Timeoff t")
@@ -29,9 +32,12 @@ public interface TimeoffRepository extends JpaRepository<Timeoff, Long> {
 
     List<Timeoff> findAllTimeoffsByStatus(Status status);
 
-    @Query("SELECT t FROM Timeoff t WHERE t.employee.position = 'EM'")
-    List<Timeoff> getOnlyEmployeeTimeoffs();
-
     @Query("SELECT t FROM Timeoff t WHERE t.status = 'Approved' AND t.startDate = :today")
     List<Timeoff> getTodayAndApprovedTimeoffs(@Param("today") LocalDate today);
+
+    @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status = 'Approved' AND t.startDate = :today")
+    long countTodayAndApprovedTimeoffs(@Param("today") LocalDate today);
+
+    @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.employeeId = ?1")
+    long countAllTimeoffsByEmployeeId(Long employeeId);
 }

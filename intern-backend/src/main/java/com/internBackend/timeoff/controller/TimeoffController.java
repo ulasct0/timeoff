@@ -1,5 +1,6 @@
 package com.internBackend.timeoff.controller;
 
+import com.internBackend.timeoff.dto.TimeoffDTO;
 import com.internBackend.timeoff.entity.Timeoff;
 import com.internBackend.timeoff.service.TimeoffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,17 +129,37 @@ public class TimeoffController {
     }
 
     @GetMapping("/pendingTimeoffs")
-    public ResponseEntity<List<Timeoff>> getPendingTimeoffs() {
+    public ResponseEntity<List<TimeoffDTO>> getPendingTimeoffs() {
         return ResponseEntity.ok(timeoffService.getPendingTimeoffs());
     }
 
-    @GetMapping("/onlyEmployeeTimeoffs")
-    public ResponseEntity<List<Timeoff>> getOnlyEmployeeTimeoffs() {
-        return ResponseEntity.ok(timeoffService.getOnlyEmployeeTimeoffs());
+    @GetMapping("/countPendingTimeoffs")
+    public ResponseEntity<Long> countPendingTimeoffs() {
+        return ResponseEntity.ok(timeoffService.countPendingTimeoffs());
     }
 
     @GetMapping("/todayAndApprovedTimeoffs")
-    public ResponseEntity<List<Timeoff>> getTodayAndApprovedTimeoffs() {
+    public ResponseEntity<List<TimeoffDTO>> getTodayAndApprovedTimeoffs() {
         return ResponseEntity.ok(timeoffService.getTodayAndApprovedTimeoffs());
+    }
+
+    @GetMapping("/countTodayAndApprovedTimeoffs")
+    public ResponseEntity<Long> countTodayAndApprovedTimeoffs() {
+        return ResponseEntity.ok(timeoffService.countTodayAndApprovedTimeoffs());
+    }
+
+    @GetMapping("/withFullName")
+    public ResponseEntity<List<TimeoffDTO>> fetchAllTimeoffsWithFullName() {
+        return ResponseEntity.ok(timeoffService.fetchAllTimeoffDTOs());
+    }
+
+    @GetMapping("/withFullName/{employeeId}")
+    public ResponseEntity<List<TimeoffDTO>> fetchAllTimeoffsByEmployeeIdWithFullName(@PathVariable Long employeeId) {
+        return ResponseEntity.ok(timeoffService.fetchAllTimeoffDTOsByEmployeeId(employeeId));
+    }
+
+    @GetMapping("/count/{employeeId}")
+    public ResponseEntity<Long> countAllTimeoffsByEmployeeId(@PathVariable Long employeeId) {
+        return ResponseEntity.ok(timeoffService.countAllTimeoffsByEmployeeId(employeeId));
     }
 }

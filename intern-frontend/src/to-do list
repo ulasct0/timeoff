@@ -35,20 +35,38 @@ Devam
 
 
 7 Haziran
-[] Timeoff ekranına employee full name diye bir alan koy
-[] Floral tasarımını informationa kopyala
-[] 1 adet daha div ekle, solda resim sağda yazı
-[] Timeoff butonlarına parantez içine kaç tane oduığunu yaz
-[] Show employee timeoff kaldır
-[] Timeoff ekranı gibi spendings ekranı, sadece timeoff type yerine spending amount (number)
-[] Dashboards total spendings by everyone (admin, hr), ve my spendings (herkes)
-[] Main ekranı lacivert yap
-[] Total employees graph (50 male 50 female), (30 em, 40 hr, 10 admin) pie chart dashboarda
+[+] Timeoff ekranına employee full name diye bir alan koy
+[+] Floral tasarımını informationa kopyala
+[+] 1 adet daha div ekle, solda resim sağda yazı
+[+] Timeoff butonlarına parantez içine kaç tane olduğunu yaz
+[+] Show employee timeoff kaldır
+[+] Timeoff ekranı gibi spendings ekranı, sadece timeoff type yerine spending amount (number)
+[+] Main ekranı lacivert yap
 
+----------------------------------------------------------------------
+Cuma
+[] Dashboards total spendings by everyone (admin, hr, all employees), ve my spendings (herkes)
+[] Total employees graph (50 male 50 female), (30 em, 40 hr, 10 admin) pie chart dashboarda
+[] Başlıklar 20px yazılar 14px
+[] Spendings ekranında start date veya end date olmasın sadece date olsun
+[] Navbar yazılarının aralarını aç
+[] Show all timeoff butonu üç butonun genişliğinde olsun
+[] Show todaya bir bak, startdate-enddatew arasında bugün varsa göster
+[] Eğer izin approve veya rejectedsa edit tuşu disable
+[] İzin approvesa delete olmasın, rejectse kalabilir
+
+Leave
+[] Timeoff ekranı gibi Leave ekranı (sadece hr ve ad)
+[] Add leave gibi bir form olmayacak, profile ekranına Leave the Company butonu eklenecek
+[] Leave the company butonuna basınca reason yazılabilen bir onaylama formu çıksın ve sonrasında Pending the Request (cancel) yazsın.
+[] Leave the company butonu leaves tablosuna o employee ile bir kayıt ekleyecek
+[] Sadece date olsun start-end date'e gerek yok
+[] Kullanıcının leave'i eğer onaylanırsa bir daha reject edilemesin, approve ve reject tuşlarını ayır
+[] Employee type'a LF diye bir position daha ekle, çalışanın leave'i onaylanırsa employee positionu'ı LF diye değiştir
+[] Eğer kullanıcı LF ise navbarda sadece tek bir sayfa göster, you left the company yazsın.
 
 
 SONRA
-[] Leave
 [] Teams
 [] Scale to multiple businesses
 [] Apply jobs

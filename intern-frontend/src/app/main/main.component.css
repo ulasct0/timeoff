@@ -47,13 +47,31 @@
   margin-bottom: 2rem;
 }
 
-:host ::ng-deep p-image {
+:host ::ng-deep .view-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--bs-primary);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+:host ::ng-deep .view-button:hover,
+:host ::ng-deep .view-button:active,
+:host ::ng-deep .view-button:focus {
+  background-color: var(--bs-primary-hover);
+  border: none;
+  padding: 0.6rem 1.2rem;
+}
+
+:host ::ng-deep p-image img {
   border-radius: 8px;
 }
 
 
 .view-container-2 {
-  background-color: #EB3656;
+  background-color: var(--bs-primary);
   align-items: center;
   padding-left: 4rem;
   padding-right: 4rem;
@@ -77,7 +95,7 @@
 
 .grid-container-long {
   width: 60%;
-  background-color: #ffddef;
+  background-color: #ddebff;
 }
 
 .grid-container-short {

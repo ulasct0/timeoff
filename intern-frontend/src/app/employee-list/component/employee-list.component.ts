@@ -6,6 +6,7 @@ import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
 import {AuthService} from '../../login/service/auth.service';
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
+import {Select} from 'primeng/select';
 
 
 @Component({
@@ -20,6 +21,7 @@ import {DropdownModule} from 'primeng/dropdown';
     NgStyle,
     TableModule,
     DropdownModule,
+    Select,
   ],
 })
 

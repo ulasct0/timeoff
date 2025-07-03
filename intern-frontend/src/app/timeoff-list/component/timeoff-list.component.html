@@ -1,11 +1,6 @@
 <div class="timeoff-list-container m-4">
 
   <h1>Timeoff List</h1>
-
-  <div *ngIf="alertMessage" [ngClass]="'alert-' + alertType" class="alert" role="alert">
-    {{ alertMessage }}
-  </div>
-  <!-- Search Box -->
   <div class="inputs my-3">
     <input
       (ngModelChange)="filterTimeoffs($event)"
@@ -38,6 +33,7 @@
 
   <!-- Table -->
   <div class="card">
+    <p-toast/>
     <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]"
              [rows]="5" [showCurrentPageReport]="true" [sortOrder]="+1" [tableStyle]="{ 'min-width': '50rem' }"
              [value]="filteredTimeoffs"
@@ -52,6 +48,9 @@
           </th>
           <th pSortableColumn="employeeId">Employee ID
             <p-sortIcon field="employeeId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="employeeFullName">Full Name
+            <p-sortIcon field="employeeFullName"></p-sortIcon>
           </th>
           <th pSortableColumn="startDate">Start Date
             <p-sortIcon field="startDate"></p-sortIcon>
@@ -81,6 +80,7 @@
             <i (click)="openDialog('View', undefined, timeoff.employeeId)" class="bi bi-box-arrow-up-right"
                type="button"></i>
           </td>
+          <td></td>
           <td>{{ timeoff.startDate }}</td>
           <td>{{ timeoff.endDate }}</td>
           <td>
@@ -160,7 +160,7 @@
               for="type-id">
               Type
             </label>
-            <p-dropdown
+            <p-select
               [(ngModel)]="selectedTimeoff.typeId"
               [options]="timeoffTypes"
               class="form-control"
@@ -168,7 +168,7 @@
               optionLabel="label"
               placeholder="Select a Type of Timeoff"
             >
-            </p-dropdown>
+            </p-select>
           </div>
 
 
@@ -251,8 +251,11 @@
         </div>
 
         <div class="modal-footer">
-          <button (click)="closeDialog()" class="btn btn-outline-danger cancelButton" type="button">Cancel</button>
-          <button (click)="addOrEditTimeoff(selectedTimeoff)" class="btn btn-primary saveButton" type="button">Save
+          <button (click)="closeDialog()" class="btn btn-outline-danger cancelButton"
+                  type="button">{{ formType === 'View' ? 'Close' : 'Cancel' }}
+          </button>
+          <button (click)="addOrEditTimeoff(selectedTimeoff)" *ngIf="formType !== 'View'"
+                  class="btn btn-primary saveButton" type="button">Save
           </button>
         </div>
       </div>

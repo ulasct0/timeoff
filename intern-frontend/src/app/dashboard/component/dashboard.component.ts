@@ -8,7 +8,9 @@ import {NgForOf, NgIf} from '@angular/common';
 import {Timeoff} from '../../timeoff-list/model/timeoff.model';
 import {TimeoffService} from '../../timeoff-list/service/timeoff.service';
 import {Router} from '@angular/router';
-import { timeoffTypes } from '../model/dashboard.model';
+import {timeoffTypes} from '../model/dashboard.model';
+import {DropdownModule} from 'primeng/dropdown';
+import {Select} from 'primeng/select';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +18,8 @@ import { timeoffTypes } from '../model/dashboard.model';
     FormsModule,
     NgIf,
     ReactiveFormsModule,
-    NgForOf
+    DropdownModule,
+    Select
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'

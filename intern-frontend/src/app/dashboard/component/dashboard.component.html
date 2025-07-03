@@ -113,20 +113,15 @@
                 for="type-id">
                 Type
               </label>
-
-              <select
-                class="form-select"
-                formControlName="type"
+              <p-select
+                [options]="timeoffTypes"
+                class="form-control p-1"
+                formControlName="typeId"
                 id="type-id"
-                type="text"
+                optionLabel="label"
+                placeholder="Select a Type of Timeoff"
               >
-                <option
-                  *ngFor="let type of timeoffTypes"
-                  [value]="type.id"
-                >
-                  {{ type.label }}
-                </option>
-              </select>
+              </p-select>
             </div>
 
             <!-- Reason -->

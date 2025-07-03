@@ -8,6 +8,7 @@ Tasarım
 [+] Header ve row heigh küçült
 [+] Approveda ve delete'da reject uyarı success
 
+
 Yeni Özellikler
 [+] Main ekranına gösterdiğim tasarımı uygula
 [+] Details butonu ekle, avatar üstte resim, diğerleri input alanı ama editlenemeyen
@@ -17,8 +18,8 @@ Yeni Özellikler
 [+] Sorting columnlar
 [+] Pagination
 
+
 Logic
-[+] Timeoff ekranına employee diye bir alan koy
 [+] Show pending (5)
 [+] Show today button (approve olanları ve start-end date içinde bugün olanları)
 [+] Employee-list yeni buton: bugün izinli olanları göster
@@ -32,17 +33,23 @@ Devam
 [+] Tabloya 2 kayıt arasından xx gösteriliyor yazısı ekle
 [+] timeoff list id mavi
 
---------------------------------------------------
+
+7 Haziran
+[] Timeoff ekranına employee full name diye bir alan koy
+[] Floral tasarımını informationa kopyala
+[] 1 adet daha div ekle, solda resim sağda yazı
+[] Timeoff butonlarına parantez içine kaç tane oduığunu yaz
+[] Show employee timeoff kaldır
+[] Timeoff ekranı gibi spendings ekranı, sadece timeoff type yerine spending amount (number)
+[] Dashboards total spendings by everyone (admin, hr), ve my spendings (herkes)
+[] Main ekranı lacivert yap
+[] Total employees graph (50 male 50 female), (30 em, 40 hr, 10 admin) pie chart dashboarda
+
+
 
 SONRA
 [] Leave
-[] Spendings
-[] Total employees
-
-
 [] Teams
-
-
 [] Scale to multiple businesses
 [] Apply jobs
 

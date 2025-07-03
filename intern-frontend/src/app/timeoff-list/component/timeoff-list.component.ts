@@ -9,6 +9,9 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {Employee} from '../../employee-list/model/employee.model';
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
+import {Select} from 'primeng/select';
 
 @Component({
   selector: 'app-timeoff-list',
@@ -18,7 +21,9 @@ import {DropdownModule} from 'primeng/dropdown';
     FormsModule,
     TableModule,
     CommonModule,
-    DropdownModule
+    DropdownModule,
+    ToastModule,
+    Select,
   ],
   templateUrl: './timeoff-list.component.html',
   styleUrl: './timeoff-list.component.css'
@@ -85,6 +90,7 @@ export class TimeoffListComponent implements OnInit {
     private employeeService: EmployeeListService,
     private authService: AuthService,
     private destroyRef: DestroyRef,
+    private messageService: MessageService
   ) {
   }
 
@@ -110,7 +116,6 @@ export class TimeoffListComponent implements OnInit {
               this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
             });
           }
-
         },
       });
   }
@@ -194,14 +199,25 @@ export class TimeoffListComponent implements OnInit {
   }
 
   changeTimeoffStatus(id: number): void {
+
     this.timeoffService.changeTimeoffStatus(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (updatedTimeoff: Timeoff) => {
           console.log('Status changed:', updatedTimeoff);
           if (updatedTimeoff.status === 'Approved') {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: `Timeoff #${updatedTimeoff.id} approved!`,
+            });
             this.showAlert('success', `Timeoff #${updatedTimeoff.id} approved!`);
           } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Timeoff #${updatedTimeoff.id} rejected!`,
+            });
             this.showAlert('danger', `Timeoff #${updatedTimeoff.id} rejected!`);
           }
           this.employeeService.fetchEmployeeById(this.employeeId)

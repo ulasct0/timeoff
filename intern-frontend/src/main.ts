@@ -8,6 +8,7 @@ import {AppComponent} from './app/app.component';
 import {routes} from './app/app.routes';
 import {providePrimeNG} from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import {MessageService} from 'primeng/api';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -20,6 +21,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideZoneChangeDetection({
       eventCoalescing: true
-    })
+    }),
+    MessageService
   ]
 });

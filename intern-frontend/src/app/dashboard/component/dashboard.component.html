@@ -19,6 +19,16 @@
       <div class="separator"></div>
       <p class="number">{{ remainingTimeoffs }}</p>
     </div>
+    <div class="box">
+      <p class="text">Total Spendings</p>
+      <div class="separator"></div>
+      <p class="number">{{ totalSpendings }}</p>
+    </div>
+    <div class="box">
+      <p class="text">My Spendings</p>
+      <div class="separator"></div>
+      <p class="number">{{ mySpendings }}</p>
+    </div>
   </div>
 
   <ng-container *ngIf="positionByEmployeeId !== 'EM'">
@@ -49,6 +59,11 @@
       </svg>
       Go to the Profile Page
     </button>
+  </div>
+
+  <div class="charts">
+    <p-chart type="pie" [data]="genderData"/>
+    <p-chart type="pie" [data]="positionData"/>
   </div>
 
 
@@ -116,7 +131,7 @@
               <p-select
                 [options]="timeoffTypes"
                 class="form-control p-1"
-                formControlName="typeId"
+                formControlName="type"
                 id="type-id"
                 optionLabel="label"
                 placeholder="Select a Type of Timeoff"

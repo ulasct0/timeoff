@@ -30,11 +30,13 @@ h1, h5 {
 th {
   font-weight: bold;
   vertical-align: middle !important;
+  text-align: center !important;
 }
 
 td {
   padding: 0.5rem !important;
   vertical-align: middle !important;
+  text-align: center !important;
 }
 
 .editButton, .deleteButton, .approveButton {
@@ -69,16 +71,47 @@ td {
   border-radius: 8px;
   background-color: var(--bs-primary);
   color: white;
-  padding: 0.5rem;
-  width: 12vw;
-  border: none;
+  min-width: 12vw !important;
+  min-height: 2vw !important;
+  width: 12vw !important;
+  padding: 0.5rem !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 :host ::ng-deep .p-button.showTodayAndApprovedButton:hover,
 :host ::ng-deep .p-button.showPendingButton:hover,
 :host ::ng-deep .p-button.showMyTimeoffsButton:hover {
-  background-color: var(--bs-primary-focus);
-  border: none;
+  background-color: var(--bs-primary-focus) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+:host ::ng-deep .p-button.showTodayAndApprovedButton:focus,
+:host ::ng-deep .p-button.showPendingButton:focus,
+:host ::ng-deep .p-button.showMyTimeoffsButton:focus {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+:host ::ng-deep .p-button.my-toggle-btn {
+  border-radius: 8px;
+  background-color: var(--bs-primary);
+  color: white;
+  min-width: 12vw !important;
+  min-height: 2vw !important;
+  padding: 0.5rem !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  width: 37vw !important;
+}
+
+:host ::ng-deep .p-button.my-toggle-btn:hover {
+  background-color: var(--bs-primary-focus) !important;
 }
 
 .searchBar {
@@ -86,7 +119,7 @@ td {
   border-radius: 8px;
   box-shadow: #dddddd 0 1px 1px;
   background-color: #fff;
-  border: 0px solid transparent !important;
+  border: 0 solid transparent !important;
   padding: 1rem;
 }
 

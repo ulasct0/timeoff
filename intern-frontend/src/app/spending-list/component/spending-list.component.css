@@ -30,11 +30,13 @@ h1, h5 {
 th {
   font-weight: bold;
   vertical-align: middle !important;
+  text-align: center !important;
 }
 
 td {
   padding: 0.5rem !important;
   vertical-align: middle !important;
+  text-align: center !important;
 }
 
 .editButton, .deleteButton, .approveButton {
@@ -86,7 +88,7 @@ td {
   border-radius: 8px;
   box-shadow: #dddddd 0 1px 1px;
   background-color: #fff;
-  border: 0px solid transparent !important;
+  border: 0 solid transparent !important;
   padding: 1rem;
 }
 

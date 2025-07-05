@@ -15,30 +15,24 @@ h1, h5 {
   color: white;
 }
 
-.table {
-  text-align: center;
-  border-radius: 8px;
-}
-
 th {
   font-weight: bold;
   vertical-align: middle !important;
+  text-align: center !important;
+  background-color: var(--bs-primary);
+  color: white;
 }
 
 td {
   padding: 0.5rem !important;
   vertical-align: middle !important;
+  text-align: center !important;
 }
 
 .editButton, .deleteButton, .detailButton {
   width: 5rem;
   height: 2.5rem;
   font-size: 1rem;
-}
-
-th {
-  background-color: var(--bs-primary);
-  color: white;
 }
 
 .inputs {
@@ -61,7 +55,7 @@ th {
   border-radius: 8px;
   box-shadow: #dddddd 0 1px 1px;
   background-color: #fff;
-  border: 0px solid transparent !important;
+  border: 0 solid transparent !important;
   padding: 1rem;
 }
 
@@ -89,6 +83,7 @@ th {
 img {
   border-radius: 50%;
   width: 50px;
+  margin: 0 auto;
 }
 
 .img-dialog {

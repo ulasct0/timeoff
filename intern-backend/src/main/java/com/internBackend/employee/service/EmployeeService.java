@@ -1,5 +1,7 @@
 package com.internBackend.employee.service;
 
+import com.internBackend.employee.dto.GenderCountDTO;
+import com.internBackend.employee.dto.PositionCountDTO;
 import com.internBackend.employee.entity.Employee;
 
 import java.util.List;
@@ -16,4 +18,7 @@ public interface EmployeeService {
     Employee updateEmployee(Employee employee);
     String deleteEmployee(Employee employee);
     List<Employee> getEmployeesOnTimeoff();
+
+    List<GenderCountDTO> getGenderCounts();
+    List<PositionCountDTO> getPositionCounts();
 }

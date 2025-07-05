@@ -1,5 +1,7 @@
 package com.internBackend.employee.service;
 
+import com.internBackend.employee.dto.GenderCountDTO;
+import com.internBackend.employee.dto.PositionCountDTO;
 import com.internBackend.employee.entity.Employee;
 import com.internBackend.employee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getEmployeesOnTimeoff() {
         return employeeRepository.getEmployeesOnTimeoff(LocalDate.now());
+    }
+
+    @Override
+    public List<GenderCountDTO> getGenderCounts(){
+        return employeeRepository.countEmployeesByGender();
+    }
+
+    @Override
+    public List<PositionCountDTO> getPositionCounts(){
+        return employeeRepository.countEmployeesByPosition();
     }
 }

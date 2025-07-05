@@ -144,7 +144,7 @@ th {
   border-radius: 8px;
   box-shadow: #dddddd 0 1px 1px;
   background-color: #fff;
-  border: 0px solid transparent !important;
+  border: 0 solid transparent !important;
   padding: 1rem;
 }
 
@@ -176,4 +176,19 @@ th {
 
 button {
   border-radius: 8px;
+}
+
+.charts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 2rem;
+  background-color: inherit;
+  border: none;
+  width: 100%;
+}
+
+:host ::ng-deep p-chart {
+  max-width: 300px;
+  width: 50%;
 }

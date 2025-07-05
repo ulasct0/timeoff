@@ -1,5 +1,7 @@
 package com.internBackend.employee.controller;
 
+import com.internBackend.employee.dto.GenderCountDTO;
+import com.internBackend.employee.dto.PositionCountDTO;
 import com.internBackend.employee.entity.Employee;
 import com.internBackend.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,12 @@ import java.util.Map;
 @RequestMapping("/api/v1/employees")
 public class EmployeeController {
 
+    private final EmployeeService employeeService;
+
     @Autowired
-    private EmployeeService employeeService;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Employee>> fetchAllEmployees(){
@@ -79,5 +85,15 @@ public class EmployeeController {
     @GetMapping("/onTimeoff")
     public ResponseEntity<List<Employee>> getEmployeesOnTimeoff() {
         return ResponseEntity.ok(employeeService.getEmployeesOnTimeoff());
+    }
+
+    @GetMapping("/gender-counts")
+    public List<GenderCountDTO> getGenderCounts() {
+        return employeeService.getGenderCounts();
+    }
+
+    @GetMapping("/position-counts")
+    public List<PositionCountDTO> getPositionCounts() {
+        return employeeService.getPositionCounts();
     }
 }

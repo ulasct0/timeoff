@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Timeoff} from '../model/timeoff.model';
+import {TimeoffWithFullName} from '../dto/TimeoffWithFullName.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -40,28 +41,28 @@ export class TimeoffService {
     return this.http.get<Timeoff>(`${this.timeoffUrl}/changeTimeoffStatus/${id}`);
   }
 
-  getPendingTimeoffs(): Observable<Timeoff[]> {
-    return this.http.get<Timeoff[]>(`${this.timeoffUrl}/pendingTimeoffs`);
+  getPendingTimeoffs(): Observable<TimeoffWithFullName[]> {
+    return this.http.get<TimeoffWithFullName[]>(`${this.timeoffUrl}/pendingTimeoffs`);
   }
 
   countPendingTimeoffs(): Observable<number> {
     return this.http.get<number>(`${this.timeoffUrl}/countPendingTimeoffs`);
   }
 
-  getTodayAndApprovedTimeoffs(): Observable<Timeoff[]> {
-    return this.http.get<Timeoff[]>(`${this.timeoffUrl}/todayAndApprovedTimeoffs`);
+  getTodayAndApprovedTimeoffs(): Observable<TimeoffWithFullName[]> {
+    return this.http.get<TimeoffWithFullName[]>(`${this.timeoffUrl}/todayAndApprovedTimeoffs`);
   }
 
   countTodayAndApprovedTimeoffs(): Observable<number> {
     return this.http.get<number>(`${this.timeoffUrl}/countTodayAndApprovedTimeoffs`);
   }
 
-  getAllTimeoffsByEmployeeIdWithFullName(employeeId: number): Observable<Timeoff[]> {
-    return this.http.get<Timeoff[]>(`${this.timeoffUrl}/withFullName/${employeeId}`);
+  getAllTimeoffsByEmployeeIdWithFullName(employeeId: number): Observable<TimeoffWithFullName[]> {
+    return this.http.get<TimeoffWithFullName[]>(`${this.timeoffUrl}/withFullName/${employeeId}`);
   }
 
-  getAllTimeoffsWithFullName(): Observable<Timeoff[]> {
-    return this.http.get<Timeoff[]>(`${this.timeoffUrl}/withFullName`);
+  getAllTimeoffsWithFullName(): Observable<TimeoffWithFullName[]> {
+    return this.http.get<TimeoffWithFullName[]>(`${this.timeoffUrl}/withFullName`);
   }
 
   countAllTimeoffsByEmployeeId(employeeId: number): Observable<number> {

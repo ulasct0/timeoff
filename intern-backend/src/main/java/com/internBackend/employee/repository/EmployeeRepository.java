@@ -1,5 +1,7 @@
 package com.internBackend.employee.repository;
 
+import com.internBackend.employee.dto.GenderCountDTO;
+import com.internBackend.employee.dto.PositionCountDTO;
 import com.internBackend.employee.entity.Employee;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -24,4 +26,13 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     @Query("SELECT DISTINCT t.employee FROM Spending t WHERE :today BETWEEN t.startDate AND t.endDate")
     List<Employee> getEmployeesOnTimeoff(@Param("today") LocalDate today);
+
+
+    @Query("SELECT new com.internBackend.employee.dto.GenderCountDTO(e.gender, COUNT(e)) " +
+            "FROM Employee e GROUP BY e.gender")
+    List<GenderCountDTO> countEmployeesByGender();
+
+    @Query("SELECT new com.internBackend.employee.dto.PositionCountDTO(e.position, COUNT(e)) " +
+            "FROM Employee e GROUP BY e.position")
+    List<PositionCountDTO> countEmployeesByPosition();
 }

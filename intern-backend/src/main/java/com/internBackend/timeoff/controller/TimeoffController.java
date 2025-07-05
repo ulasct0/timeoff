@@ -16,9 +16,9 @@ import java.util.Map;
 @RequestMapping("/api/v1/timeoffs")
 public class TimeoffController {
 
-    @Autowired
     private final TimeoffService timeoffService;
 
+    @Autowired
     public TimeoffController(TimeoffService timeoffService) {
         this.timeoffService = timeoffService;
     }

@@ -45,15 +45,15 @@ Devam
 
 ----------------------------------------------------------------------
 Cuma
-[] Dashboards total spendings by everyone (admin, hr, all employees), ve my spendings (herkes)
-[] Total employees graph (50 male 50 female), (30 em, 40 hr, 10 admin) pie chart dashboarda
+[+] Dashboards total spendings by everyone (admin, hr, all employees), ve my spendings (herkes)
+[+] Total employees graph (50 male 50 female), (30 em, 40 hr, 10 admin) pie chart dashboarda
 [] Başlıklar 20px yazılar 14px
-[] Spendings ekranında start date veya end date olmasın sadece date olsun
-[] Navbar yazılarının aralarını aç
-[] Show all timeoff butonu üç butonun genişliğinde olsun
-[] Show todaya bir bak, startdate-enddatew arasında bugün varsa göster
-[] Eğer izin approve veya rejectedsa edit tuşu disable
-[] İzin approvesa delete olmasın, rejectse kalabilir
+[+] Spendings ekranında start date veya end date olmasın sadece date olsun
+[+] Navbar yazılarının aralarını aç
+[+] Show all timeoff butonu üç butonun genişliğinde olsun
+[+] Show todaya bir bak, startdate-enddatew arasında bugün varsa göster
+[+] Eğer izin approve veya rejectedsa edit tuşu disable
+[+] İzin approvesa delete olmasın, rejectse kalabilir
 
 Leave
 [] Timeoff ekranı gibi Leave ekranı (sadece hr ve ad)

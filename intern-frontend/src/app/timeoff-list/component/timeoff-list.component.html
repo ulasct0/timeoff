@@ -12,7 +12,7 @@
     <input (click)="openDialog('Add')" class="btn btn-primary add-btn" type="button" value="Add Timeoff">
     <p-button (click)="showMyTimeoffs()" *ngIf="loggedInEmployeeType != 'EM'"
               badge="{{ hideAllTimeoffs === false ? countAllTimeoffsByEmployeeId : countAllTimeoffs }}"
-              styleClass="showMyTimeoffsButton" type="button">
+              [styleClass]="hideAllTimeoffs ? 'my-toggle-btn' : 'showMyTimeoffsButton'" type="button">
       {{ hideAllTimeoffs ? 'Show All Timeoffs' : 'Show My Timeoffs ' }}
     </p-button>
     <p-button (click)="showPendingTimeoffs()" *ngIf="loggedInEmployeeType != 'EM' && hideAllTimeoffs === false"
@@ -90,12 +90,14 @@
           <td>{{ timeoff.status }}</td>
           <td>{{ timeoff.reason }}</td>
           <td>
-            <button (click)="openDialog('Edit',timeoff)" class="editButton btn btn-sm">
+            <button (click)="openDialog('Edit',timeoff)" class="editButton btn btn-sm"
+                    *ngIf="timeoff.status === 'Pending'">
               Edit
             </button>
           </td>
           <td>
-            <button (click)="deleteTimeoff(timeoff.id)" class="deleteButton btn btn-sm btn-danger">
+            <button (click)="deleteTimeoff(timeoff.id)" class="deleteButton btn btn-sm btn-danger"
+                    *ngIf="timeoff.status !== 'Approved'">
               Delete
             </button>
           </td>

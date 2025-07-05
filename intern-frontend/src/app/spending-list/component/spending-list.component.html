@@ -46,12 +46,6 @@
           <th pSortableColumn="employeeId">Employee ID
             <p-sortIcon field="employeeId"></p-sortIcon>
           </th>
-          <th pSortableColumn="startDate">Start Date
-            <p-sortIcon field="startDate"></p-sortIcon>
-          </th>
-          <th pSortableColumn="endDate">End Date
-            <p-sortIcon field="endDate"></p-sortIcon>
-          </th>
           <th pSortableColumn="spendingAmount">Spending Amount
             <p-sortIcon field="spendingAmount"></p-sortIcon>
           </th>
@@ -72,10 +66,8 @@
           <td>{{ spending.id }}</td>
           <td>{{ spending.employeeId }}
             <i (click)="openDialog('View', undefined, spending.employeeId)" class="bi bi-box-arrow-up-right"
-               type="button"></i>
+               type="button" style="cursor: pointer"></i>
           </td>
-          <td>{{ spending.startDate }}</td>
-          <td>{{ spending.endDate }}</td>
           <td>{{ spending.spendingAmount }}</td>
           <td>{{ spending.status }}</td>
           <td>{{ spending.reason }}</td>

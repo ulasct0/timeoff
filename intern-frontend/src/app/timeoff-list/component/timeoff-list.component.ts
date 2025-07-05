@@ -13,6 +13,7 @@ import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {Select} from 'primeng/select';
 import {Button} from 'primeng/button';
+import {TimeoffWithFullName} from '../dto/TimeoffWithFullName.dto';
 
 @Component({
   selector: 'app-timeoff-list',
@@ -31,8 +32,8 @@ import {Button} from 'primeng/button';
   styleUrl: './timeoff-list.component.css'
 })
 export class TimeoffListComponent implements OnInit {
-  timeoffs: Timeoff[] = [];
-  filteredTimeoffs: Timeoff[] = [];
+  timeoffs: TimeoffWithFullName[] = [];
+  filteredTimeoffs: TimeoffWithFullName[] = [];
   filterText: string = '';
   showDialog: boolean = false;
   countPendingTimeoffs: number = 0;
@@ -122,24 +123,28 @@ export class TimeoffListComponent implements OnInit {
           this.loggedInEmployeeType = data.position;
           if (data.position == 'EM') {
             this.timeoffService.getAllTimeoffsByEmployeeIdWithFullName(this.employeeId).subscribe(data => {
-              this.timeoffs = data.sort((a, b) => a.id - b.id);
-              this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+              this.timeoffs = data;
+              this.filteredTimeoffs = data;
             });
           } else {
             this.timeoffService.getAllTimeoffsWithFullName().subscribe(data => {
-              this.timeoffs = data.sort((a, b) => a.id - b.id);
-              this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+              this.timeoffs = data;
+              this.filteredTimeoffs = data;
             });
           }
         },
       });
+
+
   }
+
 
   filterTimeoffs(search: string): void {
     const term = search.trim().toLowerCase();
     this.filteredTimeoffs = this.timeoffs.filter(item =>
       item.id.toString().includes(term) ||
       item.employeeId.toString().includes(term) ||
+      item.employeeFullName.toLowerCase().includes(term) ||
       item.startDate.toString().includes(term) ||
       item.endDate.toString().includes(term) ||
       item.typeId.toString().includes(term) ||
@@ -169,7 +174,6 @@ export class TimeoffListComponent implements OnInit {
     if (isConfirmed) {
       this.timeoffService.deleteTimeoff(id).subscribe({
         next: () => {
-          this.timeoffs = this.timeoffs.filter((item) => item.id !== id);
           window.location.reload(); // Optionally remove this and update customers locally
         }
       });
@@ -241,13 +245,13 @@ export class TimeoffListComponent implements OnInit {
                 this.loggedInEmployeeType = data.position;
                 if (data.position == 'EM') {
                   this.timeoffService.getAllTimeoffsByEmployeeIdWithFullName(this.employeeId).subscribe(data => {
-                    this.timeoffs = data.sort((a, b) => a.id - b.id);
-                    this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+                    this.timeoffs = data;
+                    this.filteredTimeoffs = data;
                   });
                 } else {
                   this.timeoffService.getAllTimeoffsWithFullName().subscribe(data => {
-                    this.timeoffs = data.sort((a, b) => a.id - b.id);
-                    this.filteredTimeoffs = data.sort((a, b) => a.id - b.id);
+                    this.timeoffs = data;
+                    this.filteredTimeoffs = data;
                   });
                 }
 

@@ -4,22 +4,25 @@ import {DashboardService} from '../service/dashboard.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {forkJoin} from 'rxjs';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {NgForOf, NgIf} from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {Timeoff} from '../../timeoff-list/model/timeoff.model';
 import {TimeoffService} from '../../timeoff-list/service/timeoff.service';
 import {Router} from '@angular/router';
 import {timeoffTypes} from '../model/dashboard.model';
 import {DropdownModule} from 'primeng/dropdown';
 import {Select} from 'primeng/select';
+import {SpendingService} from '../../spending-list/service/spending.service';
+import {ChartModule} from 'primeng/chart';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
     FormsModule,
-    NgIf,
+    CommonModule,
     ReactiveFormsModule,
     DropdownModule,
-    Select
+    Select,
+    ChartModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -29,6 +32,8 @@ export class DashboardComponent implements OnInit {
   employeeId: number = 0;
   usedTimeoffs: number = 0;
   remainingTimeoffs: number = 0;
+  totalSpendings: number = 0;
+  mySpendings: number = 0;
   positionByEmployeeId?: string;
   totalEmployees = 0;
   totalTimeoffs = 0;
@@ -41,10 +46,18 @@ export class DashboardComponent implements OnInit {
   reasonControl!: FormControl;
   typeControl!: FormControl;
 
+  // For Chart
+  genderData: any;
+  genderOptions: any;
+
+  positionData: any;
+  positionOptions: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private dashboardService: DashboardService,
+    private spendingService: SpendingService,
     private destroyRef: DestroyRef,
     private timeoffService: TimeoffService,
     private router: Router
@@ -107,12 +120,16 @@ export class DashboardComponent implements OnInit {
     forkJoin({
       remaining: this.dashboardService.getRemainingTimeoffByEmployeeId(this.employeeId),
       used: this.dashboardService.countUsedTimeoffsByEmployeeId(this.employeeId),
+      totalSpendings: this.spendingService.countAllSpendings(),
+      mySpendings: this.spendingService.countAllSpendingsByEmployeeId(this.employeeId),
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: ({remaining, used}) => {
+        next: ({remaining, used, totalSpendings, mySpendings}) => {
           this.remainingTimeoffs = remaining;
           this.usedTimeoffs = used;
+          this.totalSpendings = totalSpendings;
+          this.mySpendings = mySpendings;
         },
         error: err => {
           console.error('Dashboard load failed', err);
@@ -121,6 +138,34 @@ export class DashboardComponent implements OnInit {
           console.log('Dashboard loaded.');
         }
       });
+
+
+    forkJoin({
+      genders: this.dashboardService.getGenderCounts(),
+      positions: this.dashboardService.getPositionCounts()
+    })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({genders, positions}) => {
+        this.genderData = {
+          labels: genders.map(g => g.gender),
+          datasets: [
+            {
+              data: genders.map(g => g.count)
+            }
+          ]
+        };
+
+        this.positionData = {
+          labels: positions.map(p => p.position),
+          datasets: [
+            {
+              data: positions.map(p => p.count)
+            }
+          ]
+        };
+      });
+
+
   }
 
   onSubmit() {

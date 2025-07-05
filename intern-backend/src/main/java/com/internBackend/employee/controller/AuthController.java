@@ -1,6 +1,7 @@
 package com.internBackend.employee.controller;
 
 import com.internBackend.employee.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final EmployeeService employeeService;
 
+    @Autowired
     public AuthController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }

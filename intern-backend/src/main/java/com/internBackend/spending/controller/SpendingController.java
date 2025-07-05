@@ -15,9 +15,9 @@ import java.util.Map;
 @RequestMapping("/api/v1/spendings")
 public class SpendingController {
 
-    @Autowired
     private final SpendingService spendingService;
 
+    @Autowired
     public SpendingController(SpendingService spendingService) {
         this.spendingService = spendingService;
     }

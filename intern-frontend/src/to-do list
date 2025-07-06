@@ -56,13 +56,13 @@ Cuma
 [+] İzin approvesa delete olmasın, rejectse kalabilir
 
 Leave
-[] Timeoff ekranı gibi Leave ekranı (sadece hr ve ad)
-[] Add leave gibi bir form olmayacak, profile ekranına Leave the Company butonu eklenecek
-[] Leave the company butonuna basınca reason yazılabilen bir onaylama formu çıksın ve sonrasında Pending the Request (cancel) yazsın.
-[] Leave the company butonu leaves tablosuna o employee ile bir kayıt ekleyecek
-[] Sadece date olsun start-end date'e gerek yok
-[] Kullanıcının leave'i eğer onaylanırsa bir daha reject edilemesin, approve ve reject tuşlarını ayır
-[] Employee type'a LF diye bir position daha ekle, çalışanın leave'i onaylanırsa employee positionu'ı LF diye değiştir
+[+] Timeoff ekranı gibi Leave ekranı (sadece hr ve ad)
+[+] Add leave gibi bir form olmayacak, profile ekranına Leave the Company butonu eklenecek
+[+] Leave the company butonuna basınca reason yazılabilen bir onaylama formu çıksın ve sonrasında Pending the Request (cancel) yazsın.
+[+] Leave the company butonu leaves tablosuna o employee ile bir kayıt ekleyecek
+[+] Sadece date olsun start-end date'e gerek yok
+[+] Kullanıcının leave'i eğer onaylanırsa bir daha reject edilemesin, approve ve reject tuşlarını ayır
+[+] Employee type'a LF diye bir position daha ekle, çalışanın leave'i onaylanırsa employee positionu'ı LF diye değiştir
 [] Eğer kullanıcı LF ise navbarda sadece tek bir sayfa göster, you left the company yazsın.
 
 

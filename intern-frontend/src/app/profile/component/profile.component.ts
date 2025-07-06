@@ -4,8 +4,14 @@ import {Employee} from '../../employee-list/model/employee.model';
 import {Timeoff} from '../../timeoff-list/model/timeoff.model';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ProfileService} from '../service/profile.service';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass, NgIf} from '@angular/common';
+import {Button} from 'primeng/button';
+import {Dialog} from 'primeng/dialog';
+import {InputText} from 'primeng/inputtext';
+import {LeaveService} from '../../leave/service/leave.service';
+import {Leave, Status} from '../../leave/model/leave.model';
+import {Message} from 'primeng/message';
 
 @Component({
   selector: 'app-profile',
@@ -13,12 +19,18 @@ import {NgClass, NgIf} from '@angular/common';
     ReactiveFormsModule,
     NgIf,
     NgClass,
+    Button,
+    Dialog,
+    InputText,
+    FormsModule,
+    Message,
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
+  leaveForm!: FormGroup;
   employeeByEmployeeId?: Employee;
   timeoffsByEmployeeId?: Timeoff[];
   infoName: 'Personal Information' | 'Contact Information' | 'Business Information' = 'Personal Information';
@@ -28,12 +40,17 @@ export class ProfileComponent implements OnInit {
   showContactInformation: boolean = false;
   showBusinessInformation: boolean = false;
   showPassword = false;
+  showDialog: boolean = false;
+  showMessage: boolean = false;
+  infoMessage: string = '';
+  dangerMessage: string = '';
 
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
     private destroyRef: DestroyRef,
     private formBuilder: FormBuilder,
+    private leaveService: LeaveService,
   ) {
   }
 
@@ -42,6 +59,10 @@ export class ProfileComponent implements OnInit {
     if (this.authService.isLoggedIn() === false) {
       this.authService.logout();
     }
+
+    this.leaveForm = this.formBuilder.group({
+      reason: ['', [Validators.required, Validators.maxLength(100)]]
+    });
 
     this.profileForm = this.formBuilder.group({
       employeeIdControl: new FormControl(this.employeeId, {
@@ -147,5 +168,47 @@ export class ProfileComponent implements OnInit {
 
   togglePassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  openCreateLeave() {
+    this.showDialog = true;
+  }
+
+  createNewLeave() {
+    if (this.leaveForm.invalid) {
+      return;
+    }
+
+    const isCreating = window.confirm("Are you sure you want to leave this leave?");
+
+    const payload: Leave = {
+      id: 0,
+      employeeId: this.employeeId,
+      date: new Date(),
+      status: Status.Pending,
+      reason: this.leaveForm.value.reason,
+    }
+
+    if (!isCreating) {
+      this.showDialog = false;
+      return;
+    }
+
+    this.leaveService.createLeave(payload)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data) => {
+          this.showMessage = true;
+          this.infoMessage = 'Pending The Request!';
+          this.leaveForm.reset();
+        },
+        error: (err) => {
+          this.showMessage = true;
+          this.dangerMessage = err.message + "employee couldn't be canceled";
+        },
+        complete: () => {
+          this.showDialog = false;
+        }
+      })
   }
 }

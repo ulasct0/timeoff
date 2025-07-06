@@ -93,3 +93,39 @@ img {
   transform: translateY(-50%);
   cursor: pointer;
 }
+
+::ng-deep .p-button.leaveBtn {
+  margin-top: 1rem;
+  background-color: var(--bs-primary);
+  border: 1px solid var(--bs-primary);
+}
+
+::ng-deep .p-button.saveBtn {
+  background-color: var(--bs-primary);
+  border: 1px solid var(--bs-primary);
+}
+
+::ng-deep .p-button.leaveBtn:hover, ::ng-deep .p-button.leaveBtn:hover, ::ng-deep .p-button.saveBtn:hover, ::ng-deep .p-button.saveBtn:focus {
+  background-color: var(--bs-primary-hover) !important;
+  border: 1px solid var(--bs-primary-hover) !important;
+}
+
+:host ::ng-deep input#reason {
+  margin-left: 1rem;
+  border: 1px solid gray;
+}
+
+:host ::ng-deep input#reason:hover {
+  border: 1px solid var(--bs-primary-hover);
+}
+
+:host ::ng-deep input#reason:focus {
+  border: 1px solid var(--bs-primary-hover);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 1rem;
+}

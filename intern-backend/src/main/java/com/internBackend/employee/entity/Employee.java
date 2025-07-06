@@ -35,8 +35,8 @@ public class Employee {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(name = "position", length = 100)
-    private String position;
+    @Enumerated(EnumType.STRING)
+    private Position position;
 
     private Double salary;
 

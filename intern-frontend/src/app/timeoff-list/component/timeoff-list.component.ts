@@ -14,6 +14,7 @@ import {MessageService} from 'primeng/api';
 import {Select} from 'primeng/select';
 import {Button} from 'primeng/button';
 import {TimeoffWithFullName} from '../dto/TimeoffWithFullName.dto';
+import {Position} from '../../employee-list/dto/Position.dto';
 
 @Component({
   selector: 'app-timeoff-list',
@@ -58,7 +59,7 @@ export class TimeoffListComponent implements OnInit {
     address: '',
     avatar: '',
     password: '',
-    position: '',
+    position: Position.EM,
     salary: 0,
     phoneNumber: '',
     startDate: new Date()
@@ -72,7 +73,7 @@ export class TimeoffListComponent implements OnInit {
     address: '',
     avatar: '',
     password: '',
-    position: '',
+    position: Position.EM,
     salary: 0,
     phoneNumber: '',
     startDate: new Date()

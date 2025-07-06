@@ -1,3 +1,5 @@
+import {Position} from '../dto/Position.dto';
+
 export interface Employee {
   id: number;
   name: string;
@@ -6,7 +8,7 @@ export interface Employee {
   avatar: string;
   email: string;
   password: string;
-  position: string;
+  position: Position;
   salary: number;
   address: string;
   phoneNumber: string;

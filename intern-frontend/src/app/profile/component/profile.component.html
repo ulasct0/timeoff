@@ -8,6 +8,33 @@
       <button (click)="openPersonalInformation()" class="btn button">Personal Information ></button>
       <button (click)="openContactInformation()" class="btn button">Contact Information ></button>
       <button (click)="openBusinessInformation()" class="btn button">Business Information ></button>
+      <p-button (click)="openCreateLeave()" type="button" styleClass="leaveBtn">Leave The Company</p-button>
+      <!-- Dialog-->
+      <p-dialog header="Create Leave Form" [modal]="true" [(visible)]="showDialog" [style]="{ width: '25rem' }">
+        <form [formGroup]="leaveForm">
+          <div class="flex items-center gap-4 mb-4">
+            <label for="reason" class="font-semibold w-24">Reason</label>
+            <input
+              pInputText
+              id="reason"
+              formControlName="reason"
+              autocomplete="off"
+              class="flex-auto"
+            />
+          </div>
+          <div class="buttons">
+            <p-button label="Cancel" severity="danger" (click)="showDialog = false"/>
+            <p-button label="Leave" styleClass="saveBtn" (click)="createNewLeave()"/>
+          </div>
+          <ng-container *ngIf="showMessage">
+            <p-message severity="error" variant="simple">{{ dangerMessage }}</p-message>
+          </ng-container>
+        </form>
+      </p-dialog>
+      <ng-container *ngIf="showMessage">
+        <p-message severity="info" variant="simple">{{ infoMessage }}</p-message>
+      </ng-container>
+
     </div>
     <div class="profile-information-right">
       <h2 class="mb-4">{{ infoName }}</h2>

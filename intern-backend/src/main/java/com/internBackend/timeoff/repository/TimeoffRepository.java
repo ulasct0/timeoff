@@ -34,7 +34,7 @@ public interface TimeoffRepository extends JpaRepository<Timeoff, Long> {
     List<Timeoff> findAllTimeoffsByStatus(Status status);
 
     @Query("SELECT t FROM Timeoff t WHERE t.status = 'Approved' AND :today BETWEEN t.startDate AND t.endDate")
-    List<TimeoffDTO> getTodayAndApprovedTimeoffs(@Param("today") LocalDate today);
+    List<Timeoff> getTodayAndApprovedTimeoffs(@Param("today") LocalDate today);
 
     @Query("SELECT COUNT(t) FROM Timeoff t WHERE t.status = 'Approved' AND t.startDate = :today")
     long countTodayAndApprovedTimeoffs(@Param("today") LocalDate today);

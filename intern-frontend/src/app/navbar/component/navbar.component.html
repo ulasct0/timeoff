@@ -6,7 +6,14 @@
           data-toggle="collapse" type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div *ngIf="showThreeNavbar === false" class="collapse navbar-collapse" id="navbarNav">
+  <div *ngIf="employeePositionByEmployeeId === Position.LF" class="collapse navbar-collapse" id="navbarNav">
+    <a [routerLinkActiveOptions]="{ exact: true }"
+       class="nav-item nav-link"
+       routerLink="/left-employee"
+       routerLinkActive="active">Left</a>
+  </div>
+  <div *ngIf="showThreeNavbar === false && employeePositionByEmployeeId !== Position.LF"
+       class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
       <a [routerLinkActiveOptions]="{ exact: true }"
          class="nav-item nav-link"
@@ -25,6 +32,11 @@
          class="nav-item nav-link"
          routerLink="/spending-list"
          routerLinkActive="active">Spending List</a>
+      <a *ngIf="employeePositionByEmployeeId === 'AD' || employeePositionByEmployeeId === 'HR'"
+         [routerLinkActiveOptions]="{ exact: true }"
+         class="nav-item nav-link"
+         routerLink="/leave"
+         routerLinkActive="active">Leave</a>
     </div>
     <div class="navbar-nav ml-auto">
       <a [routerLinkActiveOptions]="{ exact: true }"
@@ -41,7 +53,8 @@
       </a>
     </div>
   </div>
-  <div *ngIf="showThreeNavbar === true" class="collapse navbar-collapse" id="navbarNav">
+  <div *ngIf="showThreeNavbar === true && employeePositionByEmployeeId !== Position.LF" class="collapse navbar-collapse"
+       id="navbarNav">
     <div class="navbar-nav">
       <a [routerLinkActiveOptions]="{ exact: true }"
          class="nav-item nav-link"

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {GenderCountDTO} from '../dto/gender-count.dto';
 import {PositionCountDTO} from '../dto/position-count.dto';
+import {Position} from '../../employee-list/dto/Position.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,9 @@ export class DashboardService {
     return this._httpClient.get<number>(`${this.timeoffUrl}/employee/remaining/${employeeId}`);
   }
 
-  getPositionByEmployeeId(employeeId: number): Observable<string> {
-    return this._httpClient.get(
-      `${this.employeeUrl}/position/${employeeId}`,
-      {responseType: 'text'}
+  getPositionByEmployeeId(employeeId: number): Observable<Position> {
+    return this._httpClient.get<Position>(
+      `${this.employeeUrl}/position/${employeeId}`
     );
   }
 

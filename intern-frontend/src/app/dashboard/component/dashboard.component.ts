@@ -13,6 +13,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {Select} from 'primeng/select';
 import {SpendingService} from '../../spending-list/service/spending.service';
 import {ChartModule} from 'primeng/chart';
+import {Position} from '../../employee-list/dto/Position.dto';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit {
   remainingTimeoffs: number = 0;
   totalSpendings: number = 0;
   mySpendings: number = 0;
-  positionByEmployeeId?: string;
+  positionByEmployeeId?: Position;
   totalEmployees = 0;
   totalTimeoffs = 0;
   timeoffTypes = timeoffTypes;
@@ -95,6 +96,9 @@ export class DashboardComponent implements OnInit {
       .subscribe({
         next: (pos) => {
           this.positionByEmployeeId = pos;
+          if (pos === Position.LF) {
+            this.router.navigate(['/left-employee']);
+          }
 
           if (pos === 'AD' || pos === 'HR') {
             // only for admins / HR, fetch counts

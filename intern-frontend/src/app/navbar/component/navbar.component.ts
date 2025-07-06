@@ -5,6 +5,7 @@ import {AuthService} from '../../login/service/auth.service';
 import {DashboardService} from '../../dashboard/service/dashboard.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {filter} from 'rxjs';
+import {Position} from '../../employee-list/dto/Position.dto';
 
 @Component({
   selector: 'app-navbar',
@@ -49,4 +50,6 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+  protected readonly Position = Position;
 }

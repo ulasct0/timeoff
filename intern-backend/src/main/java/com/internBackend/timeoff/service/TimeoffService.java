@@ -5,6 +5,7 @@ import com.internBackend.timeoff.entity.Timeoff;
 
 import java.util.List;
 
+
 public interface TimeoffService {
     List<Timeoff> fetchAllTimeoffs();
     List<Timeoff> getAllTimeoffsByEmployeeId(Long employeeId);

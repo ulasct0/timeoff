@@ -7,6 +7,8 @@ import {DashboardComponent} from './dashboard/component/dashboard.component';
 import {MainComponent} from './main/main.component';
 import {InformationComponent} from './information/information.component';
 import {SpendingListComponent} from './spending-list/component/spending-list.component';
+import {LeaveComponent} from './leave/component/leave.component';
+import {LeftEmployeeComponent} from './left-employee/left-employee.component';
 
 export const routes: Routes = [
   {
@@ -38,8 +40,16 @@ export const routes: Routes = [
     component: SpendingListComponent,
   },
   {
+    path: 'leave',
+    component: LeaveComponent
+  },
+  {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'left-employee',
+    component: LeftEmployeeComponent,
   },
   {
     path: '**',

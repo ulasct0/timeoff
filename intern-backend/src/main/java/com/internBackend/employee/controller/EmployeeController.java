@@ -3,6 +3,7 @@ package com.internBackend.employee.controller;
 import com.internBackend.employee.dto.GenderCountDTO;
 import com.internBackend.employee.dto.PositionCountDTO;
 import com.internBackend.employee.entity.Employee;
+import com.internBackend.employee.entity.Position;
 import com.internBackend.employee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +41,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/position/{id}")
-    public ResponseEntity<String> getPositionByEmployeeId(@PathVariable("id") Long id) {
-        String position = employeeService.getPositionByEmployeeId(id);
+    public ResponseEntity<Position> getPositionByEmployeeId(@PathVariable("id") Long id) {
+        Position position = employeeService.getPositionByEmployeeId(id);
         return ResponseEntity.ok(position);
     }
 
@@ -95,5 +96,18 @@ public class EmployeeController {
     @GetMapping("/position-counts")
     public List<PositionCountDTO> getPositionCounts() {
         return employeeService.getPositionCounts();
+    }
+
+    @PutMapping("/changeEmployeePosition/{employeeId}/{position}")
+    public ResponseEntity<Boolean> changeEmployeePosition(
+            @PathVariable Long employeeId,
+            @PathVariable Position position
+    ) {
+        try {
+            boolean success = employeeService.changeEmployeePosition(employeeId, position);
+            return ResponseEntity.ok(success);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(false);
+        }
     }
 }

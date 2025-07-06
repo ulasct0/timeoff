@@ -11,8 +11,8 @@ import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
-import {Select} from 'primeng/select';
 import {Button} from 'primeng/button';
+import {Position} from '../../employee-list/dto/Position.dto';
 
 @Component({
   selector: 'app-spending-list',
@@ -56,7 +56,7 @@ export class SpendingListComponent implements OnInit {
     address: '',
     avatar: '',
     password: '',
-    position: '',
+    position: Position.EM,
     salary: 0,
     phoneNumber: '',
     startDate: new Date()
@@ -70,7 +70,7 @@ export class SpendingListComponent implements OnInit {
     address: '',
     avatar: '',
     password: '',
-    position: '',
+    position: Position.EM,
     salary: 0,
     phoneNumber: '',
     startDate: new Date()

@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {Employee} from '../model/employee.model';
 import {EmployeeListService} from '../service/employee-list.service';
 import {FormsModule} from '@angular/forms';
-import {NgClass, NgForOf, NgIf, NgStyle} from '@angular/common';
+import {NgClass, NgIf, NgStyle} from '@angular/common';
 import {AuthService} from '../../login/service/auth.service';
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
 import {Select} from 'primeng/select';
+import {Position} from '../dto/Position.dto';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class EmployeeListComponent implements OnInit {
     address: '',
     avatar: '',
     password: '',
-    position: '',
+    position: Position.EM,
     salary: 0,
     phoneNumber: '',
     startDate: new Date()
@@ -54,7 +55,7 @@ export class EmployeeListComponent implements OnInit {
     address: '',
     avatar: '',
     password: '',
-    position: '',
+    position: Position.EM,
     salary: 0,
     phoneNumber: '',
     startDate: new Date()
@@ -131,7 +132,7 @@ export class EmployeeListComponent implements OnInit {
       address: '',
       avatar: '',
       password: '',
-      position: '',
+      position: Position.EM,
       salary: 0,
       phoneNumber: '',
       startDate: new Date()

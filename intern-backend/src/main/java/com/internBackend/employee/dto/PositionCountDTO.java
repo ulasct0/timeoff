@@ -1,5 +1,6 @@
 package com.internBackend.employee.dto;
 
+import com.internBackend.employee.entity.Position;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PositionCountDTO {
-    private String position;
+    private Position position;
     private Long count;
 }

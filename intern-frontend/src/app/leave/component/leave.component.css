@@ -66,7 +66,7 @@ td {
   background-color: var(--bs-primary-focus) !important;
 }
 
-:host ::ng-deep .p-button.showTodayAndApprovedButton, :host ::ng-deep .p-button.showPendingButton, :host ::ng-deep .p-button.showMySpendingsButton {
+:host ::ng-deep .p-button.showTodayAndApprovedButton, :host ::ng-deep .p-button.showPendingButton, :host ::ng-deep .p-button.showMyLeavesButton {
   border-radius: 8px;
   background-color: var(--bs-primary);
   color: white;
@@ -80,7 +80,7 @@ td {
 
 :host ::ng-deep .p-button.showTodayAndApprovedButton:hover,
 :host ::ng-deep .p-button.showPendingButton:hover,
-:host ::ng-deep .p-button.showMySpendingsButton:hover {
+:host ::ng-deep .p-button.showMyLeavesButton:hover {
   background-color: var(--bs-primary-focus) !important;
   box-shadow: none !important;
   outline: none !important;
@@ -89,7 +89,7 @@ td {
 
 :host ::ng-deep .p-button.showTodayAndApprovedButton:focus,
 :host ::ng-deep .p-button.showPendingButton:focus,
-:host ::ng-deep .p-button.showMySpendingsButton:focus {
+:host ::ng-deep .p-button.showMyLeavesButton:focus {
   box-shadow: none !important;
   outline: none !important;
   background-color: var(--bs-primary-focus) !important;
@@ -119,8 +119,8 @@ td {
   border-radius: 8px;
   box-shadow: #dddddd 0 1px 1px;
   background-color: #fff;
+  border: 0 solid transparent !important;
   padding: 1rem;
-  border: 1px solid var(--bs-primary);
 }
 
 .searchBar::placeholder {

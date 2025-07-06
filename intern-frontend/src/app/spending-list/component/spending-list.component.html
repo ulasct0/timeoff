@@ -12,7 +12,7 @@
     <input (click)="openDialog('Add')" class="btn btn-primary add-btn" type="button" value="Add Spending">
     <p-button (click)="showMySpendings()" *ngIf="loggedInEmployeeType != 'EM'"
               badge="{{ hideAllSpendings === false ? countAllSpendingsByEmployeeId : countAllSpendings }}"
-              styleClass="showMySpendingsButton" type="button">
+              [styleClass]="hideAllSpendings ? 'my-toggle-btn' : 'showMySpendingsButton'" type="button">
       {{ hideAllSpendings ? 'Show All Spendings' : 'Show My Spendings ' }}
     </p-button>
     <p-button (click)="showPendingSpendings()" *ngIf="loggedInEmployeeType != 'EM' && hideAllSpendings === false"
@@ -32,7 +32,8 @@
   <div class="card">
     <p-toast/>
     <p-table [paginator]="true" [rowsPerPageOptions]="[3, 5, 10, 20, 50]"
-             [rows]="5" [showCurrentPageReport]="true" [sortOrder]="+1" [tableStyle]="{ 'min-width': '50rem' }"
+             [rows]="5" [showCurrentPageReport]="true" [sortOrder]="+1"
+             [tableStyle]="{ 'min-width': '50rem', 'margin-top': '2rem' }"
              [value]="filteredSpendings"
              currentPageReportTemplate=" {{ filteredSpendings.length }} records found. {first} to {last} of {totalRecords} entries"
              rowHover

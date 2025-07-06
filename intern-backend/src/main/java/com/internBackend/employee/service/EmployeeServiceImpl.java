@@ -3,6 +3,7 @@ package com.internBackend.employee.service;
 import com.internBackend.employee.dto.GenderCountDTO;
 import com.internBackend.employee.dto.PositionCountDTO;
 import com.internBackend.employee.entity.Employee;
+import com.internBackend.employee.entity.Position;
 import com.internBackend.employee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional(readOnly = true)
-    public String getPositionByEmployeeId(Long employeeId) {
+    public Position getPositionByEmployeeId(Long employeeId) {
         return employeeRepository.getPositionByEmployeeId(employeeId);
     }
 
@@ -73,5 +74,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<PositionCountDTO> getPositionCounts(){
         return employeeRepository.countEmployeesByPosition();
+    }
+
+    @Override
+    @Transactional
+    public boolean changeEmployeePosition(Long employeeId, Position position) {
+        return employeeRepository.changeEmployeePosition(employeeId, position) > 0;
     }
 }

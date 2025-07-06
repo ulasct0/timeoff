@@ -3,6 +3,8 @@ package com.internBackend.employee.repository;
 import com.internBackend.employee.dto.GenderCountDTO;
 import com.internBackend.employee.dto.PositionCountDTO;
 import com.internBackend.employee.entity.Employee;
+import com.internBackend.employee.entity.Position;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +17,7 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     Optional<Employee> findByEmailAndPassword(String email, String password);
 
     @Query("SELECT e.position FROM Employee e WHERE e.id = ?1")
-    String getPositionByEmployeeId(Long employeeId);
+    Position getPositionByEmployeeId(Long employeeId);
 
     @Query("SELECT COUNT(e) FROM Employee e")
     long countAllEmployees();
@@ -35,4 +37,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     @Query("SELECT new com.internBackend.employee.dto.PositionCountDTO(e.position, COUNT(e)) " +
             "FROM Employee e GROUP BY e.position")
     List<PositionCountDTO> countEmployeesByPosition();
+
+    @Modifying
+    @Query("UPDATE Employee e SET e.position = :position WHERE e.id = :employeeId")
+    int changeEmployeePosition(@Param("employeeId") Long employeeId, @Param("position") Position position);
+
 }
